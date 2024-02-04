@@ -22,11 +22,15 @@ class Routes {
         },
       });
     });
+ 
+
+    
+    this.router.use(`${rootAPI}/auth`, authRoute)
+
 
     this.router.use(authMiddleware.validateUserToken);
 
     
-    this.router.use(`${rootAPI}/auth`, authRoute)
 
     this.router.all("*", (req, res) => {
       res.status(404).json({

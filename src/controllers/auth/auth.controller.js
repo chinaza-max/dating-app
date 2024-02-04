@@ -6,9 +6,11 @@ export default class AuthenticationController {
 
   
  async signupUser(req, res, next) {
+
+
     try {
-      const { authType } = req.query;
-      const data = req.body;
+
+      const data = req.body;        
 
       let my_bj = {
         ...data,
@@ -23,7 +25,7 @@ export default class AuthenticationController {
 
           await mailService.sendMail({
             to: obj.transfromedUser.email,
-            subject: "Welcome to FBY Security",
+            subject: "Welcome to choice mi dating app",
             templateName: "welcome",
             variables: {
               userRole: "Guard",
@@ -42,7 +44,8 @@ export default class AuthenticationController {
         message: "Guard registered successfully",
       });
     } catch (error) {
-      next(error);
+      console.log(error);
+      next(error)
     }
   }
 /*

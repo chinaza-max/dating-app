@@ -29,4 +29,4 @@ const avatars = multer({ storage: storageA });
 
 
 
-export default {uploads, avatars};
+export default { avatars};

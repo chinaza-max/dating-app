@@ -1,37 +1,42 @@
 export class SystemError extends Error {
-  constructor(message) {
+  constructor(code, message = "System Error") {
     super(message);
-    this.name = 'SystemError';
-  }
-
-}
-
-export class JoiValidationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = 'joiValidationError';
+    this.name = "SystemError";
+    this.code = code;
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
+export class NotFoundError extends SystemError {
+  constructor(message = "Not Found") {
+    super("NotFoundError", message);
+    this.name = "NotFoundError";
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
 
-export class UnAuthorizedError extends Error {
-  constructor(message) {
-    super(message);
+export class UnAuthorizedError extends SystemError {
+  constructor(message = "UnAuthorizedError") {
+    super("UnAuthorizedError", message);
     this.name = "UnAuthorizedError";
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
-export class BadRequestError extends Error {
-  constructor(message) {
-    super(message);
+
+
+export class BadRequestError extends SystemError {
+  constructor(message = "Bad RequestError") {
+    super("BadRequestError", message);
     this.name = "BadRequestError";
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
-export class ConflictError extends Error {
-  constructor(message) {
-    super(message);
+export class ConflictError extends SystemError {
+  constructor(message = "ConflictError") {
+    super("ConflictError", message);
     this.name = "ConflictError";
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
-

@@ -1,12 +1,14 @@
 import authService from "../service/auth.service.js";
-
+import {
+  UnAuthorizedError,
+  BadRequestError,
+} from "../errors/index.js";
 
 
 class AuthenticationMiddlewares {
 
 
-  
-  async validateUserToken(){
+  async validateUserToken( req,res,next){
     try {
 
       const { authorization } = req.headers;
@@ -26,6 +28,7 @@ class AuthenticationMiddlewares {
       req.user = payload;
       return next();
     } catch (error) { 
+      console.log(error)
       next(error);
     }
   }

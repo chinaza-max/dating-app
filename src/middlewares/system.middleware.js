@@ -1,5 +1,6 @@
 import sequelize from "sequelize";
 import { SystemError } from "../errors/index.js";
+import Joi from "joi";
 
 class SystemMiddlewares {
   async errorHandler(
@@ -9,6 +10,8 @@ class SystemMiddlewares {
     next
 ){
     if (error instanceof SystemError) {
+
+      console.log(error.name)
       switch (error.name) {
         case "NotFoundError":
           return res.status(404).json({
@@ -54,6 +57,15 @@ class SystemMiddlewares {
           });
       }
     }
+
+   
+    else if(error instanceof Joi.ValidationError){
+      return res.status(400).json({
+        status: "validation-error",
+        errors: error.details,
+      });
+    }
+
     return res.status(500).json({
       status: "server-error",
       message: "An unexpected error occured.",

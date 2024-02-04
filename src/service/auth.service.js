@@ -1,13 +1,15 @@
 import jwt from "jsonwebtoken";
+import bcrypt from'bcrypt';
 import { User,  PasswordReset } from "../db/models/index.js";
 import serverConfig from "../config/server.js";
+import authUtil from "../utils/auth.util.js";
 
 import {
   ConflictError,
   SystemError,
-  JoiValidationError,
 
 } from "../errors/index.js";
+import { Op } from "sequelize";
 
 
 
@@ -34,19 +36,15 @@ class AuthenticationService {
   }
   async handleUserCreation(data) {
 
-    try {
-      let {
+      let { 
         firstName,
         lastName,
-        image,
         tel,
+        dateOfBirth,
         email,
         password
       } = await authUtil.verifyUserCreationData.validateAsync(data);
   
-    } catch (error) {
-      throw new JoiValidationError(error.details);
-    }
 
     let hashedPassword;
     try {
@@ -55,14 +53,15 @@ class AuthenticationService {
         Number(serverConfig.SALT_ROUNDS)
       );
     } catch (error) {
-      throw new SystemError('An error occured while processing your request(handleUserCreation) while hashing password');
+      console.error(error)
+      throw new SystemError('SystemError','An error occured while processing your request(handleUserCreation) while hashing password ');
     }
 
-    var existingUser = await this.getUserByEmail(email);
-    console.log(existingUser);
-    /*
+    var existingUser = await this.isUserExisting(email,tel);
+  
+
     if (existingUser != null)
-      throw new ConflictError("A user with this email already exists");
+      throw new ConflictError(isUserExisting);
     var createdLocation = await this.LocationModel.create({
       address,
       created_at:dateStamp, 
@@ -89,10 +88,45 @@ class AuthenticationService {
     await utilService.updateStat("GUARD_SIGNUP");
     return transfromedUserObj;
 
-    */
+  
+  
   }
 
 
+    async  isUserExisting(email, tel) {
+      const existingUser = await this.UserModel.findOne({
+        where: {
+          [Op.or]: [
+            {
+              [Op.and]: [
+                { email: email },
+                { isEmailValid: true },
+                { is_deleted: false }
+              ]
+            },
+            {
+              [Op.and]: [
+                { tel: tel },
+                { isTelValid: true },
+                { is_deleted: false }
+              ]
+            }
+          ]
+        }
+      });
+    
+      if (existingUser) {
+        if (existingUser.email === email) {
+          return { type: 'email', message: 'User with this email already exists.' };
+        } else if (existingUser.tel === tel) {
+          return { type: 'tel', message: 'User with this tel already exists.' };
+        }
+      }
+    
+      return null;
+    }
+    
+  
 }
 
 export default new AuthenticationService();
