@@ -41,6 +41,17 @@ class QuestionUtil {
     questionId: Joi.number().required(),
   })
 
+  verifyHandleUpdateAnswer=Joi.object({
+    answer: Joi.string().required(),
+    answerId: Joi.number().required(),
+  })
+
+  verifyHandleCreateAndUpdateTag=Joi.object({
+    tags: Joi.string().required(),
+    userId: Joi.number().required(),
+  })
+
+
   verifyHandleDeleteQuestion=Joi.object({
     questionId: Joi.number().required(),
   })

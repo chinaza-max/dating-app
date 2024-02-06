@@ -189,6 +189,35 @@ class AuthenticationService {
   }
 
 
+
+  async handleLoginUser(data) {
+
+    const{ emailOrTel, password }=await authUtil.verifyHandleLoginUser.validateAsync(data);
+
+    const isEmail = /\S+@\S+\.\S+/.test(emailOrTel);
+
+    const user =  await this.UserModel.findOne({
+      where: {
+        [Op.and]: [
+          {
+            [isEmail ? 'emailAddress' : 'tel']: emailOrTel
+          },
+          { [isEmail ? 'isEmailValid' : 'isTelValid']: true},
+          { isDeleted: false}
+          
+        ],       
+      },
+    });   
+
+
+
+    if (!user) throw new NotFoundError("User not found.");
+
+    if (!(await bcrypt.compare(password, user.password))) return null;
+   
+    return user;
+  }
+
   async generateToken(user) {
 
     try {

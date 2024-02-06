@@ -22,8 +22,8 @@ class JobRoutes extends QuestionController {
 
     
     this.router.post("/createAnswer", this.createAnswer);
-    //this.router.post("/createAnswer", this.createAnswer);
-    //this.router.post("/createAnswer", this.createAnswer);
+    this.router.post("/updateAnswer", this.updateAnswer);
+    this.router.post("/createAndUpdateTag", this.createAndUpdateTag);
 
 
   } 

@@ -37,7 +37,37 @@ export default class UserController {
     }
     
   }
-async updateUserPersonalityQuestion(
+
+
+  
+  async addOrUpdatefilter(req, res, next) {
+
+    try {
+      const data = req.body;        
+
+      let my_bj = {
+        ...data,
+        userId:req.user.id
+      }
+
+      const obj = await userService.handleAddOrUpdatefilter(my_bj);
+  
+
+      
+        return res.status(200).json({
+          status: 200,
+          message: "filter setting updated successfully",
+        });
+      
+     
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+
+  async updateUserPersonalityQuestion(
     req,
     res,
     next

@@ -59,6 +59,14 @@ class AdminUtil {
       ),
     });
 
+
+    verifyHandleLoginUser= Joi.object({
+      password: Joi.string().required(),
+      emailOrTel: Joi.alternatives().try(
+        Joi.string(),
+        Joi.number()
+      ),
+    });
     
 
 

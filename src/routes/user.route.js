@@ -13,7 +13,7 @@ class UserRoutes extends UserController {
     this.router.post("/registerAdmin", this.registerAdmin);
     this.router.post("/sendVerificationCodeEmailOrTelAdmin", this.sendVerificationCodeEmailOrTelAdmin);
 
-   // this.router.post("/updateUserPQ",  this.updateUserPersonalityQuestion);
+    this.router.post("/addOrUpdatefilter",  this.addOrUpdatefilter);
 
   } 
 

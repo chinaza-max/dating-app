@@ -1,4 +1,4 @@
-import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin} from "../db/models/index.js";
+import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,SearchSetting} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -17,6 +17,7 @@ class UserService {
   AdminModel = Admin;
   EmailandTelValidationModel=EmailandTelValidation
   EmailandTelValidationAdminModel=EmailandTelValidationAdmin
+  SearchSettingModel=SearchSetting
 
 
   
@@ -39,7 +40,7 @@ class UserService {
 
         return user
       } catch (error) {
-        throw new ServerError("Failed to update user image" );
+        throw new ServerError('SystemError',"Failed to update user image" );
       }
   }
 
@@ -150,7 +151,7 @@ async handleSendVerificationCodeEmailOrTelAdmin(data) {
       await relatedUser.update({ password });
 
     } catch (error) {
-      throw new ServerError("Failed to update user password" );
+      throw new ServerError('SystemError',"Failed to update user password" );
     }
 
     await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id, password)
@@ -160,6 +161,27 @@ async handleSendVerificationCodeEmailOrTelAdmin(data) {
 
     //await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id)
   }
+}
+
+
+async handleAddOrUpdatefilter(data) {
+
+  let obj = await userUtil.verifyHandleAddOrUpdatefilter.validateAsync(data);
+
+
+  try {
+    const [searchSettingInstance, created] = await this.SearchSettingModel.upsert({
+      userId: obj.userId,
+      ...obj,
+    });
+  
+  } catch (error) {
+    console.error('Error:', error);
+    throw new SystemError('SystemError','An error occured while updating the user filter ');
+
+  }
+
+ 
 }
 
 async  sendEmailVerificationCode(emailAddress, userId ,password) {

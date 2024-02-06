@@ -112,7 +112,54 @@ export default class AuthenticationController {
     
   }
   */
-   
+  
+
+
+  async loginUser(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+
+      let my_bj = {
+        ...data,
+      }
+      
+      const user=await authService.handleLoginUser(my_bj);
+    
+
+      if (user == null){
+        return res.status(400).json({
+          status: 400,
+          message: "Invalid login credentials",
+        });
+      }
+      
+
+
+      const token = await authService.generateToken(user.dataValues);
+
+      const excludedProperties = ['isDeleted', 'password'];
+
+      // Creating a new object with excluded properties
+      const modifiedUser = Object.keys(user.dataValues)
+        .filter(key => !excludedProperties.includes(key))
+        .reduce((acc, key) => {
+          acc[key] = user.dataValues[key];
+          return acc;
+        }, {});
+        
+      return res.status(200).json({
+        status: 200,
+        message: "login successfully.",
+        data: { user: modifiedUser, token },
+      });
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
   async loginAdmin(req, res, next) {
 
     try {

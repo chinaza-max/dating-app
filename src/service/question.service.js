@@ -51,7 +51,6 @@ class UserService {
    createdBy,
  }=await questionUtil.verifyHandleCreateTag.validateAsync(data);
 
-
     try {
       await this.TagModel.findOrCreate({
         where: {
@@ -137,6 +136,8 @@ async handleDeleteTag(data) {
     throw new ServerError("Failed to delete question" );
   }
 }
+
+
  async handleUpdateQuestion(data) {
     
   const{  
@@ -164,7 +165,6 @@ async handleDeleteTag(data) {
 }
  
 
-
 async handleCreateAnswer(data) {
     
   const{  
@@ -172,30 +172,112 @@ async handleCreateAnswer(data) {
    userId
  }=await questionUtil.verifyHandleCreateAnswer.validateAsync(data);
 
-
-  details.map(async (data) => {
+ for (let index = 0; index < details.length; index++) {
+  const element = details[index];
   try {
 
     const [userAnswer, created] = await this.UserAnswerModel.findOrCreate({
       where: {
         userId,
-        answer: data.answer,
-        partnerPersonaltyQId: data.partnerPersonaltyQId,
+        partnerPersonaltyQId: element.partnerPersonaltyQId,
       },
-      defaults: data, 
+      defaults: {
+        userId,
+        answer: element.answer,
+        partnerPersonaltyQId: element.partnerPersonaltyQId,
+      }, 
     });
 
     if (!created) {
-      console.log(`Record already exists for ${userId}, ${data.answer}, ${data.partnerPersonaltyQId}`);
+      console.log(`Record already exists for ${userId}, ${element.answer}, ${element.partnerPersonaltyQId}`);
     } else {
-      console.log(`Record created for ${userId}, ${data.answer}, ${data.partnerPersonaltyQId}`);
+      console.log(`Record created for ${userId}, ${element.answer}, ${element.partnerPersonaltyQId}`);
     }
   } catch (error) {
     console.error(`Error inserting data: ${error.message}`);
   }
-});
+  
+ }
+
+/*
+ 
+  details.map(async (data) => {
+    try {
+
+      const [userAnswer, created] = await this.UserAnswerModel.findOrCreate({
+        where: {
+          userId,
+          partnerPersonaltyQId: data.partnerPersonaltyQId,
+        },
+        defaults: {
+          userId,
+          answer: data.answer,
+          partnerPersonaltyQId: data.partnerPersonaltyQId,
+        }, 
+      });
+
+      if (!created) {
+        console.log(`Record already exists for ${userId}, ${data.answer}, ${data.partnerPersonaltyQId}`);
+      } else {
+        console.log(`Record created for ${userId}, ${data.answer}, ${data.partnerPersonaltyQId}`);
+      }
+    } catch (error) {
+      console.error(`Error inserting data: ${error.message}`);
+    }
+  });
+
+  */
+
+    
 
 
+}
+
+
+
+
+async handleUpdateAnswer(data) {
+
+  const{  
+   answer,
+   answerId
+ }=await questionUtil.verifyHandleUpdateAnswer.validateAsync(data);
+
+ const obj = await this.UserAnswerModel.findByPk(answerId);
+ if (!obj) throw new NotFoundError("question not found.");
+
+  try {
+  
+    await obj.update({  
+      answer,
+    });
+
+  } catch (error) {
+    throw new ServerError("Failed to update answer" );
+  }
+}
+
+
+async handleCreateAndUpdateTag(data) {
+
+  const{  
+    tags,
+    userId
+ }=await questionUtil.verifyHandleCreateAndUpdateTag.validateAsync(data);
+
+
+ const obj = await this.UserModel.findByPk(userId);
+ if (!obj) throw new NotFoundError("question not found.");
+
+  try {
+  
+    await obj.update({  
+      tags,
+    });
+
+  } catch (error) {
+    throw new ServerError("Failed to update tag" );
+  }
 }
 
 
