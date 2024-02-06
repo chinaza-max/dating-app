@@ -40,3 +40,12 @@ export class ConflictError extends SystemError {
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }
+
+
+export class ServerError extends SystemError {
+  constructor(message= ServerError) {
+    super("server-error", message); 
+    this.name = "ServerError";
+    Object.setPrototypeOf(this, new.target.prototype); 
+  }
+}

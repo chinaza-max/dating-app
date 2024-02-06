@@ -38,10 +38,10 @@ export function init(connection) {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    emailAddress: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+    
     },
     contactPerson: {
       type: DataTypes.STRING,
@@ -61,6 +61,7 @@ export function init(connection) {
     tableName: 'BusinessSpot',
     sequelize: connection,
     timestamps: true,
+    underscored:false
   });
 }
 

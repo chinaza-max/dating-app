@@ -34,7 +34,9 @@ export function init(connection) {
     }, {
       timestamps: true,
       tableName: 'WishList',
-      sequelize: connection
+      sequelize: connection,
+      underscored:false
+
     });
   }
 

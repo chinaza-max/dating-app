@@ -1,12 +1,40 @@
 import authService from "../../service/auth.service.js";
+import { User,EmailandTelValidation } from "../../db/models/index.js";
 
 
 export default class AuthenticationController {
 
 
   
- async signupUser(req, res, next) {
 
+
+  
+
+  
+
+  async verifyEmailorTelAdmin(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+
+      let my_bj = {
+        ...data,
+      }
+      
+      const obj = await authService.handleVerifyEmailorTel(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: "verification successful",
+      });
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+  async verifyEmailorTel(req, res, next) {
 
     try {
 
@@ -16,124 +44,262 @@ export default class AuthenticationController {
         ...data,
       }
 
-      const obj = await authService.handleUserCreation(my_bj);
-
-      try {
-        if (obj != null) {
-          console.log(obj);
-          console.log("email obj");
-
-          await mailService.sendMail({
-            to: obj.transfromedUser.email,
-            subject: "Welcome to choice mi dating app",
-            templateName: "welcome",
-            variables: {
-              userRole: "Guard",
-              website: "https://fbysecuritysvs.com",
-              email: obj.transfromedUser.email,
-              password: data.password,
-            },
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      const obj = await authService.handleVerifyEmailorTel(my_bj);
 
       return res.status(200).json({
         status: 200,
-        message: "Guard registered successfully",
+        message: "email verification completed",
       });
     } catch (error) {
       console.log(error);
       next(error)
     }
+    
   }
-/*
-  async signupAdmin(req, res, next) {
+ 
+  async signupUser(req, res, next) {
+
     try {
-      const data = req.body;
+
+      const data = req.body;        
 
       let my_bj = {
         ...data,
-        created_by_id: req.user.id,
-        my_time_zone: req["user_time_zone"]
       }
 
-      const obj = await authService.handleAdminCreation(my_bj);
+      await authService.handleUserCreation(my_bj);
 
-      try {
-        if (obj != null) {
-          await mailService.sendMail({
-            to: obj.transfromedUser.email,
-            subject: "Welcome to FBY Security",
-            templateName: "welcome",
-            variables: {
-              userRole: "Admin",
-              website: "https://fbysecuritysvs.com",
-              email: obj.transfromedUser.email,
-              password: data.password,
-            },
-          })
+    
+
+      return res.status(200).json({
+        status: 200,
+        message: "user registered successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+  
+
+  /*
+  async registerAdmin(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+      console.log(req.user)
+      let my_bj = {
+        ...data,
+        createdBy:req.user.id
+      }
+      
+      await authService.handleRegisterAdmin(my_bj);
+
+    
+
+      return res.status(200).json({
+        status: 200,
+        message: "user registered successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+  */
+   
+  async loginAdmin(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+
+      let my_bj = {
+        ...data,
+      }
+      
+      const user=await authService.handleLoginAdmin(my_bj);
+    
+
+      const token = await authService.generateToken(user.dataValues);
+
+      return res.status(200).json({
+        status: 200,
+        message: "login successfully.",
+        data: { user: {firstName:user.dataValues.firstName,firstName:user.dataValues.lastName }, token },
+      });
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+   
+
+  
+  async sendVerificationCodeEmailOrTel(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+
+      let my_bj = {
+        ...data,
+      }
+
+      const obj = await authService.handleSendVerificationCodeEmailOrTel(my_bj);
+  
+
+      if(data.type=='email'){
+        return res.status(200).json({
+          status: 200,
+          message: "verification code sent you email address",
+        });
+      }
+      else{
+        return res.status(200).json({
+          status: 200,
+          message: "verification code sent you number",
+        });
+      }
+     
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+
+
+  async sendVerificationCodeEmailOrTel(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+
+      let my_bj = {
+        ...data,
+      }
+
+      const obj = await authService.handleSendVerificationCodeEmailOrTel(my_bj);
+  
+
+      if(data.type=='email'){
+        return res.status(200).json({
+          status: 200,
+          message: "verification code sent you email address",
+        });
+      }
+      else{
+        return res.status(200).json({
+          status: 200,
+          message: "verification code sent you number",
+        });
+      }
+     
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+
+  
+  async uploadPicture(req, res, next) {
+
+    try {
+      
+      const data = req.body;        
+      const { file } = req;
+      
+      let my_bj = {
+        ...data,
+        image:{
+          size:file?.size
         }
-      } catch (error) {
-        console.log(error);
       }
 
-      return res.status(200).json({
-        status: 200,
-        message: "Admin registered successfully",
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
+    const user=await authService.handleUploadPicture(my_bj,file);
 
-  async whoAmI(req, res, next) {
-    try {
-      const { id } = req.user;
+    
+   const token = await authService.generateToken(user.dataValues);
 
-      const user = await authService.getCurrentUser(id);
-      var LocationModel = Location;
-      var relatedLocation = await LocationModel.findByPk(user.location_id);
-      var { transfromedUser } = await authService.transformUserForResponse(
-        user,
-        relatedLocation
-      );
-      return res.status(200).json({
-        status: 200,
-        data: {
-          user: transfromedUser,
-          token: req.headers.authorization.split(" ")[1],
-        },
-      });
+
+    return res.status(200).json({
+      status: 200,
+      message: "verification successful.",
+      data: { user: {firstName:user.dataValues.firstName,firstName:user.dataValues.lastName }, token },
+    });
+     
     } catch (error) {
-      next(error);
+      console.log(error);
+      next(error)
     }
+    
   }
 
 
-  async resetPasswordEmail(req, res, next) {
-    try {
-      const createdResetObj = await authService.handlePasswordResetEmail(req.body);
-      return res.status(200).json({
-        status: 200,
-        message: "A reset link was sent to your email"
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async resetPassword(req, res, next) {
-    try {
-      const createdResetObj = await authService.handlePasswordReset(req.body);
-      return res.status(200).json({
-        status: 200,
-        message: "Password updated successfully"
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
-*/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*this.sendEmailVerificationCode
+      this.sendEmailVerificationCode(obj.emailAddress,obj.id)
+
+async  sendEmailVerificationCode(emailAddress, userId) {
+
+    var keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
+    const validationCode  = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+
+    console.log(keyExpirationMillisecondsFromEpoch)
+    console.log(validationCode)
+
+
+    await this.PasswordResetModel.findOrCreate({
+      where: {
+        userId
+      },
+      defaults: {
+        userId,
+        type: 'email',
+        validationCode,
+        expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+      },
+    });
+
+    try {
+          
+        await mailService.sendMail({
+          to: emailAddress,
+          subject: "Account Verification",
+          templateName: "emailVerificationCode",
+          variables: {
+            verificationCode:verificationCode,
+            email: emailAddress,
+          },
+        });
+
+    } catch (error) {
+        console.log(error)
+    }
+
+
+
+  }
+      */

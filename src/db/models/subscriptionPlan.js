@@ -35,7 +35,8 @@ export function init(connection) {
     }, {
       tableName: 'SubscriptionPlan',
       sequelize: connection,
-      timestamps: true, 
+      timestamps: true,
+      underscored:false
     });
   }
 

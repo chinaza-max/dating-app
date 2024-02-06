@@ -33,6 +33,7 @@ export function init(connection) {
       timestamps: true,
       tableName: 'UserAnswer',
       sequelize: connection,
+      underscored:false
     }
   );
 }

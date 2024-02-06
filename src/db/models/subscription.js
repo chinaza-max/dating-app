@@ -17,12 +17,14 @@ export function init(connection) {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        
       },
       subscriptionPlanId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-       
+      },
+      transactionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       startDate: {
         type: DataTypes.DATE,
@@ -45,7 +47,8 @@ export function init(connection) {
     }, {
       tableName: 'Subscription',
       sequelize: connection,
-      timestamps: true,    
+      timestamps: true, 
+      underscored:false   
     });
   }
 

@@ -11,7 +11,7 @@ class SystemMiddlewares {
 ){
     if (error instanceof SystemError) {
 
-      console.log(error.name)
+      
       switch (error.name) {
         case "NotFoundError":
           return res.status(404).json({
@@ -70,6 +70,7 @@ class SystemMiddlewares {
       status: "server-error",
       message: "An unexpected error occured.",
     });
+    
   }
 }
 

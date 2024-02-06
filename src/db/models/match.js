@@ -45,6 +45,7 @@ import {
       tableName: 'Match',
       sequelize: connection,
       timestamps: true, 
+      underscored:false
     });
   }
 

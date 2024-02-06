@@ -14,6 +14,10 @@ import SearchSetting, { init as initSearchSetting } from "./searchSetting.js";
 import Review, { init as initReview } from "./review.js";
 import PasswordReset, { init as initPasswordReset } from "./passwordReset.js";
 import Match, { init as initMatch } from "./match.js";
+import Transaction, { init as initTransaction } from "./transaction.js";
+import EmailandTelValidation, { init as initEmailandTelValidation } from "./emailAndTelValidation.js";
+
+
 
 
 function associate() {
@@ -34,6 +38,9 @@ function associate() {
     foreignKey: 'requestId'
   })
 
+
+
+  
   User.hasMany(WishList, {
     foreignKey: 'userId',
     as: "WishLists",
@@ -50,8 +57,6 @@ function associate() {
   BusinessSpot.belongsTo(Business, {
     foreignKey: 'businessId', 
   })
-
-
 
 
   Business.hasMany(Date, {
@@ -108,6 +113,9 @@ function associate() {
     foreignKey: 'userId', 
   })
 
+
+
+
   User.hasMany(Date, {
     foreignKey: 'userId2',
     as: "User2Dates",
@@ -116,11 +124,14 @@ function associate() {
     foreignKey: 'userId2', 
   })
 
+
+
+
+
   User.hasOne(SearchSetting, {
     foreignKey: 'userId',
     as: "SearchSettings",
   });
-
   SearchSetting.belongsTo(User,{ 
     foreignKey: 'userId'
   })
@@ -162,6 +173,13 @@ function associate() {
     foreignKey: 'userId2', 
   })
 
+  Subscription.hasOne(Transaction, {
+    foreignKey: 'transactionId',
+    as: "Transactions",
+  });
+  Transaction.belongsTo(Subscription, {
+    foreignKey: 'transactionId', 
+  })
 
 
 }
@@ -190,6 +208,8 @@ export {
   Review,
   Admin,
   PasswordReset,
+  Transaction,
+  EmailandTelValidation,
   Match
 }
 
@@ -209,6 +229,8 @@ export function init(connection) {
   initAdmin(connection)
   initPasswordReset(connection)
   initMatch(connection)
+  initTransaction(connection)
+  initEmailandTelValidation(connection)
   associate();
   authenticateConnection(connection)
 }

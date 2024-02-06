@@ -48,7 +48,8 @@ export function init(connection) {
     }, {
       tableName: 'Request',
       sequelize: connection,
-      timestamps: true, 
+      timestamps: true,
+      underscored:false 
     });
   }
 

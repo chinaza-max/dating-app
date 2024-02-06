@@ -7,10 +7,10 @@ import {
   import serverConfig from "../../config/server.js";
 
 
-  class PasswordReset extends Model {}
+  class EmailandTelValidation extends Model {}
 
   export function init(connection) {
-    PasswordReset.init({
+    EmailandTelValidation.init({
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
@@ -19,9 +19,16 @@ import {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      }, 
+      type: {
+        type: DataTypes.ENUM(
+          'email',
+          'tel'
+        ),
+        allowNull: false,
       },
-      resetKey: {
-        type: DataTypes.STRING,
+      verificationCode: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       expiresIn: {
@@ -33,7 +40,7 @@ import {
         defaultValue: false,
       }
     }, {
-      tableName: 'PasswordReset',
+      tableName: 'EmailandTelValidation',
       sequelize: connection,
       timestamps: true,
       underscored:false
@@ -42,7 +49,7 @@ import {
 
 
 
-export default PasswordReset ;
+export default EmailandTelValidation ;
 
 
 

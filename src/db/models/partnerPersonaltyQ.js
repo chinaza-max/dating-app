@@ -44,6 +44,7 @@ import {
         tableName: 'PartnerPersonaltyQ',
         sequelize: connection,
         timestamps: true, 
+        underscored:false
       });
   }
 

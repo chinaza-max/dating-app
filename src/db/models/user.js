@@ -23,6 +23,11 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      isImageVerified: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:false
+      },
       tel: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -30,15 +35,16 @@ export function init(connection) {
       isTelValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue:false
       },
-      email: {
+      emailAddress: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
+        allowNull: false,        
       }, 
       isEmailValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue:false
       },
       password: {
         type: DataTypes.STRING,
@@ -58,7 +64,7 @@ export function init(connection) {
       },
       numberOfChildren: {
         type: DataTypes.INTEGER, 
-        allowNull: true, 
+        allowNull: false, 
       },
       language: {
         type: DataTypes.STRING,
@@ -100,14 +106,11 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: true,
       }, 
-      notification: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-      }, 
       tags: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
+     
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -117,6 +120,7 @@ export function init(connection) {
       tableName: 'User',
       sequelize: connection,
       timestamps: true,
+      underscored:false
     });
   }
 

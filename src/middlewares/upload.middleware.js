@@ -6,13 +6,12 @@ import serverConfig from "../config/server.js";
 const storageA = multer.diskStorage({
   destination: function (req, file, cb) {
     
-
     if(serverConfig.NODE_ENV == "production"){
-      cb(null, '/public/images/avatars');
+      cb(null, '/public/images');
 
     }
     else if(serverConfig.NODE_ENV == "development"){
-      cb(null, 'public/images/avatars')
+      cb(null, 'public/images')
     }
 
   },
@@ -24,9 +23,8 @@ const storageA = multer.diskStorage({
 })
 
 
-const avatars = multer({ storage: storageA });
+const image = multer({ storage: storageA });
 
 
 
-
-export default { avatars};
+export default {image};

@@ -58,6 +58,7 @@ export function init(connection) {
       tableName: 'Review',
       sequelize: connection,
       timestamps: true,
+      underscored:false
     });
   }
 

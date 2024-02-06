@@ -87,6 +87,7 @@ export function init(connection) {
       tableName: 'SearchSetting',
       sequelize: connection,
       timestamps: true,
+      underscored:false
     });
   }
 

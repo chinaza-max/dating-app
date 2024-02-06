@@ -88,6 +88,7 @@ export function init(connection) {
       tableName: 'Date',
       sequelize: connection,
       timestamps: true,
+      underscored:false
     });
   }
 

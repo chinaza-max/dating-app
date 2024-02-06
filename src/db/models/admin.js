@@ -36,18 +36,28 @@ import {
       isTelValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue:false
       },
-      email: {
+      emailAddress: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       }, 
       isEmailValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue:false
+
       },
       password: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      adminType: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      createdBy: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       isDeleted: {
@@ -60,6 +70,7 @@ import {
         tableName: 'Admin',
         sequelize: connection,
         timestamps: true,
+        underscored:false
       });
   }
 

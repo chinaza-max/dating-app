@@ -26,10 +26,9 @@ export  function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,
       }, 
-      email: {
+      emailAddress: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       }, 
       isEmailValid: {
         type: DataTypes.BOOLEAN,
@@ -63,6 +62,7 @@ export  function init(connection) {
       tableName: 'Business',
       sequelize: connection,
       timestamps: true,
+      underscored:false
     });
   }
 

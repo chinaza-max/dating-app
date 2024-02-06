@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authMiddleware from "../middlewares/auth.middleware.js";
 import authRoute from "./auth.route.js";
+import userRoute from "./user.route.js";
 
 
 class Routes {
@@ -27,8 +28,10 @@ class Routes {
     
     this.router.use(`${rootAPI}/auth`, authRoute)
 
-
     this.router.use(authMiddleware.validateUserToken);
+
+    this.router.use(`${rootAPI}/user`, userRoute)
+
 
     
 
