@@ -26,13 +26,15 @@ class AdminUtil {
     });
 
     verifyHandleVerifyEmailorTelAdmin= Joi.object({
-      userId: Joi.number().required(),  
+      userId: Joi.number().required(),
+      verificationCode: Joi.number().required(),
+      type: Joi.string().required()
     });
 
     verifyHandleVerifyEmailorTel= Joi.object({
       userId: Joi.number().required(),
       verificationCode: Joi.number().required(),
-      type: Joi.string().required(),
+      type: Joi.string().required()
     });
 
     verifyHandleSendVerificationCodeEmailOrTel= Joi.object({

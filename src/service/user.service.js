@@ -1,4 +1,4 @@
-import { User,Admin ,EmailandTelValidation} from "../db/models/index.js";
+import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -8,14 +8,18 @@ import mailService from "../service/mail.service.js";
 
 import {
   NotFoundError,
- 
+  ConflictError
+
 } from "../errors/index.js";
 
 class UserService {
   UserModel = User;
   AdminModel = Admin;
   EmailandTelValidationModel=EmailandTelValidation
+  EmailandTelValidationAdminModel=EmailandTelValidationAdmin
 
+
+  
   /*
   constructor() {
     this.UserModel = User;
@@ -26,9 +30,6 @@ class UserService {
 
  async updateUserPersonalityQuestion(data) {
     
-
-  console.log(data)
-
    const{ personalityQuestionsAnswer,userId}=await userUtil.verifyUpdateUserPersonalityQuestion.validateAsync(data);
 
    const user = await this.UserModel.findByPk(userId);
@@ -41,7 +42,6 @@ class UserService {
         throw new ServerError("Failed to update user image" );
       }
   }
-
 
   async handleRegisterAdmin(data) {
     let { 
@@ -87,7 +87,6 @@ class UserService {
   }
 
 
-
   async  isUserExistingAdmin(emailAddress, tel) {
 
     const existingUser = await this.AdminModel.findOne({
@@ -121,27 +120,65 @@ class UserService {
     return null
 }
 
+async handleSendVerificationCodeEmailOrTelAdmin(data) {
 
+  let { 
+    userId,
+    type,
+  } = await userUtil.verifyHandleSendVerificationCodeEmailOrTelAdmin.validateAsync(data);
+
+  var relatedUser = await this.AdminModel.findOne({
+    where: { id: userId },
+  });
+
+  if(type==='email'){
+
+    let password=await this.generateRandomPassword(7);
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(
+        password,
+        Number(serverConfig.SALT_ROUNDS)
+      );
+    } catch (error) {
+      console.error(error)
+      throw new SystemError('SystemError','An error occured while processing your request(handleUserCreation) while hashing password ');
+    }
+
+
+    try {
+      await relatedUser.update({ password });
+
+    } catch (error) {
+      throw new ServerError("Failed to update user password" );
+    }
+
+    await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id, password)
+  }else{
+
+
+
+    //await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id)
+  }
+}
 
 async  sendEmailVerificationCode(emailAddress, userId ,password) {
 
   try {
     
       var keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
-      const verificationCode  = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+      const verificationCode =Math.floor(Math.random() * 9000000) + 100000;
   
 
-  
-      await this.EmailandTelValidationModel.findOrCreate({
+      await this.EmailandTelValidationAdminModel.upsert({
+        userId,
+        type: 'email',
+        verificationCode,
+        expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+      }, {
         where: {
           userId
-        },
-        defaults: {
-          userId,
-          type: 'email',
-          verificationCode,
-          expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
-        },
+        }
       });
   
       try {
@@ -160,7 +197,7 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
               password,
               email: emailAddress,
               domain: serverConfig.DOMAIN,
-              resetLink:serverConfig.NODE_ENV==='development'?`http://127.0.0.1:5500/verifyEmail.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/PasswordReset.html?${params.toString()}`
+              resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/verifyEmail.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/PasswordReset.html?${params.toString()}`
             },
           });
   
@@ -177,9 +214,19 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
 
 
 
+}
+
+ async generateRandomPassword(length = 12) {
+  const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";
+  let password = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    password += charset.charAt(randomIndex);
   }
 
-
+  return password;
+}
 }
 
 export default new UserService();

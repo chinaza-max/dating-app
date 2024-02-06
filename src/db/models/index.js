@@ -16,6 +16,8 @@ import PasswordReset, { init as initPasswordReset } from "./passwordReset.js";
 import Match, { init as initMatch } from "./match.js";
 import Transaction, { init as initTransaction } from "./transaction.js";
 import EmailandTelValidation, { init as initEmailandTelValidation } from "./emailAndTelValidation.js";
+import EmailandTelValidationAdmin, { init as initEmailandTelValidationAdmin } from "./emailAndTelValidationAdmin.js";
+import Tag, { init as initTag } from "./tag.js";
 
 
 
@@ -29,6 +31,7 @@ function associate() {
   UserAnswer.belongsTo(User, {
     foreignKey: 'userId',
   })
+  
 
   User.hasMany(Request, {
     foreignKey: 'requestId',
@@ -39,8 +42,6 @@ function associate() {
   })
 
 
-
-  
   User.hasMany(WishList, {
     foreignKey: 'userId',
     as: "WishLists",
@@ -210,6 +211,8 @@ export {
   PasswordReset,
   Transaction,
   EmailandTelValidation,
+  EmailandTelValidationAdmin,
+  Tag,
   Match
 }
 
@@ -231,6 +234,8 @@ export function init(connection) {
   initMatch(connection)
   initTransaction(connection)
   initEmailandTelValidation(connection)
+  initEmailandTelValidationAdmin(connection)
+  initTag(connection)
   associate();
   authenticateConnection(connection)
 }

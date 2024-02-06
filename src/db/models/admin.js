@@ -6,7 +6,6 @@ import {
   import serverConfig from "../../config/server.js";
 
 
-
   class Admin extends Model {}
 
   export function init(connection) {

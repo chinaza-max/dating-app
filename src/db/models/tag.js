@@ -1,41 +1,40 @@
 import { Model, DataTypes } from "sequelize";
 import serverConfig from "../../config/server.js";
 
-class UserAnswer extends Model {}
+class Tag extends Model {}
 
 export function init(connection) {
-  UserAnswer.init(
+  Tag.init(
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      answer: {
+      createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      tag: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      partnerPersonaltyQId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      userId:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: false,
-      },
-    },
-    {
-      timestamps: true,
-      tableName: 'UserAnswer',
+        defaultValue:false ,
+      }
+    }, {
+      tableName: 'Tag',
       sequelize: connection,
+      timestamps: true,
       underscored:false
-    }
-  );
-}
+    });
+  }
 
-export default UserAnswer;
+export default Tag ;
+
+
+  
+
+  

@@ -5,7 +5,38 @@ export default class UserController {
 
 
 
+  async sendVerificationCodeEmailOrTelAdmin(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+
+      let my_bj = {
+        ...data,
+      }
+
+      const obj = await userService.handleSendVerificationCodeEmailOrTelAdmin(my_bj);
   
+
+      if(data.type=='email'){
+        return res.status(200).json({
+          status: 200,
+          message: "verification code sent you email address",
+        });
+      }
+      else{
+        return res.status(200).json({
+          status: 200,
+          message: "verification code sent you number",
+        });
+      }
+     
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
 async updateUserPersonalityQuestion(
     req,
     res,
@@ -51,7 +82,7 @@ async updateUserPersonalityQuestion(
 
       return res.status(200).json({
         status: 200,
-        message: "user registered successfully",
+        message: "registration successfull",
       });
     } catch (error) {
       console.log(error);
@@ -59,7 +90,5 @@ async updateUserPersonalityQuestion(
     }
     
   }
-
-
 
 }

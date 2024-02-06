@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from'bcrypt';
-import { User,  EmailandTelValidation ,  Admin } from "../db/models/index.js";
+import { User,  EmailandTelValidation ,  Admin,  EmailandTelValidationAdmin } from "../db/models/index.js";
 import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
 import mailService from "../service/mail.service.js";
@@ -18,6 +18,7 @@ class AuthenticationService {
    UserModel = User;
    AdminModel = Admin;
    EmailandTelValidationModel=EmailandTelValidation
+   EmailandTelValidationAdminModel=EmailandTelValidationAdmin
 
   verifyToken(token) {
     try {
@@ -158,7 +159,7 @@ class AuthenticationService {
       }
   }
 
-
+  
   async handleLoginAdmin(data) {
 
     const{ emailOrTel, password }=await authUtil.verifyHandleLoginAdmin.validateAsync(data);
@@ -182,9 +183,7 @@ class AuthenticationService {
 
     if (!user) throw new NotFoundError("User not found.");
 
-
     if (!(await bcrypt.compare(password, user.password))) return null;
-
    
     return user;
   }
@@ -216,14 +215,15 @@ class AuthenticationService {
       type
     } = await authUtil.verifyHandleVerifyEmailorTelAdmin.validateAsync(data);
 
-    var relatedEmailoRTelValidationCode = await this.EmailandTelValidationModel.findOne({
+
+    var relatedEmailoRTelValidationCode = await this.EmailandTelValidationAdminModel.findOne({
       where: {
         userId: userId,
         verificationCode: verificationCode,
         type
       },
     })
-    
+
     if (relatedEmailoRTelValidationCode == null){
       throw new NotFoundError("Invalid verification code");
     } 
@@ -232,6 +232,7 @@ class AuthenticationService {
     var relatedUser = await this.AdminModel.findOne({
       where: { id: relatedEmailoRTelValidationCode.userId },
     });
+
 
     if (relatedUser == null){
       throw new NotFoundError("Selected user cannot be found");
@@ -254,6 +255,8 @@ class AuthenticationService {
     }
 
   }
+
+
   async handleVerifyEmailorTel(data) {
 
     let { 
@@ -345,19 +348,18 @@ class AuthenticationService {
   try {
     
       var keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
-      const verificationCode  = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-  
-  
-      await this.EmailandTelValidationModel.findOrCreate({
+      const verificationCode = Math.floor(Math.random() * 900000) + 100000;
+
+
+      await this.EmailandTelValidationModel.upsert({
+        userId,
+        type: 'email',
+        verificationCode,
+        expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+      }, {
         where: {
           userId
-        },
-        defaults: {
-          userId,
-          type: 'email',
-          verificationCode,
-          expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
-        },
+        }
       });
   
       try {
@@ -393,18 +395,20 @@ class AuthenticationService {
     try {      
         var keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
         const verificationCode  = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-    
-        await this.EmailandTelValidationModel.findOrCreate({
+
+
+        await this.EmailandTelValidationModel.upsert({
+          userId,
+          type: 'email',
+          verificationCode,
+          expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+        }, {
           where: {
             userId
-          },
-          defaults: {
-            userId,
-            type: 'email',
-            verificationCode,
-            expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
-          },
+          }
         });
+
+        
     
         try {
               

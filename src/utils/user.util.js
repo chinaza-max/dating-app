@@ -18,6 +18,12 @@ class UserUtil {
     createdBy: Joi.number().required(),
   });
 
+  verifyHandleSendVerificationCodeEmailOrTelAdmin= Joi.object({
+    userId: Joi.number().required(),
+    type: Joi.string().required()
+  });
+
+  
 }
 
 export default new UserUtil();

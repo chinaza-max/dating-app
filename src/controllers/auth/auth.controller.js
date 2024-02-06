@@ -22,7 +22,9 @@ export default class AuthenticationController {
         ...data,
       }
       
-      const obj = await authService.handleVerifyEmailorTel(my_bj);
+
+      await authService.handleVerifyEmailorTelAdmin(my_bj);
+
 
       return res.status(200).json({
         status: 200,
@@ -124,7 +126,17 @@ export default class AuthenticationController {
       const user=await authService.handleLoginAdmin(my_bj);
     
 
+      if (user == null){
+        return res.status(400).json({
+          status: 400,
+          message: "Invalid login credentials",
+        });
+      }
+      
+
+
       const token = await authService.generateToken(user.dataValues);
+
 
       return res.status(200).json({
         status: 200,
@@ -173,7 +185,7 @@ export default class AuthenticationController {
     
   }
 
-
+/*
   async sendVerificationCodeEmailOrTel(req, res, next) {
 
     try {
@@ -206,7 +218,7 @@ export default class AuthenticationController {
     }
     
   }
-
+*/
   
   async uploadPicture(req, res, next) {
 
