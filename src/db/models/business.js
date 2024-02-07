@@ -38,10 +38,6 @@ export  function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      businessId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
       businessPicture: {
         type: DataTypes.STRING,
         allowNull: true
@@ -50,6 +46,10 @@ export  function init(connection) {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:true
+      },
+      createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,

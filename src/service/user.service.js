@@ -1,4 +1,4 @@
-import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,SearchSetting} from "../db/models/index.js";
+import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,SearchSetting,Business} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -18,16 +18,9 @@ class UserService {
   EmailandTelValidationModel=EmailandTelValidation
   EmailandTelValidationAdminModel=EmailandTelValidationAdmin
   SearchSettingModel=SearchSetting
-
+  BusinessModel=SearchSetting
 
   
-  /*
-  constructor() {
-    this.UserModel = User;
-    this.AdminModel = Admin;
-
-  }*/
-
 
  async updateUserPersonalityQuestion(data) {
     
@@ -87,6 +80,51 @@ class UserService {
 
   }
 
+  async handleCreateBusiness(data,files) {
+    let { 
+      firstName,
+      lastName,
+      tel,
+      emailAddress,
+      password,
+      createdBy,
+    } = await userUtil.verifyHandleCreateBusiness.validateAsync(data);
+
+
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(
+        password,
+        Number(serverConfig.SALT_ROUNDS)
+      );
+    } catch (error) {
+      console.error(error)
+      throw new SystemError('SystemError','An error occured while processing your request(handleBusinessCreation) while hashing password ');
+    }
+
+  var existingUser = await this.isBusinessExisting(emailAddress,tel);
+
+  if (existingUser != null)throw new ConflictError(existingUser);
+  
+
+
+
+  const user = await this.AdminModel.create({
+    firstName,
+    lastName,
+    tel,
+    emailAddress,
+    password:hashedPassword,
+    adminType,
+    createdBy
+  });
+
+  await this.sendEmailVerificationCode(user.emailAddress,user.id,password)
+  
+  return user;
+
+  }
+
 
   async  isUserExistingAdmin(emailAddress, tel) {
 
@@ -115,10 +153,43 @@ class UserService {
       if (existingUser.emailAddress == emailAddress&&existingUser.isEmailValid == true) {
         return 'User with this email already exists.';
       } else if (existingUser.tel == tel) {
-        return 'User with this tel already exists.';
+        return 'User with this contact already exists.';
       }
     }
     return null
+}
+
+async  isBusinessExisting(emailAddress, tel) {
+
+  const existingUser = await this.BusinessModel.findOne({
+    where: {
+      [Op.or]: [
+        {
+          [Op.and]: [
+            { emailAddress: emailAddress },
+            { isEmailValid: true },
+            { isDeleted: false }
+          ]
+        },
+        {
+          [Op.and]: [
+            { tel: tel },
+            { isTelValid: true },
+            { isDeleted: false }
+          ]
+        }
+      ]
+    }
+  });
+
+  if (existingUser) {
+    if (existingUser.emailAddress == emailAddress&&existingUser.isEmailValid == true) {
+      return 'Business with this email already exists.';
+    } else if (existingUser.tel == tel) {
+      return 'Business with this contact already exists.';
+    }
+  }
+  return null
 }
 
 async handleSendVerificationCodeEmailOrTelAdmin(data) {
@@ -164,22 +235,50 @@ async handleSendVerificationCodeEmailOrTelAdmin(data) {
 }
 
 
+async handleGetUserFilter(data) {
+
+  let {userId} = await userUtil.verifyHandleGetUserFilter.validateAsync(data);
+
+
+  const user = await this.SearchSettingModel.findOne( {
+    where: {
+    userId: userId,
+    isDeleted: false,
+  }
+  });
+
+  console.log(user)
+  console.log(userId)
+
+  return user
+
+}
+
+
 async handleAddOrUpdatefilter(data) {
 
   let obj = await userUtil.verifyHandleAddOrUpdatefilter.validateAsync(data);
 
 
-  try {
-    const [searchSettingInstance, created] = await this.SearchSettingModel.upsert({
-      userId: obj.userId,
-      ...obj,
+  this.SearchSettingModel.findOrCreate({
+    where: {userId: obj.userId },
+    defaults: obj,
+  })
+    .then(([record, created]) => {
+      // If created is true, it means a new record was inserted
+      if (created) {
+        console.log('New record created:', record.toJSON());
+      } else {
+        // Update the existing record with the new data
+        return record.update(obj)
+          .then(updatedRecord => {
+            console.log('Record updated:', updatedRecord.toJSON());
+          });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
-  
-  } catch (error) {
-    console.error('Error:', error);
-    throw new SystemError('SystemError','An error occured while updating the user filter ');
-
-  }
 
  
 }

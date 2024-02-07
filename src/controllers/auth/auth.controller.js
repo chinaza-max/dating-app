@@ -141,7 +141,6 @@ export default class AuthenticationController {
 
       const excludedProperties = ['isDeleted', 'password'];
 
-      // Creating a new object with excluded properties
       const modifiedUser = Object.keys(user.dataValues)
         .filter(key => !excludedProperties.includes(key))
         .reduce((acc, key) => {

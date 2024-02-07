@@ -33,6 +33,7 @@ export function init(connection) {
           'hispanic',
           'finnish',
           'american',
+          'any'
         ),
         allowNull: true,
       },
@@ -41,6 +42,7 @@ export function init(connection) {
           'pear',
           'round',
           'slim',
+          'any'
         ),
         allowNull: true,
       },
@@ -61,7 +63,8 @@ export function init(connection) {
           'married',
           'single',
           'divourced',
-          'widowed'
+          'widowed',
+          'any'
         ),
         allowNull: true,
       },
@@ -74,20 +77,32 @@ export function init(connection) {
           'friends',
           'networking',
           'marriage',
-          'dating'
+          'dating',
+          'any'
         ),
         allowNull: true,
+      },
+      searchFilterStatus: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:false,
       },      
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
-        defaultValue:true ,
+        defaultValue:false ,
       }
     }, {
       tableName: 'SearchSetting',
       sequelize: connection,
       timestamps: true,
-      underscored:false
+      underscored:false,
+      indexes: [
+        {
+          unique: true, 
+          fields: ['userId'],
+        },
+      ]
     });
   }
 
