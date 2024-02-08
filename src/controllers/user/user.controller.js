@@ -187,6 +187,8 @@ export default class UserController {
     }
   }
 
+  
+
   async createOrUpdateOrRemoveBusinessImage(
     req,
     res,
@@ -247,6 +249,56 @@ export default class UserController {
   }
 
 
+  
+  async getAllMatchSingleUser(
+    req,
+    res,
+    next
+  ){
+
+
+    const type=req.query.type
+    const offset=req.query.offset
+    const pageSize=req.query.pageSize
+    const userId=req.query.userId
+
+
+    let result=[]
+    try {
+    
+      if(type=='admin'){
+                            
+        const my_bj = {
+          userId,
+          adminId:req.user.id,
+        }
+        result=await userService.handGetAllMatchSingleUserForAdmin(my_bj,offset,pageSize);
+  
+      }
+      else if(type=='user'){
+        const my_bj = {
+          userId:req.user.id,
+      }
+                          
+      result=await userService.handGetAllMatchSingleUserForUser(my_bj,offset,pageSize);
+  
+      }
+      else{
+        
+      return res.status(400).json({
+        message: "type is missing in the request or is not correct(admin or user)",
+      });
+      }
+
+      return res.status(200).json({
+        status: 200,
+        data:result
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
  
   async deleteBusiness(
     req,

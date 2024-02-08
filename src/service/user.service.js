@@ -1,4 +1,4 @@
-import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,SearchSetting,BusinessSpot,Business,EmailandTelValidationBusiness,UserAnswer} from "../db/models/index.js";
+import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,SearchSetting,BusinessSpot,Business,EmailandTelValidationBusiness,UserAnswer,Match} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -23,7 +23,7 @@ class UserService {
   EmailandTelValidationBusinessModel=EmailandTelValidationBusiness
   BusinessSpotsModel=BusinessSpot
   UserAnswerModel=UserAnswer
-
+  MatchModel=Match
 
   
 
@@ -101,68 +101,6 @@ class UserService {
       tel              
     } = await userUtil.verifyHandleCUBusinessSpot.validateAsync(data);
 
-
-
-
-
-
-
-    try {
-      const usersWithProfiles = await this.UserModel.findAll({
-        attributes: ['id', 'tags'],
-        include: [{
-          model: this.UserAnswerModel,
-          as: 'UserAnswers',
-          attributes: ['answer', 'partnerPersonaltyQId'],
-          where: {
-            isDeleted:false
-          },
-        }],
-        where: {
-          isTelValid:true,
-          isEmailValid:true,
-          isDeleted:false
-        },
-      });
-      
-      //console.log(usersWithProfiles);
-      console.log(usersWithProfiles[0].UserAnswers);
-     /* let obj=[]
-      usersWithProfiles.forEach(()=>{
-
-      })*/
-      let UserInfo=[]
-      for (let index = 0; index < usersWithProfiles.length; index++) {
-        const userArray = usersWithProfiles[index];
-
-        for (let index2 = 0; index2 < userArray.UserAnswers.length; index2++) {
-          const userAnswerArray = userArray.UserAnswers[index2];
-          
-        }
-        UserInfo.push({})
-
-      }
-
-    } catch (error) {
-      console.log(error)
-      console.log(error.name)
-      console.log(error.parent)
-
-    }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
     const businessObj=await this.BusinessModel.findOne({
       where:{
         id:businessId,
@@ -214,6 +152,136 @@ class UserService {
     console.log(error);
     throw new SystemError(error.name,error.parent)
   }
+
+  }
+
+
+
+  async handGetAllMatchSingleUserForAdmin(data,offset,pageSize) {
+    let { 
+      userId,
+      adminId            
+    } = await userUtil.verifyHandGetAllMatchSingleUserForAdmin.validateAsync(data);
+
+
+    try {
+
+      const conditions = {
+        [Op.or]: [
+          { userId: userId },
+          { userId2: userId },
+        ],
+        isDeleted: false,
+        isMatchRejected: false,
+      };
+      let result=[]
+      if(Number(offset)){
+
+       result = await this.MatchModel.findAll({
+          where: conditions,
+          limit: Number(offset),
+          offset: Number(pageSize),
+          attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage']
+        });
+      }
+      else{
+
+        result = await this.MatchModel.findAll({
+          where: conditions,
+          attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage']
+        });
+      }
+     
+        return result || [];
+      
+      
+    } catch (error) {
+        throw new SystemError(error.name,  error.parent)
+    }
+
+   
+
+  }
+
+
+  async handGetAllMatchSingleUserForUser(data,offset,pageSize) {
+    let { 
+      userId
+    } = await userUtil.verifyHandGetAllMatchSingleUserForUser.validateAsync(data);
+
+
+    try {
+      const conditions = {
+        [Op.or]: [
+          { userId: userId },
+          { userId2: userId }
+        ],
+        isDeleted: false,
+        isMatchRejected: false,
+      };
+      let result=[]
+      if(Number(offset)){
+
+       result = await this.MatchModel.findAll({
+          where: conditions,
+          limit: Number(offset),
+          offset: Number(pageSize),
+          attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage']
+        });
+      }
+      else{
+/*
+        result = await this.MatchModel.findAll({
+          where: conditions,
+          attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
+          order: [['matchPercentage', 'ASC']],
+          include: [
+            {
+              model: this.UserModel,
+              as: 'User', 
+            //  attributes: ['id', 'firstName', 'lastName', 'email'], // Include only specific attributes for User
+            }/*,
+            {
+              model: this.UserModel,
+              as: 'User2Matchs',
+              attributes: ['id', 'firstName', 'lastName'], // Include only specific attributes for Profile
+            },*/
+      /*    ]
+        });
+*/
+        result = await this.UserModel.findOne({
+          where: {id:5},
+        //  attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
+         // order: [['matchPercentage', 'ASC']],
+          include: [
+            {
+              model: this.MatchModel,
+              as: 'UserMatchs', 
+            //  attributes: ['id', 'firstName', 'lastName', 'email'], // Include only specific attributes for User
+            }/*,
+            {
+              model: this.UserModel,
+              as: 'User2Matchs',
+              attributes: ['id', 'firstName', 'lastName'], // Include only specific attributes for Profile
+            },*/
+          ]
+        });
+      }
+     
+
+      console.log(result)
+
+
+      
+      return result;
+      
+      
+    } catch (error) {
+      console.log(error)
+        throw new SystemError(error.name,  error.parent)
+    }
+
+   
 
   }
 

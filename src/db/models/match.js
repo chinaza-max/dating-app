@@ -28,7 +28,7 @@ import {
         allowNull: false
       }, 
       matchPercentage: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
       }, 
       isMatchRejected: {

@@ -2,6 +2,7 @@ import { User,Admin
   ,EmailandTelValidation,
   PartnerPersonaltyQ,
   UserAnswer,
+  Match,
   Tag
 } from "../db/models/index.js";
 import questionUtil from "../utils/question.util.js";
@@ -13,7 +14,8 @@ import mailService from "./mail.service.js";
 
 import {
   NotFoundError,
-  ConflictError
+  ConflictError,
+  ServerError
 
 } from "../errors/index.js";
 
@@ -24,6 +26,7 @@ class UserService {
   PartnerPersonaltyQModel=PartnerPersonaltyQ;
   TagModel=Tag;
   UserAnswerModel=UserAnswer
+  MatchModel=Match
   
 
  async handleCreateQuestion(data) {
@@ -265,20 +268,170 @@ async handleCreateAndUpdateTag(data) {
     userId
  }=await questionUtil.verifyHandleCreateAndUpdateTag.validateAsync(data);
 
-
+ 
  const obj = await this.UserModel.findByPk(userId);
  if (!obj) throw new NotFoundError("question not found.");
 
   try {
-  
     await obj.update({  
-      tags,
+      tags:JSON.stringify(tags),
     });
 
+ 
   } catch (error) {
     throw new ServerError("Failed to update tag" );
   }
+
+
+   this.rematchUser()
 }
+
+
+ async rematchUser(){
+  
+  try {
+    const usersWithProfiles =await  this.UserModel.findAll({
+      attributes: ['id', 'tags'],
+      include: [{
+        model: this.UserAnswerModel,
+        as: 'UserAnswers',
+        attributes: ['answer', 'partnerPersonaltyQId'],
+        where: {
+          isDeleted:false
+        },
+      }],
+      where: {
+        isTelValid:true,
+        isEmailValid:true,
+        isDeleted:false
+      },
+    });
+    
+    let UserInfo=[]
+    for (let index = 0; index < usersWithProfiles.length; index++) {
+      const userArray = usersWithProfiles[index];
+      const tags=JSON.parse(userArray.dataValues.tags)
+      
+
+      let totalArray=[]
+      for (let index2 = 0; index2 < userArray.UserAnswers.length; index2++) {
+        const userAnswerArray = userArray.UserAnswers[index2];
+        const answer=userAnswerArray.dataValues.answer
+        const questionId=userAnswerArray.dataValues.partnerPersonaltyQId
+        const answerAndquestionId=answer+'_'+questionId
+        totalArray.push(answerAndquestionId)
+      }
+      const combinedArray = [...tags,...totalArray];
+
+      UserInfo.push({userId:userArray.dataValues.id,userData:combinedArray})
+
+    }
+
+    console.log(UserInfo)
+
+    function calculateMatchingPercentage(set1, set2) {
+      const intersection = set1.filter(value => set2.includes(value));
+      const matchingPercentage = Math.round((intersection.length / set1.length) * 100);
+      return matchingPercentage;
+    }
+    
+    function findMatchingUsers(data, threshold) {
+      const matchingUsers = [];
+    
+      for (let i = 0; i < data.length - 1; i++) {
+        for (let j = i + 1; j < data.length; j++) {
+          const user1 = data[i];
+          const user2 = data[j];
+    
+          const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
+    
+          if (matchingPercentage >= threshold) {
+            const matchingData = user1.userData.filter(value => user2.userData.includes(value));
+            matchingUsers.push({
+              userId1: user1.userId,
+              userId2: user2.userId,
+              matchingPercentage,
+              matchingData,
+            });
+          }
+        }
+      }
+
+      function cleanUpMatchingData(matchingUsers) {
+        return matchingUsers.map(match => ({
+          userId1: match.userId1,
+          userId2: match.userId2,
+          matchingPercentage: match.matchingPercentage,
+          matchingData: match.matchingData.map(value => value.split('_')[0]),
+        }));
+      }
+      return cleanUpMatchingData(matchingUsers);
+    }
+    
+    const threshold = 50; 
+    const result = findMatchingUsers(UserInfo, threshold);
+
+
+    console.log(result);
+    
+
+    try {
+
+      for (let index = 0; index < result.length; index++) {
+        const element = result[index];
+
+        
+        const existingMatch1 = await this.MatchModel.findOne({
+          where: {   
+            userId:element.userId1,
+            userId2:element.userId2,
+            isDeleted:false },
+        });
+
+        const existingMatch2 = await this.MatchModel.findOne({
+          where: {   
+            userId:element.userId2,
+            userId2:element.userId1,
+            isDeleted:false },
+        });
+
+
+        if (existingMatch1) {
+
+          await existingMatch1.update({
+            matchInformation:JSON.stringify(element.matchingData),
+            matchPercentage:element.matchingPercentage+'%'
+          });
+        } else if(existingMatch2) {
+          await existingMatch2.update({
+            matchInformation:JSON.stringify(element.matchingData),
+            matchPercentage:element.matchingPercentage+'%'
+          });
+        }
+        else{
+          await this.MatchModel.create({
+            userId:element.userId1,
+            userId2:element.userId2,
+            matchInformation:JSON.stringify(element.matchingData),
+            matchPercentage:element.matchingPercentage
+        });
+        }
+
+      }
+
+  } catch (error) {
+    console.log(error);
+    throw new SystemError(error.name,error.parent)
+  }
+
+
+  } catch (error) {
+    console.log(error)
+    throw new SystemError(error.name,error.parent)
+  }
+  
+}
+
 
 
 

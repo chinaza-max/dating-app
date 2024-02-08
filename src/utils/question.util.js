@@ -47,7 +47,7 @@ class QuestionUtil {
   })
 
   verifyHandleCreateAndUpdateTag=Joi.object({
-    tags: Joi.string().required(),
+    tags: Joi.array().required(),
     userId: Joi.number().required(),
   })
 

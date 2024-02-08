@@ -176,6 +176,9 @@ function associate() {
     foreignKey: 'userId2', 
   })
 
+  
+
+
   Subscription.hasOne(Transaction, {
     foreignKey: 'transactionId',
     as: "Transactions",

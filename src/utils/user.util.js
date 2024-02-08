@@ -54,7 +54,15 @@ class UserUtil {
     }).required(),
   });
 
+  verifyHandGetAllMatchSingleUserForAdmin=Joi.object({
+    userId: Joi.number().required(),
+    adminId: Joi.number().required(),
+  });
 
+
+  verifyHandGetAllMatchSingleUserForUser=Joi.object({
+    userId: Joi.number().required()
+  });
 
   verifyHandleRemoveBusinessImage=Joi.object({
     businessId: Joi.number().integer().required(),
