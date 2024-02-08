@@ -142,6 +142,160 @@ export default class UserController {
 
 
   
+  async CUDBusinessSpot(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+    
+      if(data.type=='CreateOrUpdate'){
+   
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+        }
+                          
+        await userService.handleCUBusinessSpot(my_bj);
+  
+      }
+      else if(data.type=='delete'){
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+        }
+                          
+        await userService.handleRemoveBusinessSpot(my_bj);
+  
+      }
+      else{
+        
+      return res.status(400).json({
+        message: "type is missing in the request or is not correct(CreateOrUpdate delete)",
+      });
+      }
+
+      return res.status(200).json({
+        status: 200,
+        message: "action was successfull.",
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+  async createOrUpdateOrRemoveBusinessImage(
+    req,
+    res,
+    next
+  ){
+
+
+    const data=req.body
+ 
+    try {
+    
+
+      if(data.type=='add'){
+        const { files } = req;
+
+        const sizes=files.map((obj)=>{
+            return  obj.size
+        })
+  
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+          image:{
+            sizes:sizes
+          }
+        }
+                          
+        await userService.handCreateBusinessImage(my_bj,files);
+  
+      }
+    
+      else if(data.type=='delete'){
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+      }
+                          
+        await userService.handleRemoveBusinessImage(my_bj);
+  
+      }
+      else{
+        
+      return res.status(400).json({
+        message: "type is missing in the request or is not correct(add update)",
+      });
+      }
+
+
+   
+      return res.status(200).json({
+        status: 200,
+        message: "action was successfull.",
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
+ 
+  async deleteBusiness(
+    req,
+    res,
+    next
+  ){
+    try {
+      
+      const data=req.body
+
+      const my_bj = {
+        ...data,
+        createdBy:req.user.id,
+      }
+                        
+      await userService.handleDeleteBusiness(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: "Business deleted successfully.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async UpdateBusiness(
+    req,
+    res,
+    next
+  ){
+    try {
+      
+      const data=req.body
+
+      const my_bj = {
+        ...data,
+        createdBy:req.user.id,
+      }
+                        
+      await userService.handleUpdateBusiness(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: "Business updated successfully.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
   async createBusiness(
     req,
     res,
@@ -149,17 +303,39 @@ export default class UserController {
   ){
     try {
       
+      const data=req.body
 
+      console.log(data)
+      const my_bj = {
+        ...data,
+        createdBy:req.user.id,
+      }
+
+      await userService.handleCreateBusiness(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: "Business created successfully.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async createOrUpBusinessImage(
+    req,
+    res,
+    next
+  ){
+    try {
+      
       const data=req.body
       const { files } = req;
-
-      console.log(files)
-      console.log("files")
 
       const sizes=files.map((obj)=>{
           return  obj.size
       })
-     
+  
 
       const my_bj = {
         ...data,
@@ -169,7 +345,36 @@ export default class UserController {
         }
       }
 
-      const user = await userService.handleCreateBusiness(my_bj,files);
+      await userService.handleCreateOrUpBusinessImage(my_bj,files);
+
+      return res.status(200).json({
+        status: 200,
+        message: "Business registered successfully.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  
+
+  
+  async addBusinessSpot(
+    req,
+    res,
+    next
+  ){
+    try {
+      
+
+      const data=req.body
+     
+
+      const my_bj = {
+        ...data,
+      }
+
+      const user = await userService.handleAddBusinessSpot(my_bj);
 
       const token = await authService.generateToken(user.dataValues);
 
@@ -183,6 +388,7 @@ export default class UserController {
       next(error);
     }
   }
+
 
   async registerAdmin(req, res, next) {
 

@@ -18,7 +18,17 @@ class UserRoutes extends UserController {
     this.router.get("/getUserFilter",  this.getUserFilter);
 
 
-    this.router.post("/createBusiness",uploadHandler.image.array("businessPicture",5),  this.createBusiness);
+    this.router.post("/createBusiness",  this.createBusiness);
+    this.router.post("/updateBusiness",  this.UpdateBusiness);
+    this.router.post("/deleteBusiness",  this.deleteBusiness);
+    this.router.post("/deleteBusiness",  this.deleteBusiness);
+    this.router.post("/createOrUpdateOrRemoveBusinessImage", uploadHandler.image.array("image"), this.createOrUpdateOrRemoveBusinessImage);
+    this.router.post("/createBusiness", this.createOrUpdateOrRemoveBusinessImage);
+    this.router.post("/CUDBusinessSpot", this.CUDBusinessSpot);
+
+   // this.router.post("/createOrUpBusinessImage",uploadHandler.image.array("businessPicture"),  this.createOrUpBusinessImage);
+
+   // this.router.post("/addBusinessSpot",  this.addBusinessSpot);
 
 
   } 

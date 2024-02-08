@@ -29,17 +29,32 @@ export  function init(connection) {
       emailAddress: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique:false
       }, 
       isEmailValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue:false
+      }, 
+      tel: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      }, 
+      isTelValid: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:false
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      businessId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       businessPicture: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
       },
       availabilty: {

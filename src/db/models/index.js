@@ -18,6 +18,8 @@ import Transaction, { init as initTransaction } from "./transaction.js";
 import EmailandTelValidation, { init as initEmailandTelValidation } from "./emailAndTelValidation.js";
 import EmailandTelValidationAdmin, { init as initEmailandTelValidationAdmin } from "./emailAndTelValidationAdmin.js";
 import Tag, { init as initTag } from "./tag.js";
+import EmailandTelValidationBusiness, { init as initEmailandTelValidationBusiness} from "./emailAndTelValidationBusiness.js";
+
 
 
 
@@ -212,6 +214,7 @@ export {
   Transaction,
   EmailandTelValidation,
   EmailandTelValidationAdmin,
+  EmailandTelValidationBusiness,
   Tag,
   Match
 }
@@ -236,6 +239,7 @@ export function init(connection) {
   initEmailandTelValidation(connection)
   initEmailandTelValidationAdmin(connection)
   initTag(connection)
+  initEmailandTelValidationBusiness(connection)
   associate();
   authenticateConnection(connection)
 }

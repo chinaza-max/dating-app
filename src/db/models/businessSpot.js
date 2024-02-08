@@ -27,21 +27,21 @@ export function init(connection) {
       allowNull: false,
     },
     openHours: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     closeHours: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     tel: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     emailAddress: {
       type: DataTypes.STRING,
       allowNull: false,
-    
+      unique:false
     },
     contactPerson: {
       type: DataTypes.STRING,
