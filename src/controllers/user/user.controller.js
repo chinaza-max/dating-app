@@ -187,6 +187,53 @@ export default class UserController {
     }
   }
 
+
+
+  async CUdate(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+    
+      if(data.type=='CreateOrUpdate'){
+   
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+        }
+                          
+        await userService.handleCUdate(my_bj);
+  
+      }
+      else if(data.type=='delete'){
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+        }
+                          
+        await userService.handleRemoveBusinessSpot(my_bj);
+  
+      }
+      else{
+        
+      return res.status(400).json({
+        message: "type is missing in the request or is not correct(CreateOrUpdate delete)",
+      });
+      }
+
+      return res.status(200).json({
+        status: 200,
+        message: "action was successfull.",
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
   
 
   async createOrUpdateOrRemoveBusinessImage(
@@ -261,7 +308,6 @@ export default class UserController {
     const offset=req.query.offset
     const pageSize=req.query.pageSize
     const userId=req.query.userId
-    console.log('')
 
     let result=[]
     try {
@@ -368,6 +414,114 @@ export default class UserController {
       return res.status(200).json({
         status: 200,
         message: "Business created successfully.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
+  
+
+
+  async createRequest(
+    req,
+    res,
+    next
+  ){
+    try {
+      
+      const data=req.body
+
+      const my_bj = {
+        ...data,
+        userId:req.user.id,
+      }
+
+      await userService.handleCreateRequest(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: "Request created successfully.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  
+  async getRequest(
+    req,
+    res,
+    next
+  ){
+    try {
+      
+      const data=req.body
+      const offset=req.query
+      const pageSize=req.query
+
+
+      const my_bj = {
+        ...data,
+      }
+
+      const result=await userService.handleGetRequest(my_bj,offset,pageSize);
+
+      return res.status(200).json({
+        status: 200,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
+  
+  async reJectMatch(
+    req,
+    res,
+    next
+  ){
+    try {
+      
+      const data=req.body
+
+      const my_bj = {
+        ...data,
+        userId:req.user.id,
+      }
+      
+      await userService.handleReJectMatch(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: 'sucess',
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async requestAction(
+    req,
+    res,
+    next
+  ){
+    try {
+      
+      const data=req.body
+
+      const my_bj = {
+        ...data,
+        userId:req.user.id,
+      }
+      
+      await userService.handleRequestAction(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: 'sucess',
       });
     } catch (error) {
       next(error);

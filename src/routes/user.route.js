@@ -28,8 +28,18 @@ class UserRoutes extends UserController {
 
     //MATCH
     this.router.get("/getAllMatchSingleUser",  this.getAllMatchSingleUser);
+    this.router.post("/reJectMatch",  this.reJectMatch);
 
 
+
+    this.router.post("/createRequest", this.createRequest);
+    this.router.post("/getRequest", this.getRequest);
+    this.router.post("/requestAction", this.requestAction);
+    
+
+    this.router.post("/CUdate", this.CUdate);
+
+    
 
 
    // this.router.post("/createOrUpBusinessImage",uploadHandler.image.array("businessPicture"),  this.createOrUpBusinessImage);

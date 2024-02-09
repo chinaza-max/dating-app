@@ -61,7 +61,7 @@ export function init(connection) {
         ),
         allowNull: true,
       },
-      reservationId: {
+      businessIdSpotId: {
         type: DataTypes.INTEGER,
         allowNull: false
       },

@@ -233,6 +233,10 @@ export default class QuestionController {
     
   }
 
+  
+
+
+
   async deletedAnswer(req, res, next) {
 
     try {

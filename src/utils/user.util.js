@@ -172,7 +172,58 @@ class UserUtil {
   verifyHandleGetUserFilter= Joi.object({
     userId: Joi.number().required()
   });
-  
+
+  verifyHandleCreateRequest= Joi.object({
+    userId: Joi.number().required(),
+    userId2: Joi.number().required()
+  });
+
+  verifyhandleGetRequest= Joi.object({
+    userId: Joi.number().required(),
+    type: Joi.string().valid(
+      'rejected',
+      'accepted',
+      'outGoing',
+      'inComing',
+      'any'
+    ).required(),
+    type2: Joi.string().valid(
+      'all',
+      'single',
+    ).required()
+  });
+
+
+  verifyHandleRequestAction= Joi.object({
+    userId: Joi.number().required(),
+    type: Joi.string().valid(
+      'accept',
+      'decline',
+    ).required(),
+    requestId: Joi.number().required()
+  });
+
+  verifyHandleReJectMatch= Joi.object({
+    userId: Joi.number().required(),
+    matchId: Joi.number().required()
+  });
+
+
+  verifyHandleCUdate= Joi.object({
+    userId: Joi.number().required(),
+    userId2: Joi.number().required(),
+    fullDate: Joi.number().required(),
+    businessIdSpotId: Joi.number().required(),
+    requestId: Joi.number().required(),
+    matchInformation: Joi.number().required(),
+    usersStatus: Joi.string().valid(
+        'accepted',
+        'decline',
+    ).required(),
+    dateStatus: Joi.number().required(),
+
+  });
+
 }
 
 export default new UserUtil();

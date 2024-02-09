@@ -1,4 +1,4 @@
-import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,BusinessSpot,Business,EmailandTelValidationBusiness,UserAnswer,Match} from "../db/models/index.js";
+import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,BusinessSpot,Business,EmailandTelValidationBusiness,UserAnswer,Match,Request} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -24,6 +24,7 @@ class UserService {
   BusinessSpotsModel=BusinessSpot
   UserAnswerModel=UserAnswer
   MatchModel=Match
+  RequestModel=Request
 
   
 
@@ -42,6 +43,70 @@ class UserService {
         throw new ServerError('SystemError',"Failed to update user image" );
       }
   }
+
+
+  
+
+  async handleRequestAction(data) {
+    
+    const{ requestId,userId,type}=await userUtil.verifyHandleRequestAction.validateAsync(data);
+ 
+
+    const requestRequest = await this.RequestModel.findByPk(requestId);
+    if (!requestRequest) throw new NotFoundError("Request not found.");
+     
+
+        if(requestRequest.dataValues.userId2==userId){
+
+          try {
+
+            if(type=='accept'){
+              await requestRequest.update({ status:'accepted' });
+
+            }
+            else{
+              await requestRequest.update({ status:'decline' });
+            }
+          } catch (error) {
+            console.log(error)
+            new ServerError(error.name,error.parent );
+         }
+        }
+        else{
+          throw new ConflictError('wrong user initiating the reject')
+        }
+ 
+     
+   }
+
+   
+   async handleReJectMatch(data) {
+    
+    const{ matchId,userId}=await userUtil.verifyHandleReJectMatch.validateAsync(data);
+ 
+    try {
+      const matchDetail=await this.MatchModel.findOne({
+        where: {
+          [Op.or]: [
+            {
+             userId:userId,
+            },
+            {
+              userId2:userId
+            },
+          ],
+          id:matchId
+        },
+      })
+      if (!matchDetail) throw new NotFoundError("match not found.");
+      await matchDetail.update({ isMatchRejected:true })
+    } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name,error.parent)
+    }
+   
+     
+   }
 
   async handleRegisterAdmin(data) {
     let { 
@@ -85,6 +150,237 @@ class UserService {
   return user;
 
   }
+
+
+  
+  async handleCreateRequest(data) {
+    let { 
+      userId,
+      userId2             
+    } = await userUtil.verifyHandleCreateRequest.validateAsync(data);
+
+    let matchDetail=await this.MatchModel.findOne({
+      where: {
+        [Op.or]: [
+          {
+            [Op.and]: [
+              { userId: userId },
+              { userId2:userId2},
+            ],
+          },
+          {
+            [Op.and]: [
+              { userId: userId2 },
+              { userId2:userId },
+            ],
+          },
+        ],
+      },
+    })
+
+    let requestDetail=await this.RequestModel.findOne({
+      where: {
+        userId: userId,
+        userId2: userId2,
+        status:'pending'
+      }
+    })
+
+
+    if(requestDetail) return 
+    if(!matchDetail) throw new NotFoundError("match not found.");
+
+
+  try {
+    await this.RequestModel.create({
+      userId,
+      userId2
+    });
+  } catch (error) {
+      throw new SystemError(error.name, error.parent)
+  }
+ 
+
+
+  }
+
+
+  
+  async handleGetRequest(data,offset,pageSize) {
+    let { 
+      type,
+      type2,
+      userId            
+    } = await userUtil.verifyhandleGetRequest.validateAsync(data);
+
+    let result=[]
+    let details=[]
+    try {
+      
+
+      if(type2=='single'){
+        if(type=='rejected'){
+          if(Number(pageSize)){
+            details=await this.RequestModel.findAll({
+              where:{
+                userId:userId,
+                status:'decline',
+                isDeleted:false
+              },
+              attributes:['userId','userId2','status','id','createdAt'],
+              limit: Number(pageSize),
+              offset: Number(offset),
+            })
+          }else{
+            details=await this.RequestModel.findAll({
+              where:{
+                userId:userId,
+                status:'decline',
+                isDeleted:false
+              },
+              attributes:['userId','userId2','status','id','createdAt'],
+            })
+          }
+  
+        }else if(type=='outGoing'){
+          if(Number(pageSize)){
+            details=await this.RequestModel.findAll({
+              where:{
+                userId:userId,
+                status:'pending',
+                isDeleted:false
+              },
+              attributes:['userId','userId2','status','id','createdAt'],
+              limit: Number(pageSize),
+              offset: Number(offset),
+            })
+          }else{
+            details=await this.RequestModel.findAll({
+              where:{
+                userId:userId,
+                status:'pending',
+                isDeleted:false
+              },
+              attributes:['userId','userId2','status','id','createdAt'],
+            })
+  
+            console.log(details)
+  
+          }
+        }
+        else if(type=='inComing'){
+          if(Number(pageSize)){
+            details=await this.RequestModel.findAll({
+              where:{
+                userId2:userId,
+                status:'pending',
+                isDeleted:false
+              },
+              attributes:['userId','userId2','status','id','createdAt'],
+              limit: Number(pageSize),
+              offset: Number(offset),
+            })
+          }else{
+            details=await this.RequestModel.findAll({
+              where:{
+                userId2:userId,
+                status:'pending',
+                isDeleted:false
+              },
+              attributes:['userId','userId2','status','id','createdAt'],
+            })
+          }
+        }
+          else if(type=='accepted'){
+          if(Number(pageSize)){
+            details=await this.RequestModel.findAll({
+              where:{
+                userId2:userId,
+                status:'accepted',
+                isDeleted:false
+              },
+              attributes:['userId','userId2','status','id','createdAt'],
+              limit: Number(pageSize),
+              offset: Number(offset),
+            })
+          }else{
+            details=await this.RequestModel.findAll({
+              where:{
+                userId2:userId,
+                status:'accepted',
+                isDeleted:false
+              },
+              attributes:['userId','userId2','status','id','createdAt'],
+            })
+          }
+        }
+  
+      }else{
+  
+        if(Number(pageSize)){
+          details=await this.RequestModel.findAll({
+            where:{
+              status:'pending',
+              isDeleted:false
+            },
+            attributes:['userId','userId2','status','id','createdAt'],
+            limit: Number(pageSize),
+            offset: Number(offset),
+          })
+        }else{
+
+          details=await this.RequestModel.findAll({
+            where:{
+              status:'pending',
+              isDeleted:false
+            },
+            attributes:['userId','userId2','status','id','createdAt'],
+          })
+
+        }
+      }
+    
+  
+      for (let index = 0; index < details.length; index++) {
+        const element = details[index];
+        let matchDetail=await this.MatchModel.findOne({
+          where: {
+            [Op.or]: [
+              {
+                [Op.and]: [
+                  { userId:element.dataValues.userId },
+                  { userId2:element.dataValues.userId2},
+                ],
+              },
+              {
+                [Op.and]: [
+                  { userId: element.dataValues.userId2 },
+                  { userId2:element.dataValues.userId },
+                ],
+              },
+            ],
+          },
+        })
+  
+        result.push({
+          userId: element.dataValues.userId,
+          userId2:element.dataValues.userId2,
+          matchInformation:JSON.parse(matchDetail.dataValues.matchInformation),
+          requestId:element.dataValues.id,
+          matchId:matchDetail.dataValues.id,
+          createdAt:element.dataValues.createdAt
+        })
+      }
+    
+      return result
+    } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name, error.parent)
+    }
+  
+
+  }
+
 
   
   async handleCUBusinessSpot(data) {
@@ -156,6 +452,74 @@ class UserService {
   }
 
 
+  async handleCUdate(data) {
+    let { 
+      businessId,
+      name,
+      address,
+      city,
+      openHours,
+      closeHours,
+      emailAddress,
+      contactPerson,
+      availabilty,
+      tel              
+    } = await userUtil.verifyHandleCUdate.validateAsync(data);
+
+    const businessObj=await this.BusinessModel.findOne({
+      where:{
+        id:businessId,
+        isDeleted:false
+      }
+    })
+
+    if (!businessObj) throw new NotFoundError("Business for business spot  not found.");
+
+
+    try {
+
+      const existingBusinessSpot = await this.BusinessSpotsModel.findOne({
+        where: {   
+          businessId,
+          name,
+          isDeleted:false },
+      });
+
+      if (existingBusinessSpot) {
+
+        await existingBusinessSpot.update({
+          name,
+          address,
+          city,
+          openHours,
+          closeHours,
+          emailAddress,
+          contactPerson,
+          availabilty,
+          tel
+        });
+      } else {
+        await BusinessSpot.create({
+            businessId,
+            name,
+            address,
+            city,
+            openHours,
+            closeHours,
+            emailAddress,
+            contactPerson,
+            availabilty,
+            tel
+        });
+      }
+
+  } catch (error) {
+    console.log(error);
+    throw new SystemError(error.name,error.parent)
+  }
+
+  }
+
 
   async handGetAllMatchSingleUserForAdmin(data,offset,pageSize) {
     let { 
@@ -222,7 +586,6 @@ class UserService {
       let result=[]
 
       let matchResult=[]
-      console.log(Number(offset))
       
       if(Number(pageSize)){
      
@@ -237,7 +600,6 @@ class UserService {
       }
       else{
 
-    
             matchResult = await this.MatchModel.findAll({
             where: conditions,
             attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
@@ -263,7 +625,6 @@ class UserService {
             if(Number(age)){
               if(Number(age)!= Number(await this.calculateAge(myMatchUser.dataValues.dateOfBirth)) ) continue; 
             }
-
 
             if(Number(height)){
               if(Number(height)!= myMatchUser.dataValues.height ) continue; 
@@ -298,7 +659,7 @@ class UserService {
             }*/
            
             result.push({
-              id:element.dataValues.id,
+              matchId:element.dataValues.id,
               userId:element.dataValues.userId,
               userId2:element.dataValues.userId2,
               isMatchRejected:element.dataValues.isMatchRejected,

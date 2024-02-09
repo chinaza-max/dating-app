@@ -134,6 +134,11 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      active: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue:true
+      },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
