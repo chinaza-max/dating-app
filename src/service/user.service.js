@@ -1,8 +1,8 @@
-import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,SearchSetting,BusinessSpot,Business,EmailandTelValidationBusiness,UserAnswer,Match} from "../db/models/index.js";
+import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,BusinessSpot,Business,EmailandTelValidationBusiness,UserAnswer,Match} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
-import { Op } from "sequelize";
+import { NUMBER, Op } from "sequelize";
 import mailService from "../service/mail.service.js";
 
 
@@ -18,7 +18,7 @@ class UserService {
   AdminModel = Admin;
   EmailandTelValidationModel=EmailandTelValidation
   EmailandTelValidationAdminModel=EmailandTelValidationAdmin
-  SearchSettingModel=SearchSetting
+  //SearchSettingModel=SearchSetting
   BusinessModel=Business
   EmailandTelValidationBusinessModel=EmailandTelValidationBusiness
   BusinessSpotsModel=BusinessSpot
@@ -204,12 +204,12 @@ class UserService {
   }
 
 
-  async handGetAllMatchSingleUserForUser(data,offset,pageSize) {
+  async handGetAllMatchSingleUserForUser(data,offset,pageSize,query) {
     let { 
       userId
     } = await userUtil.verifyHandGetAllMatchSingleUserForUser.validateAsync(data);
 
-
+    const {age,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren}=query
     try {
       const conditions = {
         [Op.or]: [
@@ -220,54 +220,94 @@ class UserService {
         isMatchRejected: false,
       };
       let result=[]
-      if(Number(offset)){
 
-       result = await this.MatchModel.findAll({
+      let matchResult=[]
+      console.log(Number(offset))
+      
+      if(Number(pageSize)){
+     
+        matchResult =await this.MatchModel.findAll({
           where: conditions,
-          limit: Number(offset),
-          offset: Number(pageSize),
-          attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage']
+          limit: Number(pageSize),
+          offset: Number(offset),
+          attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
+          order: [['matchPercentage', 'ASC']]
         });
+
       }
       else{
-/*
-        result = await this.MatchModel.findAll({
-          where: conditions,
-          attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
-          order: [['matchPercentage', 'ASC']],
-          include: [
-            {
-              model: this.UserModel,
-              as: 'User', 
-            //  attributes: ['id', 'firstName', 'lastName', 'email'], // Include only specific attributes for User
-            }/*,
-            {
-              model: this.UserModel,
-              as: 'User2Matchs',
-              attributes: ['id', 'firstName', 'lastName'], // Include only specific attributes for Profile
-            },*/
-      /*    ]
-        });
-*/
-        result = await this.UserModel.findOne({
-          where: {id:5},
-        //  attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
-         // order: [['matchPercentage', 'ASC']],
-          include: [
-            {
-              model: this.MatchModel,
-              as: 'UserMatchs', 
-            //  attributes: ['id', 'firstName', 'lastName', 'email'], // Include only specific attributes for User
-            }/*,
-            {
-              model: this.UserModel,
-              as: 'User2Matchs',
-              attributes: ['id', 'firstName', 'lastName'], // Include only specific attributes for Profile
-            },*/
-          ]
-        });
+
+    
+            matchResult = await this.MatchModel.findAll({
+            where: conditions,
+            attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
+            order: [['matchPercentage', 'ASC']],
+           });
+      
       }
+
+
+
+      for (let index = 0; index < matchResult.length; index++) {
+        const element = matchResult[index];
+
+            let myMatchId=userId==element.dataValues.userId ?element.dataValues.userId2:element.dataValues.userId
+            let myMatchUser=await this.UserModel.findOne({
+              where:{id:myMatchId,
+                      isDeleted:false},
+                      attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren']
+            })
+            if(!myMatchUser) continue;               
+
+
+            if(Number(age)){
+              if(Number(age)!= Number(await this.calculateAge(myMatchUser.dataValues.dateOfBirth)) ) continue; 
+            }
+
+
+            if(Number(height)){
+              if(Number(height)!= myMatchUser.dataValues.height ) continue; 
+            }
+
+            if(ethnicity){
+              if(ethnicity!= myMatchUser.dataValues.ethnicity ) continue; 
+            }
+
+            if(bodyType){
+              if(bodyType!= myMatchUser.dataValues.bodyType ) continue; 
+            }
+
+
+            if(smoking){
+              if(JSON.parse(smoking)!= myMatchUser.dataValues.smoking) continue; 
+            }
+
+            if(drinking){
+              if(JSON.parse(drinking)!= myMatchUser.dataValues.drinking ) continue; 
+            }
+
+
+            if(maritalStatus){
+              if(maritalStatus!= myMatchUser.dataValues.maritalStatus ) continue; 
+            }
+
+            
+/*
+            if(haveChildren){
+              if(haveChildren!= myMatchUser.dataValues.haveChildren ) continue; 
+            }*/
+           
+            result.push({
+              id:element.dataValues.id,
+              userId:element.dataValues.userId,
+              userId2:element.dataValues.userId2,
+              isMatchRejected:element.dataValues.isMatchRejected,
+              matchInformation:JSON.parse(element.dataValues.matchInformation),
+              matchPercentage:element.dataValues.matchPercentage})
+       }
      
+
+      
 
       console.log(result)
 
@@ -285,6 +325,19 @@ class UserService {
 
   }
 
+
+  async calculateAge(birthdate) {
+    const birthDateObj = new Date(birthdate);
+    const currentDate = new Date();
+  
+    // Calculate the difference in milliseconds
+    const timeDiff = currentDate - birthDateObj;
+  
+    // Calculate the age
+    const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365.25));
+  
+    return age;
+  }
   async handleAddBusinessSpot(data) {
     let { 
       firstName,
@@ -712,7 +765,7 @@ async handleSendVerificationCodeEmailOrTelAdmin(data) {
   }
 }
 
-
+/*
 async handleGetUserFilter(data) {
 
   let {userId} = await userUtil.verifyHandleGetUserFilter.validateAsync(data);
@@ -729,7 +782,7 @@ async handleGetUserFilter(data) {
 
 }
 
-
+*//*
 async handleAddOrUpdatefilter(data) {
 
   let obj = await userUtil.verifyHandleAddOrUpdatefilter.validateAsync(data);
@@ -756,7 +809,7 @@ async handleAddOrUpdatefilter(data) {
     });
 
  
-}
+}*/
 
 
 async handleRemoveBusinessSpot(data) {

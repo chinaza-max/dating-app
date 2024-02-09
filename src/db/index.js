@@ -34,7 +34,7 @@ class DB {
         //await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true });
         
-    }
+    } 
   }
 
 }

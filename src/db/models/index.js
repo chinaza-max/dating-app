@@ -10,7 +10,7 @@ import SubscriptionPlan, { init as initSubscriptionPlan } from "./subscriptionPl
 import Request, { init as initRequest } from "./request.js";
 import WishList, { init as initWishList } from "./wishList.js";
 import Date, { init as initDate } from "./date.js";
-import SearchSetting, { init as initSearchSetting } from "./searchSetting.js";
+//import SearchSetting, { init as initSearchSetting } from "./searchSetting.js";
 import Review, { init as initReview } from "./review.js";
 import PasswordReset, { init as initPasswordReset } from "./passwordReset.js";
 import Match, { init as initMatch } from "./match.js";
@@ -130,7 +130,7 @@ function associate() {
 
 
 
-
+/*
   User.hasOne(SearchSetting, {
     foreignKey: 'userId',
     as: "SearchSettings",
@@ -138,7 +138,7 @@ function associate() {
   SearchSetting.belongsTo(User,{ 
     foreignKey: 'userId'
   })
-
+*/
 
 
   User.hasMany(Review, {
@@ -210,7 +210,7 @@ export {
   Request,
   WishList,
   Date,
-  SearchSetting,
+ // SearchSetting,
   Review,
   Admin,
   PasswordReset,
@@ -233,7 +233,7 @@ export function init(connection) {
   initRequest(connection)
   initWishList(connection)
   initDate(connection)
-  initSearchSetting(connection)
+  //initSearchSetting(connection)
   initReview(connection)
   initAdmin(connection)
   initPasswordReset(connection)

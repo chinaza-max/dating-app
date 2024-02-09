@@ -37,6 +37,9 @@ class AuthenticationService {
       };
     }
   }
+
+
+
   async handleUserCreation(data) {
 
 
@@ -59,7 +62,12 @@ class AuthenticationService {
         height,
         weight,
         numberOfChildren,
-        personalityQuestionsAnswer
+        haveChildren,
+        smoking,
+        eyeColor,
+        drinking,
+        hairColor,
+        bodyType
       } = await authUtil.verifyUserCreationData.validateAsync(data);
   
 
@@ -80,7 +88,9 @@ class AuthenticationService {
     if (existingUser != null)throw new ConflictError(existingUser);
 
     
-    const user = await this.UserModel.create({
+  
+    try {
+      const user = await this.UserModel.create({
         firstName,
         lastName,
         tel,
@@ -99,13 +109,22 @@ class AuthenticationService {
         height,
         weight,
         numberOfChildren,
-        personalityQuestionsAnswer
+        haveChildren,
+        smoking,
+        eyeColor,
+        drinking,
+        hairColor,
+        bodyType
     });
-  
-
     await this.sendEmailVerificationCode(user.emailAddress,user.id)
     
     return user;
+
+    } catch (error) {
+        throw new SystemError(error.name,error.parent)
+    }
+
+
 
   
   }

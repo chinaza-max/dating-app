@@ -261,7 +261,7 @@ export default class UserController {
     const offset=req.query.offset
     const pageSize=req.query.pageSize
     const userId=req.query.userId
-
+    console.log('')
 
     let result=[]
     try {
@@ -280,7 +280,7 @@ export default class UserController {
           userId:req.user.id,
       }
                           
-      result=await userService.handGetAllMatchSingleUserForUser(my_bj,offset,pageSize);
+      result=await userService.handGetAllMatchSingleUserForUser(my_bj,offset,pageSize,req.query);
   
       }
       else{

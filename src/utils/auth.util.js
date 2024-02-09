@@ -21,8 +21,13 @@ class AdminUtil {
       occupation: Joi.string().required(),
       recreationalActivity: Joi.string().required(),
       height: Joi.number().required(),
-      weight: Joi.number().required(),
-      personalityQuestionsAnswer: Joi.string().required(),
+      haveChildren: Joi.boolean().required(),
+      smoking: Joi.boolean().required(),
+      drinking: Joi.boolean().required(),
+      eyeColor: Joi.string().required(),
+      hairColor: Joi.string().required(),
+      bodyType: Joi.string().required(),
+      weight: Joi.number().required()
     });
 
     verifyHandleVerifyEmailorTelAdmin= Joi.object({

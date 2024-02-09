@@ -78,6 +78,10 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      bodyType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       education: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -110,7 +114,26 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: true,
       },
-     
+      haveChildren: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      smoking: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      drinking: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      eyeColor: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      hairColor: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
