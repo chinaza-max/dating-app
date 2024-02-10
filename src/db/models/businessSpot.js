@@ -27,11 +27,11 @@ export function init(connection) {
       allowNull: false,
     },
     openHours: {
-      type: DataTypes.STRING,
+      type: DataTypes.TIME,
       allowNull: false,
     },
     closeHours: {
-      type: DataTypes.STRING,
+      type: DataTypes.TIME,
       allowNull: false,
     },
     tel: {

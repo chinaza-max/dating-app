@@ -3,7 +3,8 @@ import { User,Admin ,
   EmailandTelValidationAdmin,
   BusinessSpot,Business,
   EmailandTelValidationBusiness,
-  UserAnswer,Match,Request,Date} from "../db/models/index.js";
+  UserAnswer,Match,Request,Date,SubscriptionPlan
+  ,Subscription} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -31,6 +32,8 @@ class UserService {
   MatchModel=Match
   RequestModel=Request
   DateModel=Date
+  SubscriptionPlanModel=SubscriptionPlan
+  SubscriptionModel=Subscription
 
   
 
@@ -463,6 +466,124 @@ class UserService {
   }
 
 
+  
+  
+  async handleCreateSubscription(data) {
+    let { 
+      userId,
+      subscriptionPlanId,
+      transactionId,
+      startDate,
+      endDate
+    } = await userUtil.verifyHandleCreateSubscription.validateAsync(data);
+
+
+    const dateDetails=await this.UserModel.findOne({
+      where:{
+        id:userId,
+        isDeleted:false
+      }
+    })
+
+    if(!dateDetails) throw new NotFoundError('User does not exit')
+    try{
+ 
+    await this.SubscriptionModel.create({
+      userId,
+      subscriptionPlanId,
+      transactionId,
+      startDate,
+      endDate
+    })
+  
+
+  } catch (error) {
+    console.log(error);
+    throw new SystemError(error.name,error.parent)
+  }
+
+  }
+  async handleCreateSubscriptionPlan(data) {
+    let { 
+      name,
+      price,
+      durationMonths,
+      createdBy
+    } = await userUtil.verifyHandleCreateSubscriptionPlan.validateAsync(data);
+
+
+    const dateDetails=await this.SubscriptionPlanModel.findOne({
+      where:{
+        durationMonths,
+        isDeleted:false
+      }
+    })
+
+    if(dateDetails) throw new ConflictError('subscription plan already exit')
+    try{
+ 
+    await this.SubscriptionPlanModel.create({
+      name,
+      price,
+      durationMonths,
+      createdBy
+    })
+  
+
+  } catch (error) {
+    console.log(error);
+    throw new SystemError(error.name,error.parent)
+  }
+
+  }
+
+  async handleUDsubscriptionPlan(data) {
+    let { 
+      subscriptionPlanId,
+      createdBy,
+      name,
+      price,
+      durationMonths,
+      type
+    } = await userUtil.verifyHandleUDsubscriptionPlan.validateAsync(data);
+
+    try{
+
+    const dateDetails=await this.SubscriptionPlanModel.findOne({
+      where:{
+        id:subscriptionPlanId,
+        isDeleted:false
+      }
+    })
+
+    if(!dateDetails) throw new NotFoundError('subscription plan not found')
+    
+
+    if(type=='update'){
+      dateDetails.update({
+          createdBy,
+          name,
+          price,
+          durationMonths,
+      })
+    }
+    else{
+      dateDetails.update({
+        isDeleted:true
+      })
+    }
+
+  
+
+  } catch (error) {
+    console.log(error);
+    throw new SystemError(error.name,error.parent)
+  }
+
+  }
+
+
+
   async handleCUdate(data) {
     let { 
       userId,
@@ -541,7 +662,6 @@ class UserService {
     let result =[];
     let details=[];
 
-   
     try {
       if(type2=='user'){
 
@@ -560,7 +680,30 @@ class UserService {
                 ],
                 usersStatus:'accepted',
                 isDeleted:false
-              }
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
           else if(type=='decline'){
@@ -577,7 +720,30 @@ class UserService {
                 ],
                 usersStatus:'decline',
                 isDeleted:false
-              }
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             
             })
           }
@@ -595,7 +761,30 @@ class UserService {
                 ],
                 usersStatus:'pending',
                 isDeleted:false
-              } 
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
         }else{
@@ -611,40 +800,69 @@ class UserService {
                 ],
                 usersStatus:'accepted',
                 isDeleted:false
-              }
-             /* attributes:['id','userId',
-              'userId2','usersStatus',
-              'dateStatus','reservationStatus',
-              'fullDate','businessIdSpotId',]*/
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
           else if(type=='decline'){
+           
 
-            details=await this.DateModel.findAll({
+            details = await this.DateModel.findAll({
               where: {
                 [Op.or]: [
-                  {userId:userId
-                  },
-                  {
-                   userId2:userId
-                  }
+                  { userId: userId },
+                  { userId2: userId },
                 ],
-                usersStatus:'decline',
-                isDeleted:false
-              }
-              ,
-              include: [{
-                model: this.BusinessSpotsModel,
-                as: 'BusinessSpot',
-                attributes: ['id', 'name', 
-                'address', 'city', 
-                'openHours', 'closeHours', 'tel'],
-                where: {
-                  isDeleted:false
+                usersStatus: 'decline',
+                isDeleted: false,
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
                 },
-              }]
-            
-            })
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
+            });
+
           }
           else if(type=='pending'){
             details=await this.DateModel.findAll({
@@ -658,7 +876,30 @@ class UserService {
                 ],
                 usersStatus:'pending',
                 isDeleted:false
-              } 
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
         
@@ -675,7 +916,30 @@ class UserService {
                 where:{
                   isDeleted:false,
                   usersStatus:'accepted'
-                }
+                },
+                include: [
+                  {
+                    model: this.BusinessSpotsModel,
+                    attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                    where: {
+                      isDeleted: false,
+                    },
+                  },
+                  {
+                    model: this.RequestModel,
+                    where: {
+                      isDeleted: false,
+                    },
+                    include:[
+                      {
+                        model: this.MatchModel,
+                        where: {
+                          isDeleted: false,
+                        },
+                      }
+                    ]
+                  }
+                ]
               })
           }
           else if(type=='decline'){
@@ -685,7 +949,30 @@ class UserService {
               where:{
                 isDeleted:false,
                 usersStatus:'decline'
-              }
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
           else if(type=='pending'){
@@ -695,7 +982,30 @@ class UserService {
               where:{
                 isDeleted:false,
                 usersStatus:'pending'
-              }
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
           else if(type=='all'){
@@ -704,7 +1014,30 @@ class UserService {
               offset:Number(offset),
               where:{
                 isDeleted:false,
-              }
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
         }
@@ -714,7 +1047,30 @@ class UserService {
                 where:{
                   isDeleted:false,
                   usersStatus:'accepted'
-                }
+                },
+                include: [
+                  {
+                    model: this.BusinessSpotsModel,
+                    attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                    where: {
+                      isDeleted: false,
+                    },
+                  },
+                  {
+                    model: this.RequestModel,
+                    where: {
+                      isDeleted: false,
+                    },
+                    include:[
+                      {
+                        model: this.MatchModel,
+                        where: {
+                          isDeleted: false,
+                        },
+                      }
+                    ]
+                  }
+                ]
               })
           }
           else if(type=='decline'){
@@ -722,7 +1078,30 @@ class UserService {
               where:{
                 isDeleted:false,
                 usersStatus:'decline'
-              }
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
           else if(type=='pending'){
@@ -730,26 +1109,72 @@ class UserService {
               where:{
                 isDeleted:false,
                 usersStatus:'pending'
-              }
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
           else if(type=='all'){
             details=await this.DateModel.findAll({
               where:{
                 isDeleted:false,
-              }
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                }
+              ]
             })
           }
           
         }
        
       }
+    
 
-      console.log(details)
       for (let index = 0; index < details.length; index++) {
         const element = details[index];
         result.push({
-            matchId:element.dataValues.id,
+            DateId:element.dataValues.id,
             userId: element.dataValues.userId,
             userId2: element.dataValues.userId2,
             usersStatus: element.dataValues.usersStatus,
@@ -757,9 +1182,24 @@ class UserService {
             reservationStatus: element.dataValues.reservationStatus,
             whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
             fullDate:element.dataValues.fullDate,
-            businessIdSpotId: element.dataValues.businessIdSpotId,
-            requestId: element.dataValues.requestId
-          
+            requestId: element.dataValues.requestId,
+            businessSpotDetails:{
+              id:element.dataValues.BusinessSpot.id,
+              name:element.dataValues.BusinessSpot.name ,
+              address:element.dataValues.BusinessSpot.name ,
+              city:element.dataValues.BusinessSpot.name ,
+              openHours:element.dataValues.BusinessSpot.openHours ,
+              closeHours:element.dataValues.BusinessSpot.closeHours ,
+              tel: element.dataValues.BusinessSpot.tel ,
+            },
+            matchDetails:{
+              id: element.dataValues.Request.dataValues.Match.dataValues.id,
+              userId: element.dataValues.Request.dataValues.Match.dataValues.userId,
+              userId2: element.dataValues.Request.dataValues.Match.dataValues.userId2,
+              matchInformation:JSON.parse( element.dataValues.Request.dataValues.Match.dataValues.matchInformation),
+              matchPercentage: element.dataValues.Request.dataValues.Match.dataValues.matchPercentage,
+            }
+
         })
        
       }
@@ -768,6 +1208,7 @@ class UserService {
     
       return result||[]
     } catch (error) {
+      console.log(error)
         throw new SystemError(error.name,  error.parent)
     }
 
@@ -852,11 +1293,11 @@ class UserService {
       }
       else{
 
-            matchResult = await this.MatchModel.findAll({
-            where: conditions,
-            attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
-            order: [['matchPercentage', 'ASC']],
-           });
+          matchResult = await this.MatchModel.findAll({
+          where: conditions,
+          attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
+          order: [['matchPercentage', 'ASC']],
+          });
       
       }
 
@@ -868,9 +1309,36 @@ class UserService {
             let myMatchUser=await this.UserModel.findOne({
               where:{id:myMatchId,
                       isDeleted:false},
+
                       attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren']
             })
-            if(!myMatchUser) continue;               
+
+
+            let havePendingRequest=await this.RequestModel.findOne({
+              where: {
+                [Op.or]: [
+                  {
+                    [Op.and]: [
+                      { userId:element.dataValues.userId },
+                      { userId2:element.dataValues.userId2},
+                    ],
+                  },
+                  {
+                    [Op.and]: [
+                      { userId:element.dataValues.userId2 },
+                      { userId2:element.dataValues.userId },
+                    ],
+                  },
+                ],
+                isDeleted:false,
+                status:"pending"
+              },
+            })
+
+
+            if(!myMatchUser) continue;
+            if(!myMatchUser) continue;                  
+            if(!havePendingRequest) continue;                  
 
 
             if(Number(age)){

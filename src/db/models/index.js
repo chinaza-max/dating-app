@@ -86,11 +86,11 @@ function associate() {
   })
 
 
-  Subscription.hasMany(SubscriptionPlan, {
+  SubscriptionPlan.hasMany(Subscription, {
     foreignKey: 'subscriptionPlanId',
     as: "SubscriptionPlans",
   });
-  SubscriptionPlan.belongsTo(Subscription, {
+  Subscription.belongsTo(SubscriptionPlan, {
     foreignKey: 'subscriptionPlanId', 
   })
 

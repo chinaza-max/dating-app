@@ -220,6 +220,90 @@ export default class UserController {
 
 
   
+  
+  async createSubscription(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+    
+   
+        const my_bj = {
+          ...data,
+          userId:req.user.id,
+        }
+                          
+        await userService.handleCreateSubscription(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: "subscription created successfully.",
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+  async createSubscriptionPlan(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+    
+   
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+        }
+                          
+        await userService.handleCreateSubscriptionPlan(my_bj);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        message: "subscription created successfully.",
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
+  async UDsubscriptionPlan(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+    
+
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+        }
+                          
+        await userService.handleUDsubscriptionPlan(my_bj);
+  
+
+      return res.status(200).json({
+        status: 200,
+        message: "subscription updated successfully.",
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
 
   async getDate(
     req,

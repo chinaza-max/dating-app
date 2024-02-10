@@ -27,6 +27,10 @@ export function init(connection) {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

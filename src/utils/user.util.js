@@ -222,7 +222,6 @@ class UserUtil {
     businessIdSpotId: Joi.number().required(),
     requestId: Joi.number().required(),
     matchInformation: Joi.array().required(),
-   
   });
 
   verifyHandleGetDate= Joi.object({
@@ -239,6 +238,49 @@ class UserUtil {
     ).required(),
   });
 
+
+
+
+  verifyHandleCreateSubscriptionPlan= Joi.object({
+    name: Joi.string().required(),
+    price: Joi.number().required(),
+    createdBy: Joi.number().required(),
+    durationMonths: Joi.number().required()
+  });
+
+
+  verifyHandleUDsubscriptionPlan= Joi.object({
+    subscriptionPlanId: Joi.number().required(),
+    createdBy: Joi.number().required(),
+    type: Joi.string().valid(
+      'update',
+      'delete'
+    ).required(),
+    name: Joi.when('type', {
+      is: 'update',
+      then: Joi.string().required(),
+      otherwise: Joi.string(), // Not required for other types
+    }),
+    price: Joi.when('type', {
+      is: 'update',
+      then: Joi.number().required(),
+      otherwise: Joi.number(), // Not required for other types
+    }),
+    durationMonths: Joi.when('type', {
+      is: 'update',
+      then: Joi.number().required(),
+      otherwise: Joi.number(), // Not required for other types
+    }),
+  });
+
+
+  verifyHandleCreateSubscription= Joi.object({
+    userId: Joi.number().required(),
+    subscriptionPlanId: Joi.number().required(),
+    transactionId: Joi.number().required(),
+    startDate: Joi.date().required(),
+    endDate: Joi.date().required(),
+  });
 }
 
 export default new UserUtil();
