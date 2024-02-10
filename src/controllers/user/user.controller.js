@@ -188,7 +188,7 @@ export default class UserController {
   }
 
 
-
+  
   async CUdate(
     req,
     res,
@@ -198,35 +198,52 @@ export default class UserController {
  
     try {
     
-      if(data.type=='CreateOrUpdate'){
    
         const my_bj = {
           ...data,
-          createdBy:req.user.id,
+          userId:req.user.id,
         }
                           
         await userService.handleCUdate(my_bj);
   
-      }
-      else if(data.type=='delete'){
-        const my_bj = {
-          ...data,
-          createdBy:req.user.id,
-        }
-                          
-        await userService.handleRemoveBusinessSpot(my_bj);
-  
-      }
-      else{
-        
-      return res.status(400).json({
-        message: "type is missing in the request or is not correct(CreateOrUpdate delete)",
-      });
-      }
+
 
       return res.status(200).json({
         status: 200,
-        message: "action was successfull.",
+        message: "success.",
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
+  
+
+  async getDate(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+    const {offset}=req.query
+    const {pageSize}=req.query
+
+    try {
+    
+        const my_bj = {
+          ...data,
+          userId:req.user.id,
+        }
+                          
+        const result=await userService.handleGetDate(my_bj,offset,pageSize);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
       });
     } catch (error) {
       console.log(error)
@@ -304,9 +321,9 @@ export default class UserController {
   ){
 
 
-    const type=req.query.type
-    const offset=req.query.offset
-    const pageSize=req.query.pageSize
+    const {type}=req.query
+    const {offset}=req.query
+    const {pageSize}=req.query
     const userId=req.query.userId
 
     let result=[]
@@ -458,8 +475,8 @@ export default class UserController {
     try {
       
       const data=req.body
-      const offset=req.query
-      const pageSize=req.query
+      const {offset}=req.query
+      const {pageSize}=req.query
 
 
       const my_bj = {

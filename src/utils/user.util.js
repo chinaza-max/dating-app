@@ -175,7 +175,8 @@ class UserUtil {
 
   verifyHandleCreateRequest= Joi.object({
     userId: Joi.number().required(),
-    userId2: Joi.number().required()
+    userId2: Joi.number().required(),
+    matchId: Joi.number().required()
   });
 
   verifyhandleGetRequest= Joi.object({
@@ -203,25 +204,39 @@ class UserUtil {
     requestId: Joi.number().required()
   });
 
+
   verifyHandleReJectMatch= Joi.object({
     userId: Joi.number().required(),
     matchId: Joi.number().required()
   });
 
-
   verifyHandleCUdate= Joi.object({
+    type: Joi.string().valid(
+      'offer',
+      'decline',
+      'accept',
+    ).required(),
     userId: Joi.number().required(),
     userId2: Joi.number().required(),
-    fullDate: Joi.number().required(),
+    fullDate: Joi.date().iso().required(),
     businessIdSpotId: Joi.number().required(),
     requestId: Joi.number().required(),
-    matchInformation: Joi.number().required(),
-    usersStatus: Joi.string().valid(
-        'accepted',
-        'decline',
-    ).required(),
-    dateStatus: Joi.number().required(),
+    matchInformation: Joi.array().required(),
+   
+  });
 
+  verifyHandleGetDate= Joi.object({
+    userId: Joi.number().required(),
+    type: Joi.string().valid(
+      'accepted',
+      'decline',
+      'pending',
+      'all',
+    ).required(),
+    type2: Joi.string().valid(
+      'admin',
+      'user'
+    ).required(),
   });
 
 }

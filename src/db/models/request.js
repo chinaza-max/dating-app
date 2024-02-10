@@ -26,6 +26,10 @@ export function init(connection) {
         type: DataTypes.INTEGER,
         allowNull: false,
       }, 
+      matchId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      }, 
       status: {
         type: DataTypes.ENUM(
           'accepted',

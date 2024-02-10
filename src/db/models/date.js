@@ -27,6 +27,7 @@ export function init(connection) {
       usersStatus: {//if the date choosen  has been accepted
         type: DataTypes.ENUM(
           'accepted',
+          'decline',
           'pending',
         ),
         allowNull: false,
@@ -36,10 +37,8 @@ export function init(connection) {
         type: DataTypes.ENUM(
           'completed',
           'active',
-          'pending',
         ),
-        allowNull: false,
-        defaultValue:'pending'
+        allowNull: true,
       }, 
       reservationStatus: {
         type: DataTypes.ENUM(
@@ -55,11 +54,8 @@ export function init(connection) {
         allowNull: true,
       },
       fullDate: {
-        type: DataTypes.ENUM(
-          'accepted',
-          'decline'
-        ),
-        allowNull: true,
+        type: DataTypes.DATE,
+        allowNull: false,
       },
       businessIdSpotId: {
         type: DataTypes.INTEGER,

@@ -38,8 +38,7 @@ class UserRoutes extends UserController {
     
 
     this.router.post("/CUdate", this.CUdate);
-
-    
+    this.router.get("/getDate", this.getDate);
 
 
    // this.router.post("/createOrUpBusinessImage",uploadHandler.image.array("businessPicture"),  this.createOrUpBusinessImage);

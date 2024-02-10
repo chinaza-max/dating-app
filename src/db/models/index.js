@@ -62,6 +62,9 @@ function associate() {
   Date.belongsTo(BusinessSpot, {
     foreignKey: 'businessIdSpotId', 
   })
+  
+  console.log(BusinessSpot.associations)
+  console.log(Date.associations)
 
   PartnerPersonaltyQ.hasMany(UserAnswer, {
     foreignKey: 'partnerPersonaltyQId',
@@ -129,13 +132,20 @@ function associate() {
 
 
 
-  
   User.hasMany(Request, {
     foreignKey: 'userId2',
     as: "MyRequest2",
   });
   Request.belongsTo(User, {
-    foreignKey: 'userId2'
+    foreignKey: 'userId2' 
+  })
+
+  Match.hasMany(Request, {
+    foreignKey: 'matchId',
+    as: "MatchRequest",
+  });
+  Request.belongsTo(Match, {
+    foreignKey: 'matchId'
   })
 
 

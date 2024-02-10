@@ -1,4 +1,9 @@
-import { User,Admin ,EmailandTelValidation,EmailandTelValidationAdmin,BusinessSpot,Business,EmailandTelValidationBusiness,UserAnswer,Match,Request} from "../db/models/index.js";
+import { User,Admin ,
+  EmailandTelValidation,
+  EmailandTelValidationAdmin,
+  BusinessSpot,Business,
+  EmailandTelValidationBusiness,
+  UserAnswer,Match,Request,Date} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -25,6 +30,7 @@ class UserService {
   UserAnswerModel=UserAnswer
   MatchModel=Match
   RequestModel=Request
+  DateModel=Date
 
   
 
@@ -156,7 +162,8 @@ class UserService {
   async handleCreateRequest(data) {
     let { 
       userId,
-      userId2             
+      userId2,
+      matchId           
     } = await userUtil.verifyHandleCreateRequest.validateAsync(data);
 
     let matchDetail=await this.MatchModel.findOne({
@@ -178,10 +185,12 @@ class UserService {
       },
     })
 
+
     let requestDetail=await this.RequestModel.findOne({
       where: {
         userId: userId,
         userId2: userId2,
+        matchId:matchId,
         status:'pending'
       }
     })
@@ -194,9 +203,11 @@ class UserService {
   try {
     await this.RequestModel.create({
       userId,
+      matchId,
       userId2
     });
   } catch (error) {
+      console.log(error)
       throw new SystemError(error.name, error.parent)
   }
  
@@ -454,64 +465,62 @@ class UserService {
 
   async handleCUdate(data) {
     let { 
-      businessId,
-      name,
-      address,
-      city,
-      openHours,
-      closeHours,
-      emailAddress,
-      contactPerson,
-      availabilty,
-      tel              
+      userId,
+      userId2,
+      fullDate,
+      businessIdSpotId,
+      requestId,
+      matchInformation,
+      type,
     } = await userUtil.verifyHandleCUdate.validateAsync(data);
 
-    const businessObj=await this.BusinessModel.findOne({
+
+    try{
+
+    const dateDetails=await this.DateModel.findOne({
       where:{
-        id:businessId,
-        isDeleted:false
+        requestId
       }
     })
 
-    if (!businessObj) throw new NotFoundError("Business for business spot  not found.");
+  
+    if(type=='offer'){
+      if (dateDetails){
 
-
-    try {
-
-      const existingBusinessSpot = await this.BusinessSpotsModel.findOne({
-        where: {   
-          businessId,
-          name,
-          isDeleted:false },
-      });
-
-      if (existingBusinessSpot) {
-
-        await existingBusinessSpot.update({
-          name,
-          address,
-          city,
-          openHours,
-          closeHours,
-          emailAddress,
-          contactPerson,
-          availabilty,
-          tel
-        });
-      } else {
-        await BusinessSpot.create({
-            businessId,
-            name,
-            address,
-            city,
-            openHours,
-            closeHours,
-            emailAddress,
-            contactPerson,
-            availabilty,
-            tel
-        });
+        dateDetails.update({
+          userId,
+          userId2,
+          fullDate,
+          businessIdSpotId,
+          usersStatus:'pending'
+        })
       }
+      else{
+        await this.DateModel.create({
+          userId,
+          userId2,
+          fullDate,
+          businessIdSpotId,
+          requestId,
+          matchInformation,
+          usersStatus:'pending'
+        })
+      }
+    }
+    else if(type=='decline'){
+      if (dateDetails){
+        dateDetails.update({
+          usersStatus:'decline'
+        })
+      }
+    }
+    else if(type=='accept'){
+      if (dateDetails){
+        dateDetails.update({
+          usersStatus:'accepted'
+        })
+      }
+    }
 
   } catch (error) {
     console.log(error);
@@ -520,6 +529,249 @@ class UserService {
 
   }
 
+
+  async handleGetDate(data,offset,pageSize) {
+    let { 
+      userId,
+      adminId,    
+      type,
+      type2      
+    } = await userUtil.verifyHandleGetDate.validateAsync(data);
+
+    let result =[];
+    let details=[];
+
+   
+    try {
+      if(type2=='user'){
+
+        if(Number(pageSize)){
+          if(type=='accepted'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                usersStatus:'accepted',
+                isDeleted:false
+              }
+            })
+          }
+          else if(type=='decline'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                usersStatus:'decline',
+                isDeleted:false
+              }
+            
+            })
+          }
+          else if(type=='pending'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                usersStatus:'pending',
+                isDeleted:false
+              } 
+            })
+          }
+        }else{
+          if(type=='accepted'){
+            details=await this.DateModel.findAll({
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                usersStatus:'accepted',
+                isDeleted:false
+              }
+             /* attributes:['id','userId',
+              'userId2','usersStatus',
+              'dateStatus','reservationStatus',
+              'fullDate','businessIdSpotId',]*/
+            })
+          }
+          else if(type=='decline'){
+
+            details=await this.DateModel.findAll({
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                usersStatus:'decline',
+                isDeleted:false
+              }
+              ,
+              include: [{
+                model: this.BusinessSpotsModel,
+                as: 'BusinessSpot',
+                attributes: ['id', 'name', 
+                'address', 'city', 
+                'openHours', 'closeHours', 'tel'],
+                where: {
+                  isDeleted:false
+                },
+              }]
+            
+            })
+          }
+          else if(type=='pending'){
+            details=await this.DateModel.findAll({
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                usersStatus:'pending',
+                isDeleted:false
+              } 
+            })
+          }
+        
+        }
+      
+      }
+      else{
+
+        if(Number(pageSize)){
+          if(type=='accepted'){
+              details=await this.DateModel.findAll({
+                limit:Number(pageSize),
+                offset:Number(offset),
+                where:{
+                  isDeleted:false,
+                  usersStatus:'accepted'
+                }
+              })
+          }
+          else if(type=='decline'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where:{
+                isDeleted:false,
+                usersStatus:'decline'
+              }
+            })
+          }
+          else if(type=='pending'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where:{
+                isDeleted:false,
+                usersStatus:'pending'
+              }
+            })
+          }
+          else if(type=='all'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where:{
+                isDeleted:false,
+              }
+            })
+          }
+        }
+        else{
+          if(type=='accepted'){
+              details=await this.DateModel.findAll({
+                where:{
+                  isDeleted:false,
+                  usersStatus:'accepted'
+                }
+              })
+          }
+          else if(type=='decline'){
+            details=await this.DateModel.findAll({
+              where:{
+                isDeleted:false,
+                usersStatus:'decline'
+              }
+            })
+          }
+          else if(type=='pending'){
+            details=await this.DateModel.findAll({
+              where:{
+                isDeleted:false,
+                usersStatus:'pending'
+              }
+            })
+          }
+          else if(type=='all'){
+            details=await this.DateModel.findAll({
+              where:{
+                isDeleted:false,
+              }
+            })
+          }
+          
+        }
+       
+      }
+
+      console.log(details)
+      for (let index = 0; index < details.length; index++) {
+        const element = details[index];
+        result.push({
+            matchId:element.dataValues.id,
+            userId: element.dataValues.userId,
+            userId2: element.dataValues.userId2,
+            usersStatus: element.dataValues.usersStatus,
+            dateStatus: element.dataValues.dateStatus,
+            reservationStatus: element.dataValues.reservationStatus,
+            whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
+            fullDate:element.dataValues.fullDate,
+            businessIdSpotId: element.dataValues.businessIdSpotId,
+            requestId: element.dataValues.requestId
+          
+        })
+       
+      }
+
+
+    
+      return result||[]
+    } catch (error) {
+        throw new SystemError(error.name,  error.parent)
+    }
+
+  }
 
   async handGetAllMatchSingleUserForAdmin(data,offset,pageSize) {
     let { 
@@ -608,8 +860,7 @@ class UserService {
       
       }
 
-
-
+      
       for (let index = 0; index < matchResult.length; index++) {
         const element = matchResult[index];
 
