@@ -50,7 +50,7 @@ export default class AuthenticationController {
 
       return res.status(200).json({
         status: 200,
-        message: "email verification completed",
+        message: "verification completed",
       });
     } catch (error) {
       console.log(error);
@@ -159,6 +159,8 @@ export default class AuthenticationController {
     }
     
   }
+
+
   async loginAdmin(req, res, next) {
 
     try {
@@ -197,6 +199,45 @@ export default class AuthenticationController {
   }
    
 
+
+  
+  async resetPasswordEmail(
+    req,
+    res,
+    next
+  ) {
+    try {
+
+      
+      await authService.handlePasswordResetEmail(req.body);
+      return res.status(200).json({
+        status: 200,
+        message: "A reset link was sent to your email"
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
+
+  async resetPassword(
+    req,
+    res,
+    next
+  ) {
+    try {
+      await authService.handleResetPassword(req.body);
+
+
+      return res.status(200).json({
+        status: 200,
+        message: "Password updated successufully"
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
   
   async sendVerificationCodeEmailOrTel(req, res, next) {
 

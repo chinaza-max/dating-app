@@ -73,8 +73,24 @@ class AdminUtil {
       ),
     });
     
+    validateUserEmail  = Joi.object({
+      emailOrPhone: Joi.alternatives().try(
+        Joi.string().email(), 
+        Joi.number(), 
+      ).required(),
+      type: Joi.string().valid(
+        'user',
+        'admin',
+        'business'
+      ).required(),
+    });
 
 
+    
+  validatePasswordReset = Joi.object().keys({
+    password: Joi.string().min(6).required(),
+    resetPasswordKey: Joi.string().min(1).required(),
+  });
 }
 
 export default new AdminUtil();

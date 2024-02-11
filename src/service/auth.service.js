@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from'bcrypt';
-import { User,  EmailandTelValidation ,  Admin,  EmailandTelValidationAdmin } from "../db/models/index.js";
+import { User,  EmailandTelValidation ,  Admin,  PasswordReset,  Business,  EmailandTelValidationAdmin } from "../db/models/index.js";
 import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
 import mailService from "../service/mail.service.js";
@@ -19,6 +19,9 @@ class AuthenticationService {
    AdminModel = Admin;
    EmailandTelValidationModel=EmailandTelValidation
    EmailandTelValidationAdminModel=EmailandTelValidationAdmin
+   BusinessModel=Business
+   PasswordResetModel=PasswordReset
+
 
   verifyToken(token) {
     try {
@@ -149,6 +152,182 @@ class AuthenticationService {
       await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id)
     }
   }
+
+
+
+
+  async handlePasswordResetEmail(data) {
+    const { emailOrPhone ,type} = await authUtil.validateUserEmail.validateAsync(data);
+
+
+
+    let matchedUser=null
+    if(type=="user"){
+
+      try {
+        matchedUser=await this.UserModel.findOne({
+          where: {
+        [Op.or]: [
+          { emailAddress:emailOrPhone },
+          { tel: emailOrPhone }, 
+        ],
+      }
+      });
+        
+      } catch (error) {
+
+          console.log(error)
+          throw new SystemError(error.name , error.parent)
+      }
+
+    }
+    else if(type=="admin"){
+      matchedUser=await this.AdminModel.findOne({
+        where: {
+      [Op.or]: [
+        { emailAddress:emailOrPhone },
+        { tel: emailOrPhone }, 
+      ],
+    }
+    });
+    }
+    else if(type=="business"){
+      matchedUser=await this.BusinessModel.findOne({
+        where: {
+      [Op.or]: [
+        { emailAddress:emailOrPhone },
+        { tel: emailOrPhone }, 
+      ],
+    }
+    });
+    }
+
+
+    console.log("===ssssssssssssssss======")
+    console.log("===ssssssssssss=====")
+    console.log(emailOrPhone)
+    console.log(type)
+    console.log(matchedUser)
+
+
+
+
+    if (matchedUser == null){
+      throw new NotFoundError("This email does not correspond to any user");
+    }
+    var keyExpirationMillisecondsFromEpoch =
+      new Date().getTime() + 30 * 60 * 1000;
+    var generatedKey = this.generatePassword(true);
+
+    let uniqueId=matchedUser.id+'_'+type
+    var relatedPasswordReset = await this.PasswordResetModel.findOrCreate({
+      where: {
+        userId: uniqueId,
+      },
+      defaults: {
+        userId: uniqueId,
+        resetKey: generatedKey,
+        expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+      },
+    });
+    relatedPasswordReset[0]?.update({
+      userId: uniqueId,
+      resetKey: generatedKey,
+      expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+    });
+
+    const params = new URLSearchParams();
+    params.append('key', generatedKey);
+    params.append('Exkey',keyExpirationMillisecondsFromEpoch);
+
+
+
+    await mailService.sendMail({
+      to: matchedUser.emailAddress,
+      subject: "Reset Password",
+      templateName: "reset_password",
+      variables: {
+        resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/PasswordReset.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/PasswordReset.html?${params.toString()}`
+      },
+    });
+
+
+  }
+
+
+  generatePassword(omitSpecial = false, passwordLength = 12) {
+    var chars = omitSpecial
+      ? "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      : "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // var passwordLength = 12;
+    var password = "";
+    for (var i = 0; i <= passwordLength; i++) {
+      var randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber + 1);
+    }
+    return password;
+  }
+
+
+  async handleResetPassword(data) {
+
+    var {  password, resetPasswordKey } =
+      await authUtil.validatePasswordReset.validateAsync(data);
+
+
+    var relatedPasswordReset = await this.PasswordResetModel.findOne({
+      where: {
+        resetKey: resetPasswordKey,
+      },
+    });
+    
+    if (relatedPasswordReset == null)
+      throw new NotFoundError("Invalid reset link");
+    else if (relatedPasswordReset.expiresIn.getTime() < new Date().getTime())
+      throw new NotFoundError("Reset link expired");
+
+      const parts = relatedPasswordReset.userId.split('_');
+      let relatedUser=null
+      let type=parts[1]
+      let userId=parts[0]
+
+      if(type=='user'){
+        relatedUser = await this.UserModel.findOne({
+          where: { id: userId },
+        });
+      }
+      else if(type=='admin'){
+        relatedUser = await this.AdminModel.findOne({
+          where: { id: userId },
+        });
+      }
+      else if(type=='business'){
+        relatedUser = await this.BusinessModel.findOne({
+          where: { id: userId },
+        });
+      }
+
+   
+    if (relatedUser == null)
+      throw new NotFoundError("Selected user cannot be found");
+    try {
+      var hashedPassword = await bcrypt.hash(
+        password,
+        Number(serverConfig.SALT_ROUNDS)
+      );
+      relatedUser.update({
+        password: hashedPassword,
+      });
+      relatedPasswordReset.update({
+        expiresIn: new Date(),
+      });
+    } catch (error) {
+      throw new ServerError("Failed to update password");
+    }
+  }
+
+
+
 
   async handleUploadPicture(data,file) {
     
@@ -291,6 +470,10 @@ class AuthenticationService {
         relatedUser.update({
           isEmailValid: true,
         });
+
+        relatedEmailoRTelValidationCode.update({
+          expiresIn: new Date(),
+        });
       }
       else{
         relatedUser.update({
@@ -340,6 +523,10 @@ class AuthenticationService {
       if('email'){
         relatedUser.update({
           isEmailValid: true,
+        });
+
+        relatedEmailoRTelValidationCode.update({
+          expiresIn: new Date(),
         });
       }
       else{
