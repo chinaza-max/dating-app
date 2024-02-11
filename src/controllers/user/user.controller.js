@@ -220,6 +220,41 @@ export default class UserController {
 
 
   
+  async addOrRemoveWishList(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+    
+   
+        const my_bj = {
+          ...data,
+          userId:req.user.id,
+        }
+                          
+        await userService.handleAddOrRemoveWishList(my_bj);
+
+      if(data.type=='add'){
+        return res.status(200).json({
+          status: 200,
+          message: "match sucessfully added to wish list.",
+        });
+      }else{
+        return res.status(200).json({
+          status: 200,
+          message: "match sucessfully remove from wish list.",
+        });
+      }
+     
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
   
   async createSubscription(
     req,
@@ -335,6 +370,65 @@ export default class UserController {
     }
   }
 
+
+
+  async getWishList(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+    const {offset}=req.query
+    const {pageSize}=req.query
+
+    try {
+    
+        const my_bj = {
+          ...data,
+        }
+                          
+        const result=await userService.handleGetWishList(my_bj,offset,pageSize);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
+  
+  async getDatesDate(
+    req,
+    res,
+    next
+  ){
+    const {userId}=req.query
+
+    try {
+    
+        const my_bj = {
+          userId
+        }
+                          
+        const result=await userService.handleGetDatesDate(my_bj);
+  
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
   
 
   async createOrUpdateOrRemoveBusinessImage(
@@ -423,10 +517,11 @@ export default class UserController {
   
       }
       else if(type=='user'){
+
         const my_bj = {
           userId:req.user.id,
-      }
-                          
+        }
+
       result=await userService.handGetAllMatchSingleUserForUser(my_bj,offset,pageSize,req.query);
   
       }

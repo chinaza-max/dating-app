@@ -44,11 +44,10 @@ class UserRoutes extends UserController {
     this.router.post("/createSubscriptionPlan", this.createSubscriptionPlan);
     this.router.post("/UDsubscriptionPlan", this.UDsubscriptionPlan);
 
+    this.router.post("/addOrRemoveWishList", this.addOrRemoveWishList);
+    this.router.get("/getWishList", this.getWishList);
 
-
-   // this.router.post("/createOrUpBusinessImage",uploadHandler.image.array("businessPicture"),  this.createOrUpBusinessImage);
-
-   // this.router.post("/addBusinessSpot",  this.addBusinessSpot);
+    this.router.get("/getDatesDate", this.getDatesDate);
 
 
   } 

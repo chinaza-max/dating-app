@@ -4,7 +4,7 @@ import { User,Admin ,
   BusinessSpot,Business,
   EmailandTelValidationBusiness,
   UserAnswer,Match,Request,Date,SubscriptionPlan
-  ,Subscription} from "../db/models/index.js";
+  ,Subscription,WishList} from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -34,7 +34,7 @@ class UserService {
   DateModel=Date
   SubscriptionPlanModel=SubscriptionPlan
   SubscriptionModel=Subscription
-
+  WishListModel=WishList
   
 
 
@@ -160,6 +160,42 @@ class UserService {
 
   }
 
+
+
+  async handleGetDatesDate(data) {
+    let { 
+      userId        
+    } = await userUtil.verifyHandleGetDatesDate.validateAsync(data);
+
+    try {
+      const activeDates = await this.DateModel.findAll({
+        attributes: ['fullDate'], // Only select the fullDate field
+        where: {
+          [Op.or]: [
+            { userId: userId },
+            { userId2: userId },
+          ],
+         // usersStatus: 'accepted', // Assuming 'accepted' is the status for active dates
+          isDeleted: false,
+          fullDate: {
+            [Op.gte]: new Date(), // Retrieve dates greater than or equal to the current date/time
+          },
+        },
+      });
+      
+  
+      // Extract the fullDate values into an array
+      const activeDatesArray = activeDates.map(date => date.fullDate);
+      
+      console.log(activeDatesArray);
+      
+      return activeDatesArray
+    } catch (error) {
+      console.log(error)
+        throw new SystemError(error.name, error.parent)
+    }
+
+  }
 
   
   async handleCreateRequest(data) {
@@ -1214,6 +1250,103 @@ class UserService {
 
   }
 
+
+  async handleGetWishList(data,offset,pageSize) {
+    let { 
+      userId,    
+    } = await userUtil.verifyHandleGetWishList.validateAsync(data);
+
+    let result =[];
+    let details=[];
+
+    try {
+
+        if(Number(pageSize)){
+            details=await this.WishListModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where: {
+                  userId,
+                  isDeleted:false
+              },
+              include: [
+                {
+                  model: this.MatchModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                }
+              ]
+            })
+        }else{
+            details=await this.WishListModel.findAll({
+              where: {
+                userId,
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.MatchModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                }
+              ]
+            })
+        }
+
+      for (let index = 0; index < details.length; index++) {
+        const element = details[index];
+        result.push({
+            wishListId:element.dataValues.id,
+            userId:element.dataValues.userId,
+            matchDetails:{
+              matchId:element.dataValues.Match.id,
+              userId:element.dataValues.Match.userId,
+              userId2:element.dataValues.Match.userId,
+              matchInformation:JSON.parse(element.dataValues.Match.matchInformation),
+              matchPercentage:element.dataValues.Match.matchPercentage,
+            },
+          
+           /* userId: element.dataValues.userId,
+            userId2: element.dataValues.userId2,
+            usersStatus: element.dataValues.usersStatus,
+            dateStatus: element.dataValues.dateStatus,
+            reservationStatus: element.dataValues.reservationStatus,
+            whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
+            fullDate:element.dataValues.fullDate,
+            requestId: element.dataValues.requestId,
+            businessSpotDetails:{
+              id:element.dataValues.BusinessSpot.id,
+              name:element.dataValues.BusinessSpot.name ,
+              address:element.dataValues.BusinessSpot.name ,
+              city:element.dataValues.BusinessSpot.name ,
+              openHours:element.dataValues.BusinessSpot.openHours ,
+              closeHours:element.dataValues.BusinessSpot.closeHours ,
+              tel: element.dataValues.BusinessSpot.tel ,
+            },
+            matchDetails:{
+              id: element.dataValues.Request.dataValues.Match.dataValues.id,
+              userId: element.dataValues.Request.dataValues.Match.dataValues.userId,
+              userId2: element.dataValues.Request.dataValues.Match.dataValues.userId2,
+              matchInformation:JSON.parse( element.dataValues.Request.dataValues.Match.dataValues.matchInformation),
+              matchPercentage: element.dataValues.Request.dataValues.Match.dataValues.matchPercentage,
+            }
+*/
+        })
+       
+      }
+
+
+    
+      return result||[]
+    } catch (error) {
+      console.log(error)
+        throw new SystemError(error.name,  error.parent)
+    }
+
+  }
+
   async handGetAllMatchSingleUserForAdmin(data,offset,pageSize) {
     let { 
       userId,
@@ -1261,6 +1394,71 @@ class UserService {
   }
 
 
+
+  async handleAddOrRemoveWishList(data) {
+    let { 
+      userId,
+      type,
+      matchId            
+    } = await userUtil.verifyHandleAddOrRemoveWishList.validateAsync(data);
+
+
+    
+
+    if(type=='add'){
+      try {
+   
+        let result = await this.WishListModel.findOne({
+            where: {
+              userId,
+              matchId
+            },
+          });
+      
+        if(result)return
+
+
+        console.log("=======================")
+
+        console.log(userId,
+          type,
+          matchId )
+
+        await this.WishListModel.create({
+            userId,
+            matchId
+        });
+       
+      } catch (error) {
+
+          console.log(error)
+          throw new SystemError(error.name,  error.parent)
+      }
+
+    }
+    else{
+      try {
+   
+        await this.WishListModel.destroy({
+            where: {
+              userId,
+              matchId
+            },
+          });
+      
+ 
+      } catch (error) {
+        console.log(error)
+          throw new SystemError(error.name,  error.parent)
+      }
+    }
+   
+
+   
+
+  }
+
+
   async handGetAllMatchSingleUserForUser(data,offset,pageSize,query) {
     let { 
       userId
@@ -1298,7 +1496,7 @@ class UserService {
           attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
           order: [['matchPercentage', 'ASC']],
           });
-      
+          
       }
 
       
@@ -1309,10 +1507,10 @@ class UserService {
             let myMatchUser=await this.UserModel.findOne({
               where:{id:myMatchId,
                       isDeleted:false},
-
                       attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren']
-            })
+              })
 
+             
 
             let havePendingRequest=await this.RequestModel.findOne({
               where: {
@@ -1338,7 +1536,7 @@ class UserService {
 
             if(!myMatchUser) continue;
             if(!myMatchUser) continue;                  
-            if(!havePendingRequest) continue;                  
+            if(havePendingRequest) continue;                  
 
 
             if(Number(age)){
@@ -1372,10 +1570,6 @@ class UserService {
             }
 
             
-/*
-            if(haveChildren){
-              if(haveChildren!= myMatchUser.dataValues.haveChildren ) continue; 
-            }*/
            
             result.push({
               matchId:element.dataValues.id,
@@ -1385,13 +1579,7 @@ class UserService {
               matchInformation:JSON.parse(element.dataValues.matchInformation),
               matchPercentage:element.dataValues.matchPercentage})
        }
-     
-
-      
-
-      console.log(result)
-
-
+    
       
       return result;
       
@@ -1993,7 +2181,21 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
   }
 
   return password;
-}
+  }
+
+
+  async updateSubscriptionStatus () {
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";
+    let password = "";
+  
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      password += charset.charAt(randomIndex);
+    }
+  
+    return password;
+  }
+ 
 }
 
 export default new UserService();

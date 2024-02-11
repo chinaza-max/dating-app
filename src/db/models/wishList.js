@@ -22,7 +22,7 @@ export function init(connection) {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      userId2: {
+      matchId: {
         type: DataTypes.INTEGER,
         allowNull: false
       }, 

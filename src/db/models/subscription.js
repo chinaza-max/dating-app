@@ -1,5 +1,4 @@
 import {
-
     DataTypes,
     Model
   } from "sequelize";
@@ -52,6 +51,14 @@ export function init(connection) {
     });
   }
 
+  Subscription.prototype.updateSubscriptionStatus = async function () {
+
+    if (this.endDate <= new Date()) {
+      // If subscription has expired
+      this.active = false;
+      await this.save();
+    }
+  };
 
 
 export default Subscription ;

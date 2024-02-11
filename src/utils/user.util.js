@@ -281,6 +281,23 @@ class UserUtil {
     startDate: Joi.date().required(),
     endDate: Joi.date().required(),
   });
+
+
+  verifyHandleAddOrRemoveWishList= Joi.object({
+    userId: Joi.number().required(),
+    matchId: Joi.number().required(),
+    type: Joi.string().valid(
+      'add',
+      'remove'
+    ).required()
+  });
+
+  verifyHandleGetWishList= Joi.object({
+    userId: Joi.number().required(),
+  });
+  verifyHandleGetDatesDate= Joi.object({
+    userId: Joi.number().required(),
+  });
 }
 
 export default new UserUtil();

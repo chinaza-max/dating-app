@@ -7,10 +7,13 @@ import systemMiddleware from "./src/middlewares/system.middleware.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import cron from "node-cron"
+import {Subscription} from "./src/db/models/index.js";
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 
 
 class Server {
@@ -24,6 +27,24 @@ class Server {
   
     async initializeDbAndFirebase(){
         await DB.connectDB()
+
+        const job = cron.schedule('0 0 * * *', async() => {
+          try {
+            // Find all subscriptions
+            const subscriptions = await Subscription.findAll();
+        
+            // Update the status for each subscription
+            await Promise.all(subscriptions.map(subscription => subscription.updateSubscriptionStatus()));
+            
+            console.log('Subscription status updated successfully.');
+          } catch (error) {
+            console.error('Error updating subscription status:', error);
+          }
+
+
+        });  
+        
+        job.start();
     }
      
     initializeMiddlewaresAndRoutes(){

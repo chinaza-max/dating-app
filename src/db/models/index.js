@@ -44,6 +44,15 @@ function associate() {
     foreignKey: 'userId'
   })
 
+  
+  Match.hasOne(WishList, {
+    foreignKey: 'matchId',
+    as: "MatchWishLists",
+  });
+  WishList.belongsTo(Match, {
+    foreignKey: 'matchId'
+  })
+
 
   Business.hasMany(BusinessSpot, {
     foreignKey: 'businessId',
