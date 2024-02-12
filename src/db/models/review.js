@@ -5,8 +5,7 @@ import {
   } from "sequelize";
 
 import serverConfig from "../../config/server.js";
-//userId this is who created the Review
-//userId this is who is been Reviewed
+
 
 class Review extends Model {}
 
@@ -20,32 +19,16 @@ export function init(connection) {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: 'User', 
-          key: 'id',     
-        },
       },
-      userId2: {
+      dateId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: 'User', 
-          key: 'id',     
-        },
-      },
-      DateId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Date', 
-          key: 'id',     
-        },
       },
       star: {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-      comment: {
+      comment: { 
         type: DataTypes.STRING,
         allowNull: false,
       },

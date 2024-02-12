@@ -48,6 +48,11 @@ class UserRoutes extends UserController {
     this.router.get("/getWishList", this.getWishList);
 
     this.router.get("/getDatesDate", this.getDatesDate);
+    
+
+    this.router.post("/CUcommentAndRating", this.CUcommentAndRating);
+    this.router.get("/checkActiveSubscription", this.checkActiveSubscription);
+    this.router.get("/getSubcription", this.getSubcription);
 
 
   } 

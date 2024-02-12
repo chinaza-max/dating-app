@@ -255,6 +255,42 @@ export default class UserController {
     }
   }
 
+
+
+  
+  async CUcommentAndRating(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+      
+        const my_bj = {
+          ...data,
+          userId:req.user.id, 
+        }
+                          
+        await userService.handleCUcommentAndRating(my_bj);
+
+    
+        return res.status(200).json({
+          status: 200,
+          message: "review sucessfully added",
+        });
+      
+     
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
+  
+
+
   
   async createSubscription(
     req,
@@ -270,7 +306,8 @@ export default class UserController {
           ...data,
           userId:req.user.id,
         }
-                          
+                
+
         await userService.handleCreateSubscription(my_bj);
 
       return res.status(200).json({
@@ -541,7 +578,67 @@ export default class UserController {
       next(error);
     }
   }
+
+
+  async getSubcription(
+    req,
+    res,
+    next
+  ){
+    const {type}=req.query
+    const {offset}=req.query
+    const {pageSize}=req.query
+    const userId=req.query.userId
+
+    try {
+            
+      const my_bj = {
+        type
+      }
+      result=await userService.handleGetSubcription(my_bj,offset,pageSize,userId);
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
+
+  
+
+  async checkActiveSubscription(
+    req,
+    res,
+    next
+  ){
+
+    const my_bj={
+      userId:req.user.id
+    }
+    try {
+    
+    let  result=await userService.handleCheckActiveSubscription(my_bj);
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
  
+
+
+
   async deleteBusiness(
     req,
     res,

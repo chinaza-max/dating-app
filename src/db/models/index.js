@@ -183,11 +183,11 @@ function associate() {
 
 
   Date.hasMany(Review, {
-    foreignKey: 'DateId',
+    foreignKey: 'dateId',
     as: "DateReviews",
   });
   Review.belongsTo(Date, {
-    foreignKey: 'DateId', 
+    foreignKey: 'dateId',   
   })
 
 

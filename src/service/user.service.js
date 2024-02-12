@@ -4,11 +4,11 @@ import { User,Admin ,
   BusinessSpot,Business,
   EmailandTelValidationBusiness,
   UserAnswer,Match,Request,Date,SubscriptionPlan
-  ,Subscription,WishList} from "../db/models/index.js";
+  ,Subscription,WishList,Review } from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
-import { NUMBER, Op } from "sequelize";
+import {  Op } from "sequelize";
 import mailService from "../service/mail.service.js";
 
 
@@ -35,7 +35,7 @@ class UserService {
   SubscriptionPlanModel=SubscriptionPlan
   SubscriptionModel=Subscription
   WishListModel=WishList
-  
+  ReviewModel=Review
 
 
  async updateUserPersonalityQuestion(data) {
@@ -251,6 +251,84 @@ class UserService {
   }
  
 
+
+  }
+
+
+
+
+  async handleCUcommentAndRating(data) {
+    let {      
+      userId,  
+      comment,  
+      dateId,  
+      star,
+      type
+    } = await userUtil.verifyHandleCUcommentAndRating.validateAsync(data);
+
+
+
+
+    console.log("====================")
+
+    console.log(userId,  
+      comment,  
+      dateId,  
+      star,
+      type)
+      console.log("====================")
+
+
+    if(type=="add"){
+
+      try {
+        let result =await this.ReviewModel.findOne({
+          where:{
+            userId,
+            dateId
+          }
+        })
+
+        if(result)return
+
+
+        await this.ReviewModel.create({
+            userId,  
+            comment,  
+            dateId,  
+            star
+        })
+        
+      } catch (error) {
+
+          console.log(error)
+          throw new SystemError(error.name, error.parent)
+      }
+    }
+
+    else{
+
+      try {
+        let result =await this.ReviewModel.findOne({
+          where:{
+            userId,
+            dateId
+          }
+        })
+
+        if(!result)return
+
+
+        result.update({
+            comment,  
+            star
+        })
+        
+      } catch (error) {
+          throw new SystemError(error.name, error.parent)
+      }
+
+    }
 
   }
 
@@ -539,6 +617,28 @@ class UserService {
   }
 
   }
+
+  
+  async handleCheckActiveSubscription(data) {
+    let { 
+      userId
+    } = await userUtil.verifyHandleCheckActiveSubscription.validateAsync(data);
+
+
+      const result=await this.SubscriptionModel.findOne({
+        where:{
+          userId,
+          active:true
+        }
+      })
+
+      if(result){
+        return true
+      }else{
+        return false
+      }
+
+  }
   async handleCreateSubscriptionPlan(data) {
     let { 
       name,
@@ -823,7 +923,98 @@ class UserService {
               ]
             })
           }
-        }else{
+          else if(type=='completed'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                dateStatus:'completed',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                },
+                {
+                  model: this.ReviewModel,
+                  as: "DateReviews",
+                  where: {
+                    isDeleted: false,
+                  },
+                  required:false
+                }
+              ]
+            })
+          }
+          else if(type=='active'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                dateStatus:'active',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            })
+          }
+
+        }
+        else{
           if(type=='accepted'){
             details=await this.DateModel.findAll({
               where: {
@@ -898,7 +1089,7 @@ class UserService {
                 }
               ]
             });
-
+    
           }
           else if(type=='pending'){
             details=await this.DateModel.findAll({
@@ -938,7 +1129,93 @@ class UserService {
               ]
             })
           }
-        
+          else if(type=='completed'){
+            details=await this.DateModel.findAll({
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                dateStatus:'completed',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      },
+                    }
+                  ]
+                },
+                {
+                  model: this.ReviewModel,
+                  as: "DateReviews",
+                  where: {
+                    isDeleted: false,
+                  },
+                  required:false
+                }
+
+              ]
+            })
+          }
+          else if(type=='active'){
+            details=await this.DateModel.findAll({
+              where: {
+                [Op.or]: [
+                  {userId:userId
+                  },
+                  {
+                   userId2:userId
+                  }
+                ],
+                dateStatus:'active',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            })
+          }
+      
         }
       
       }
@@ -1076,6 +1353,81 @@ class UserService {
               ]
             })
           }
+          else if(type=='completed'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where: {
+                dateStatus:'completed',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                },
+                {
+                  model: this.ReviewModel,
+                  as: "DateReviews",
+                  where: {
+                    isDeleted: false,
+                  },
+                  required:false
+                }
+              ]
+            })
+          }
+          else if(type=='active'){
+            details=await this.DateModel.findAll({
+              limit:Number(pageSize),
+              offset:Number(offset),
+              where: {
+                dateStatus:'active',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            })
+          }
         }
         else{
           if(type=='accepted'){
@@ -1201,44 +1553,163 @@ class UserService {
               ]
             })
           }
+          else if(type=='completed'){
+            details=await this.DateModel.findAll({
+              where: {
+                dateStatus:'completed',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                },
+                {
+                  model: this.ReviewModel,
+                  as: "DateReviews",
+                  where: {
+                    isDeleted: false,
+                  },
+                  required:false
+                }
+              ]
+            })
+          }
+          else if(type=='active'){
+            details=await this.DateModel.findAll({
+              where: {
+                dateStatus:'active',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.MatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            })
+          }
           
         }
        
       }
     
+      if(type=='completed'){
 
-      for (let index = 0; index < details.length; index++) {
-        const element = details[index];
-        result.push({
-            DateId:element.dataValues.id,
-            userId: element.dataValues.userId,
-            userId2: element.dataValues.userId2,
-            usersStatus: element.dataValues.usersStatus,
-            dateStatus: element.dataValues.dateStatus,
-            reservationStatus: element.dataValues.reservationStatus,
-            whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
-            fullDate:element.dataValues.fullDate,
-            requestId: element.dataValues.requestId,
-            businessSpotDetails:{
-              id:element.dataValues.BusinessSpot.id,
-              name:element.dataValues.BusinessSpot.name ,
-              address:element.dataValues.BusinessSpot.name ,
-              city:element.dataValues.BusinessSpot.name ,
-              openHours:element.dataValues.BusinessSpot.openHours ,
-              closeHours:element.dataValues.BusinessSpot.closeHours ,
-              tel: element.dataValues.BusinessSpot.tel ,
-            },
-            matchDetails:{
-              id: element.dataValues.Request.dataValues.Match.dataValues.id,
-              userId: element.dataValues.Request.dataValues.Match.dataValues.userId,
-              userId2: element.dataValues.Request.dataValues.Match.dataValues.userId2,
-              matchInformation:JSON.parse( element.dataValues.Request.dataValues.Match.dataValues.matchInformation),
-              matchPercentage: element.dataValues.Request.dataValues.Match.dataValues.matchPercentage,
-            }
+        for (let index = 0; index < details.length; index++) {
+          const element = details[index];
+          let  formattedReviews=[]
 
-        })
-       
+          if(element.dataValues.DateReviews){
+            formattedReviews= element.dataValues.DateReviews.map((review) => ({
+              star: review.dataValues.star,
+              comment: review.dataValues.comment,
+              userId: review.dataValues.userId,
+              createdAt: review.dataValues.createdAt, // Assuming you want the createdAt field
+            }));
+          }
+          
+          result.push({
+              DateId:element.dataValues.id,
+              userId: element.dataValues.userId,
+              userId2: element.dataValues.userId2,
+              usersStatus: element.dataValues.usersStatus,
+              dateStatus: element.dataValues.dateStatus,
+              reservationStatus: element.dataValues.reservationStatus,
+              whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
+              fullDate:element.dataValues.fullDate,
+              requestId: element.dataValues.requestId,
+              businessSpotDetails:{
+                id:element.dataValues.BusinessSpot.id,
+                name:element.dataValues.BusinessSpot.name ,
+                address:element.dataValues.BusinessSpot.name ,
+                city:element.dataValues.BusinessSpot.name ,
+                openHours:element.dataValues.BusinessSpot.openHours ,
+                closeHours:element.dataValues.BusinessSpot.closeHours ,
+                tel: element.dataValues.BusinessSpot.tel ,
+              },
+              matchDetails:{
+                id: element.dataValues.Request.dataValues.Match.dataValues.id,
+                userId: element.dataValues.Request.dataValues.Match.dataValues.userId,
+                userId2: element.dataValues.Request.dataValues.Match.dataValues.userId2,
+                matchInformation:JSON.parse( element.dataValues.Request.dataValues.Match.dataValues.matchInformation),
+                matchPercentage: element.dataValues.Request.dataValues.Match.dataValues.matchPercentage,
+              },
+              dateReview:formattedReviews
+  
+          })
+         
+        }
+      }else{
+        for (let index = 0; index < details.length; index++) {
+          const element = details[index];
+          result.push({
+              DateId:element.dataValues.id,
+              userId: element.dataValues.userId,
+              userId2: element.dataValues.userId2,
+              usersStatus: element.dataValues.usersStatus,
+              dateStatus: element.dataValues.dateStatus,
+              reservationStatus: element.dataValues.reservationStatus,
+              whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
+              fullDate:element.dataValues.fullDate,
+              requestId: element.dataValues.requestId,
+              businessSpotDetails:{
+                id:element.dataValues.BusinessSpot.id,
+                name:element.dataValues.BusinessSpot.name ,
+                address:element.dataValues.BusinessSpot.name ,
+                city:element.dataValues.BusinessSpot.name ,
+                openHours:element.dataValues.BusinessSpot.openHours ,
+                closeHours:element.dataValues.BusinessSpot.closeHours ,
+                tel: element.dataValues.BusinessSpot.tel ,
+              },
+              matchDetails:{
+                id: element.dataValues.Request.dataValues.Match.dataValues.id,
+                userId: element.dataValues.Request.dataValues.Match.dataValues.userId,
+                userId2: element.dataValues.Request.dataValues.Match.dataValues.userId2,
+                matchInformation:JSON.parse( element.dataValues.Request.dataValues.Match.dataValues.matchInformation),
+                matchPercentage: element.dataValues.Request.dataValues.Match.dataValues.matchPercentage,
+              }
+  
+          })
+         
+        }
       }
+   
 
 
     
@@ -1393,6 +1864,37 @@ class UserService {
 
   }
 
+
+  
+
+  async handleGetSubcription(data,offset,pageSize,userId) {
+    let { 
+      type            
+    } = await userUtil.verifyHandleGetSubcription.validateAsync(data);
+
+
+    try {
+
+      const result=[]
+
+      if(userId){
+          if(Number(offset)){
+
+          }else{
+
+          }
+
+
+      }else{
+
+      }
+
+    } catch (error) {
+        throw new SystemError(error.name,  error.parent)
+    }
+
+
+  }
 
 
   async handleAddOrRemoveWishList(data) {

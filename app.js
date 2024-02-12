@@ -8,7 +8,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cron from "node-cron"
-import {Subscription} from "./src/db/models/index.js";
+import {Subscription,  Date} from "./src/db/models/index.js";
+import {  Op } from "sequelize";
 
 
 
@@ -28,11 +29,14 @@ class Server {
     async initializeDbAndFirebase(){
         await DB.connectDB()
 
-        const job = cron.schedule('0 0 * * *', async() => {
+        async function checkIfSubscriptionHasExpired(){
           try {
             // Find all subscriptions
-            const subscriptions = await Subscription.findAll();
-        
+            const subscriptions = await Subscription.findAll({
+              where:{
+                active:true
+              }
+            });
             // Update the status for each subscription
             await Promise.all(subscriptions.map(subscription => subscription.updateSubscriptionStatus()));
             
@@ -40,11 +44,35 @@ class Server {
           } catch (error) {
             console.error('Error updating subscription status:', error);
           }
+        }
 
-
-        });  
         
-        job.start();
+        async function checkIfDateAreCompleted(){
+          try {
+            const Dates = await Date.findAll({
+              where:{
+                [Op.or]: [{dateStatus:null}, {dateStatus:"active"}],
+              }
+            });
+
+            await Promise.all(Dates.map(date => date.updateDateStatus()));
+            console.log('updated date status sucessfully');
+
+          } catch (error) {
+            console.error('Error updating date status:', error);
+          }
+        }
+
+
+        //'0 0 * * *'
+        //'*/10 * * * * *'
+  
+        cron.schedule('*/10 * * * * *', () => {
+          checkIfSubscriptionHasExpired();
+          checkIfDateAreCompleted();
+
+        });
+
     }
      
     initializeMiddlewaresAndRoutes(){

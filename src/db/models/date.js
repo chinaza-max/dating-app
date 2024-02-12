@@ -28,7 +28,7 @@ export function init(connection) {
         type: DataTypes.ENUM(
           'accepted',
           'decline',
-          'pending',
+          'pending'
         ),
         allowNull: false,
         defaultValue:'pending'
@@ -78,7 +78,7 @@ export function init(connection) {
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue:false ,
+        defaultValue:false,
       }
     }, {
       tableName: 'Date',
@@ -88,6 +88,14 @@ export function init(connection) {
     });
   }
 
+  Date.prototype.updateDateStatus = async function () {
+
+    if (this.fullDate <= new Date()) {
+      // If subscription has expired
+      this.dateStatus = "completed";
+      await this.save();
+    }
+  };
 
 
 

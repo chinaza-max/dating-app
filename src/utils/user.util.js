@@ -231,6 +231,8 @@ class UserUtil {
       'decline',
       'pending',
       'all',
+      'completed',
+      'active',
     ).required(),
     type2: Joi.string().valid(
       'admin',
@@ -298,6 +300,27 @@ class UserUtil {
   verifyHandleGetDatesDate= Joi.object({
     userId: Joi.number().required(),
   });
+
+  verifyHandleCUcommentAndRating= Joi.object({
+    userId: Joi.number().required(),
+    dateId: Joi.number().required(),
+    star: Joi.number().required(),
+    comment: Joi.string().required(),
+    type:Joi.string().valid(
+      'add',
+      'edit'
+    ).required()
+  });
+
+  verifyHandleCheckActiveSubscription= Joi.object({
+    userId: Joi.number().required()
+  });
+  
+  verifyHandleGetSubcription= Joi.string().valid(
+    'active',
+    'expired'
+  ).required()
+
 }
 
 export default new UserUtil();
