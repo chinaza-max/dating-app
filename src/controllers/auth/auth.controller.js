@@ -69,13 +69,14 @@ export default class AuthenticationController {
         ...data,
       }
 
-      await authService.handleUserCreation(my_bj);
+      let result=await authService.handleUserCreation(my_bj);
 
     
 
       return res.status(200).json({
         status: 200,
         message: "user registered successfully",
+        data:{id:result.dataValues.id,type:'email'} ,
       });
     } catch (error) {
       console.log(error);
