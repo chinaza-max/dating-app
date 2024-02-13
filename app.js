@@ -67,7 +67,7 @@ class Server {
         //'0 0 * * *'
         //'*/10 * * * * *'
   
-        cron.schedule('*/10 * * * * *', () => {
+        cron.schedule('0 0 * * *', () => {
           checkIfSubscriptionHasExpired();
           checkIfDateAreCompleted();
 
