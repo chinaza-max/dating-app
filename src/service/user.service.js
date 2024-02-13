@@ -1976,12 +1976,14 @@ class UserService {
         isDeleted: false,
         isMatchRejected: false,
       };
+
+
       let result=[]
 
       let matchResult=[]
       
       if(Number(pageSize)){
-     
+      
         matchResult =await this.MatchModel.findAll({
           where: conditions,
           limit: Number(pageSize),
@@ -2006,12 +2008,20 @@ class UserService {
         const element = matchResult[index];
 
             let myMatchId=userId==element.dataValues.userId ?element.dataValues.userId2:element.dataValues.userId
+            
+            let me=await this.UserModel.findOne({
+              where:{id:userId,
+                      isDeleted:false},
+                      attributes:['preferedGender']
+              })
             let myMatchUser=await this.UserModel.findOne({
               where:{id:myMatchId,
                       isDeleted:false},
-                      attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren']
+                      attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren','gender']
               })
 
+              
+            if(me.dataValues.preferedGender!==myMatchUser.dataValues.gender) continue
              
 
             let havePendingRequest=await this.RequestModel.findOne({

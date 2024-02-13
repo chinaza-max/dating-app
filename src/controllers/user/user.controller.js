@@ -535,7 +535,6 @@ export default class UserController {
     next
   ){
 
-
     const {type}=req.query
     const {offset}=req.query
     const {pageSize}=req.query

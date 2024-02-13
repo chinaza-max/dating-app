@@ -27,6 +27,22 @@ export function init(connection) {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:false
+      }, 
+      gender: {
+        type: DataTypes.ENUM(
+          'Male',
+          'Female',
+          'Others',
+        ),
+        allowNull: false,
+      },
+      preferedGender: {
+        type: DataTypes.ENUM(
+          'Male',
+          'Female',
+          'Others',
+        ),
+        allowNull: false,
       },
       tel: {
         type: DataTypes.STRING,
