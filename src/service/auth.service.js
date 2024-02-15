@@ -81,7 +81,7 @@ class AuthenticationService {
         Number(serverConfig.SALT_ROUNDS)
       );
     } catch (error) {
-      console.error(error)
+      console.log(error)
       throw new SystemError('SystemError','An error occured while processing your request(handleUserCreation) while hashing password ');
     }
 
@@ -124,7 +124,8 @@ class AuthenticationService {
     return user;
 
     } catch (error) {
-        throw new SystemError(error.name,error.parent)
+      console.log(error)
+      throw new SystemError(error.name,error.parent)
     }
 
 
@@ -544,35 +545,44 @@ class AuthenticationService {
 
   async  isUserExisting(emailAddress, tel) {
 
-        const existingUser = await this.UserModel.findOne({
-          where: {
-            [Op.or]: [
-              {
-                [Op.and]: [
-                  { emailAddress: emailAddress },
-                  { isEmailValid: true },
-                  { isDeleted: false }
-                ]
-              },
-              {
-                [Op.and]: [
-                  { tel: tel },
-                  { isTelValid: true },
-                  { isDeleted: false }
-                ]
-              }
-            ]
-          }
-        });
 
-        if (existingUser) {
-          if (existingUser.emailAddress == emailAddress&&existingUser.isEmailValid == true) {
-            return 'User with this email already exists.';
-          } else if (existingUser.tel == tel) {
-            return 'User with this tel already exists.';
-          }
+
+    try {
+
+      const existingUser = await this.UserModel.findOne({
+        where: {
+          [Op.or]: [
+            {
+              [Op.and]: [
+                { emailAddress: emailAddress },
+                { isEmailValid: true },
+                { isDeleted: false }
+              ]
+            },
+            {
+              [Op.and]: [
+                { tel: tel },
+                { isTelValid: true },
+                { isDeleted: false }
+              ]
+            }
+          ]
         }
-        return null
+      });
+
+      if (existingUser) {
+        if (existingUser.emailAddress == emailAddress&&existingUser.isEmailValid == true) {
+          return 'User with this email already exists.';
+        } else if (existingUser.tel == tel) {
+          return 'User with this tel already exists.';
+        }
+      }
+      return null
+    } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name, error.parent)
+    }
+      
   }
 
 
