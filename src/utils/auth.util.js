@@ -27,6 +27,7 @@ class AdminUtil {
       eyeColor: Joi.string().required(),
       hairColor: Joi.string().required(),
       bodyType: Joi.string().required(),
+      gender: Joi.string().required(),
       weight: Joi.number().required()
     });
 

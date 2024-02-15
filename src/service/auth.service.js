@@ -70,6 +70,7 @@ class AuthenticationService {
         eyeColor,
         drinking,
         hairColor,
+        gender,
         bodyType
       } = await authUtil.verifyUserCreationData.validateAsync(data);
   
@@ -117,6 +118,7 @@ class AuthenticationService {
         eyeColor,
         drinking,
         hairColor,
+        gender,
         bodyType
     });
     await this.sendEmailVerificationCode(user.emailAddress,user.id)
