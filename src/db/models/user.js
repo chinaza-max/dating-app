@@ -42,7 +42,7 @@ export function init(connection) {
           'Female',
           'Others',
         ),
-        allowNull: false,
+        allowNull: true,
       },
       tel: {
         type: DataTypes.STRING,
