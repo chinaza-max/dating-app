@@ -102,6 +102,23 @@ async handleUpdateTag(data) {
 }
 
 
+
+
+
+async handleGetQuestion() {
+
+
+  let result=await this.PartnerPersonaltyQModel.findAll({
+    where:{
+      isDeleted:true
+    },
+    attributes:['id','text','PartnerPersonaltyQT','options']
+  })
+
+  return result||[]
+
+}
+
 async handleDeleteTag(data) {
     
   const{  
