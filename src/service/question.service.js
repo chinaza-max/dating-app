@@ -116,7 +116,10 @@ async handleGetQuestion() {
       },
       attributes:['id','text','PartnerPersonaltyQT','options']
     })
-  
+    
+    result=result.map((data)=>{
+      return{id:data.id,text:data.text,PartnerPersonaltyQT:data.PartnerPersonaltyQT,options:JSON.parse(data.options)}
+    })
     console.log(result)
   } catch (error) {
       console.log(error)
@@ -162,7 +165,7 @@ async handleDeleteTag(data) {
     await obj.destroy();
 
   } catch (error) {
-    throw new ServerError("Failed to delete question" );
+    throw new ServerError(error.name ,error.parent );
   }
 }
 
