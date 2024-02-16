@@ -123,7 +123,7 @@ export function init(connection) {
         allowNull: false,
       }, 
       personalityQuestionsAnswer: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       }, 
       tags: {
@@ -154,6 +154,11 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue:true
+      },
+      disableAccount: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue:false
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,

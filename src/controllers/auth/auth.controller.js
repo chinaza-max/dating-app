@@ -148,6 +148,7 @@ export default class AuthenticationController {
           acc[key] = user.dataValues[key];
           return acc;
         }, {});
+
         
       return res.status(200).json({
         status: 200,
@@ -174,7 +175,6 @@ export default class AuthenticationController {
       
       const user=await authService.handleLoginAdmin(my_bj);
     
-
       if (user == null){
         return res.status(400).json({
           status: 400,
@@ -182,15 +182,13 @@ export default class AuthenticationController {
         });
       }
       
-
-
       const token = await authService.generateToken(user.dataValues);
 
 
       return res.status(200).json({
         status: 200,
-        message: "login successfully.",
-        data: { user: {firstName:user.dataValues.firstName,firstName:user.dataValues.lastName }, token },
+        message: "login successfully  new.",
+        data: { user: {firstName:user.dataValues.firstName,lastName:user.dataValues.lastName }, token },
       });
     } catch (error) {
       console.log(error);

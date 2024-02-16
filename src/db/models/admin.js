@@ -47,6 +47,11 @@ import {
         defaultValue:false
 
       },
+      disableAccount: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue:false
+      },
       password: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -424,7 +424,7 @@ class AuthenticationService {
     try {
       const token = jwt.sign(user, serverConfig.TOKEN_SECRET, {
         algorithm: "HS256",
-        expiresIn:serverConfig.TOKEN_ISSUER,
+        expiresIn:serverConfig.TOKEN_EXPIRES_IN,
         issuer: serverConfig.TOKEN_ISSUER,
       });
 
