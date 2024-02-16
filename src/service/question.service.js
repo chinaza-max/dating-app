@@ -15,7 +15,8 @@ import mailService from "./mail.service.js";
 import {
   NotFoundError,
   ConflictError,
-  ServerError
+  ServerError,
+  SystemError
 
 } from "../errors/index.js";
 
@@ -107,13 +108,21 @@ async handleUpdateTag(data) {
 
 async handleGetQuestion() {
 
-
-  let result=await this.PartnerPersonaltyQModel.findAll({
-    where:{
-      isDeleted:true
-    },
-    attributes:['id','text','PartnerPersonaltyQT','options']
-  })
+  let result=[]
+  try {
+    result=await this.PartnerPersonaltyQModel.findAll({
+      where:{
+        isDeleted:true
+      },
+      attributes:['id','text','PartnerPersonaltyQT','options']
+    })
+  
+    console.log(result)
+  } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name, error.parent)
+  }
+ 
 
   return result||[]
 
