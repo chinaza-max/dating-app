@@ -112,7 +112,7 @@ async handleGetQuestion() {
   try {
     result=await this.PartnerPersonaltyQModel.findAll({
       where:{
-        isDeleted:true
+        isDeleted:false
       },
       attributes:['id','text','PartnerPersonaltyQT','options']
     })
