@@ -188,7 +188,7 @@ export default class AuthenticationController {
       return res.status(200).json({
         status: 200,
         message: "login successfully  new.",
-        data: { user: {firstName:user.dataValues.firstName,lastName:user.dataValues.lastName }, token },
+        data: { user: {...user.dataValues}, token },
       });
     } catch (error) {
       console.log(error);
