@@ -131,6 +131,30 @@ async handleGetQuestion() {
 
 }
 
+
+
+async handleGetTag() {
+
+  let result=[]
+  try {
+    result=await this.TagModel.findAll({
+      where:{
+        isDeleted:false
+      },
+      attributes:['tag']
+    })
+    
+  
+  } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name, error.parent)
+  }
+ 
+
+  return result||[]
+
+}
+
 async handleDeleteTag(data) {
     
   const{  

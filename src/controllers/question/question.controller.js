@@ -174,6 +174,26 @@ export default class QuestionController {
     
   }
 
+
+
+  async getTag(req, res, next) {
+
+    try {
+
+      let result=await questionService.handleGetTag();
+  
+      return res.status(200).json({
+        status: 200,
+        data: result,
+      });
+
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+
   async createAnswer(req, res, next) {
 
     try {

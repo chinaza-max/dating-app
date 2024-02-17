@@ -18,6 +18,7 @@ class JobRoutes extends QuestionController {
     this.router.post("/updateTag", this.updateTag);
     this.router.post("/deleteTag", this.deleteTag);
     this.router.get("/getQuestion", this.getQuestion);
+    this.router.get("/getTag", this.getTag);
 
 
 
