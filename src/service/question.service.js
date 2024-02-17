@@ -141,7 +141,7 @@ async handleGetTag() {
       where:{
         isDeleted:false
       },
-      attributes:['tag']
+      attributes:['id','tag']
     })
     
   
