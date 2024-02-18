@@ -44,6 +44,15 @@ export function init(connection) {
         ),
         allowNull: true,
       },
+      interest: {
+        type: DataTypes.ENUM(
+          'Marriage',
+          'Dating',
+          'New friends',
+          'Networking'
+        ),
+        allowNull: true,
+      },
       tel: {
         type: DataTypes.STRING,
         allowNull: false,

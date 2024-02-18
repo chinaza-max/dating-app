@@ -287,7 +287,36 @@ export default class UserController {
     }
   }
 
+  
 
+  async updateProfile(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+      
+        const my_bj = {
+          ...data,
+          userId:req.user.id, 
+        }
+                          
+        await userService.handleUpdateProfile(my_bj);
+
+    
+        return res.status(200).json({
+          status: 200,
+          message: "review sucessfully added",
+        });
+      
+     
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
   
 
 

@@ -143,7 +143,6 @@ async handleGetTag() {
       },
       attributes:['id','tag']
     })
-    
   
   } catch (error) {
       console.log(error)

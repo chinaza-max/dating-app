@@ -257,77 +257,69 @@ class UserService {
 
 
 
-  async handleCUcommentAndRating(data) {
+  async handleUpdateProfile(data) {
     let {      
       userId,  
-      comment,  
-      dateId,  
-      star,
-      type
-    } = await userUtil.verifyHandleCUcommentAndRating.validateAsync(data);
+      firstName,
+      lastName,
+      preferedGender,
+      interest,
+      dateOfBirth,
+      countryOfResidence,
+      maritalStatus,
+      numberOfChildren,
+      language,
+      ethnicity,
+      religion,
+      bodyType,
+      education,
+      courseOfStudy,
+      occupation,
+      recreationalActivity,
+      personalityQuestionsAnswer,
+      tags,
+      height,
+      weight,
+      haveChildren,
+      smoking,
+      drinking,
+      eyeColor,
+      hairColor,
+      active
+    } = await userUtil.verifyHandleUpdateProfile.validateAsync(data);
 
 
+    const result=await this.UserModel.findByPk(userId)
 
-
-    console.log("====================")
-
-    console.log(userId,  
-      comment,  
-      dateId,  
-      star,
-      type)
-      console.log("====================")
-
-
-    if(type=="add"){
-
-      try {
-        let result =await this.ReviewModel.findOne({
-          where:{
-            userId,
-            dateId
-          }
-        })
-
-        if(result)return
-
-
-        await this.ReviewModel.create({
-            userId,  
-            comment,  
-            dateId,  
-            star
-        })
-        
-      } catch (error) {
-
-          console.log(error)
-          throw new SystemError(error.name, error.parent)
-      }
-    }
-
-    else{
-
-      try {
-        let result =await this.ReviewModel.findOne({
-          where:{
-            userId,
-            dateId
-          }
-        })
-
-        if(!result)return
-
-
-        result.update({
-            comment,  
-            star
-        })
-        
-      } catch (error) {
-          throw new SystemError(error.name, error.parent)
-      }
-
+    if(result){
+      result.update({
+      firstName,
+      lastName,
+      preferedGender,
+      interest,
+      dateOfBirth,
+      countryOfResidence,
+      maritalStatus,
+      numberOfChildren,
+      language,
+      ethnicity,
+      religion,
+      bodyType,
+      education,
+      courseOfStudy,
+      occupation,
+      recreationalActivity,
+      personalityQuestionsAnswer,
+      tags,
+      height,
+      weight,
+      haveChildren,
+      smoking,
+      drinking,
+      eyeColor,
+      hairColor,
+      active
+      })
     }
 
   }

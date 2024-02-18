@@ -312,6 +312,37 @@ class UserUtil {
     ).required()
   });
 
+
+  verifyHandleUpdateProfile= Joi.object({
+    userId: Joi.number().required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    preferedGender: Joi.string().valid('Male', 'Female', 'Others').allow(null).optional(),
+    interest: Joi.string().valid('Marriage', 'Dating', 'New friends', 'Networking').allow(null).optional(),
+    dateOfBirth: Joi.date().required(),
+    countryOfResidence: Joi.string().required(),
+    maritalStatus: Joi.string().required(),
+    numberOfChildren: Joi.number().required(),
+    language: Joi.string().required(),
+    ethnicity: Joi.string().required(),
+    religion: Joi.string().required(),
+    bodyType: Joi.string().required(),
+    education: Joi.string().required(),
+    courseOfStudy: Joi.string().required(),
+    occupation: Joi.string().required(),
+    recreationalActivity: Joi.string().required(),
+    height: Joi.number().required(),
+    weight: Joi.number().required(),
+    personalityQuestionsAnswer: Joi.string().allow(null).optional(),
+    tags: Joi.string().allow(null).optional(),
+    haveChildren: Joi.string().required(),
+    smoking: Joi.boolean().required(),
+    drinking: Joi.boolean().required(),
+    eyeColor: Joi.string().required(),
+    hairColor: Joi.string().required(),
+    active: Joi.boolean().required(),
+  });
+
   verifyHandleCheckActiveSubscription= Joi.object({
     userId: Joi.number().required()
   });
