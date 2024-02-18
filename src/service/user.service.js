@@ -288,86 +288,60 @@ class UserService {
       active
     } = await userUtil.verifyHandleUpdateProfile.validateAsync(data);
 
-/*
-    const result=await this.UserModel.findByPk(userId)
 
-    if(result){
-      result.update({
-      firstName,
-      lastName,
-      preferedGender,
-      relationshipGoal,
-      dateOfBirth,
-      countryOfResidence,
-      maritalStatus,
-      numberOfChildren,
-      language,
-      ethnicity,
-      religion,
-      bodyType,
-      education,
-      courseOfStudy,
-      occupation,
-      recreationalActivity,
-      personalityQuestionsAnswer,
-      tags,
-      height,
-      weight,
-      haveChildren,
-      smoking,
-      drinking,
-      eyeColor,
-      hairColor,
-      active
-      })
-    }
-    */
+    try {
+      
 
-
-    const [numberOfAffectedRows, updatedRows] = await this.UserModel.update(
-      {
-        firstName,
-        lastName,
-        preferedGender,
-        relationshipGoal,
-        dateOfBirth,
-        countryOfResidence,
-        maritalStatus,
-        numberOfChildren,
-        language,
-        ethnicity,
-        religion,
-        bodyType,
-        education,
-        courseOfStudy,
-        occupation,
-        recreationalActivity,
-        personalityQuestionsAnswer,
-        tags,
-        height,
-        weight,
-        haveChildren,
-        smoking,
-        drinking,
-        eyeColor,
-        hairColor,
-        active
-      },
-      {
-        where: {
-          id: userId
+      const [numberOfAffectedRows, updatedRows] = await this.UserModel.update(
+        {
+          firstName,
+          lastName,
+          preferedGender,
+          relationshipGoal,
+          dateOfBirth,
+          countryOfResidence,
+          maritalStatus,
+          numberOfChildren,
+          language,
+          ethnicity,
+          religion,
+          bodyType,
+          education,
+          courseOfStudy,
+          occupation,
+          recreationalActivity,
+          personalityQuestionsAnswer,
+          tags,
+          height,
+          weight,
+          haveChildren,
+          smoking,
+          drinking,
+          eyeColor,
+          hairColor,
+          active
         },
-        returning: true, 
-        plain: true 
+        {
+          where: {
+            id: userId
+          },
+          returning: true, 
+          plain: true 
+        }
+      );
+      
+      if (numberOfAffectedRows > 0) {
+        const updatedUser = updatedRows.dataValues;
+        return updatedUser;
+      } else {
+        return null;
       }
-    );
-    
-    if (numberOfAffectedRows > 0) {
-      const updatedUser = updatedRows.dataValues;
-      return updatedUser;
-    } else {
-      return null;
+    } catch (error) {
+      console.log()
+      throw new SystemError(error.name, error.parent)
     }
+
+   
     
 
   }

@@ -341,7 +341,6 @@ class UserUtil {
     eyeColor: Joi.string().required(),
     hairColor: Joi.string().required(),
     active: Joi.boolean().required(),
-  
   });
 
   verifyHandleCheckActiveSubscription= Joi.object({
