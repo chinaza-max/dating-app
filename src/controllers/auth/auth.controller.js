@@ -148,7 +148,6 @@ export default class AuthenticationController {
           acc[key] = user.dataValues[key];
           return acc;
         }, {});
-
         
       return res.status(200).json({
         status: 200,

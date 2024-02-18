@@ -303,12 +303,21 @@ export default class UserController {
           userId:req.user.id, 
         }
                           
-        await userService.handleUpdateProfile(my_bj);
+        const result=await userService.handleUpdateProfile(my_bj);
 
+
+        const excludedProperties = ['isDeleted', 'password'];
+
+        const modifiedUser = Object.keys(result)
+          .filter(key => !excludedProperties.includes(key))
+          .reduce((acc, key) => {
+            acc[key] = result[key];
+            return acc;
+          }, {});
     
         return res.status(200).json({
           status: 200,
-          message: "review sucessfully added",
+          data: modifiedUser,
         });
       
      

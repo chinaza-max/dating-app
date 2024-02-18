@@ -318,7 +318,7 @@ class UserUtil {
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     preferedGender: Joi.string().valid('Male', 'Female', 'Others').allow(null).optional(),
-    interest: Joi.string().valid('Marriage', 'Dating', 'New friends', 'Networking').allow(null).optional(),
+    relationshipGoal: Joi.string().valid('Marriage', 'Dating', 'New friends', 'Networking').allow(null).optional(),
     dateOfBirth: Joi.date().required(),
     countryOfResidence: Joi.string().required(),
     maritalStatus: Joi.string().required(),

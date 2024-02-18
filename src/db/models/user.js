@@ -44,7 +44,7 @@ export function init(connection) {
         ),
         allowNull: true,
       },
-      interest: {
+      relationshipGoal: {
         type: DataTypes.ENUM(
           'Marriage',
           'Dating',
