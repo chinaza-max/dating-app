@@ -292,7 +292,7 @@ class UserService {
     try {
       
 
-      const [numberOfAffectedRows, updatedRows] = await this.UserModel.update(
+      await this.UserModel.update(
         {
           firstName,
           lastName,
@@ -324,18 +324,13 @@ class UserService {
         {
           where: {
             id: userId
-          },
-          returning: true, 
-          plain: true 
+          }
         }
       );
       
-      if (numberOfAffectedRows > 0) {
-        const updatedUser = updatedRows.dataValues;
-        return updatedUser;
-      } else {
-        return null;
-      }
+      let result =await this.UserModel.findByPk(userId)
+      
+      return result
     } catch (error) {
       console.log(error)
       throw new SystemError(error.name, error.parent)
