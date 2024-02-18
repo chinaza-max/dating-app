@@ -330,7 +330,7 @@ class UserService {
       
       let result =await this.UserModel.findByPk(userId)
       
-      return result
+      return result.dataValues
     } catch (error) {
       console.log(error)
       throw new SystemError(error.name, error.parent)
