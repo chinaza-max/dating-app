@@ -2741,17 +2741,17 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
       const tags=JSON.parse(userArray.dataValues.tags)
       
 
-      let totalArray=[]
+      let answerAndquestionIdArray=[]
       for (let index2 = 0; index2 < userArray.UserAnswers.length; index2++) {
         const userAnswerArray = userArray.UserAnswers[index2];
         const answer=userAnswerArray.dataValues.answer
         const questionId=userAnswerArray.dataValues.partnerPersonaltyQId
         const answerAndquestionId=answer+'_'+questionId
-        totalArray.push(answerAndquestionId)
+        answerAndquestionIdArray.push(answerAndquestionId)
       }
-      const combinedArray = [...tags,...totalArray];
+      const combinedArray = [...tags,...answerAndquestionIdArray];
 
-      UserInfo.push({userId:userArray.dataValues.id,userData:combinedArray})
+      UserInfo.push({userId:userArray.dataValues.id,userData:combinedArray,preferedGender:userArray.dataValues.preferedGender,gender:userArray.dataValues.gender})
 
     }
 
@@ -2769,18 +2769,23 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
         for (let j = i + 1; j < data.length; j++) {
           const user1 = data[i];
           const user2 = data[j];
+
+          if(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender){
+            const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
     
-          const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
-    
-          if (matchingPercentage >= threshold) {
-            const matchingData = user1.userData.filter(value => user2.userData.includes(value));
-            matchingUsers.push({
-              userId1: user1.userId,
-              userId2: user2.userId,
-              matchingPercentage,
-              matchingData,
-            });
+            if (matchingPercentage >= threshold) {
+              const matchingData = user1.userData.filter(value => user2.userData.includes(value));
+              matchingUsers.push({
+                userId1: user1.userId,
+                userId2: user2.userId,
+                matchingPercentage,
+                matchingData,
+              });
+            }
+          }else{
+            continue
           }
+          
         }
       }
 
