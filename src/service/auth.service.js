@@ -224,8 +224,11 @@ class AuthenticationService {
         expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
       },
     });
+
+
+
+
     relatedPasswordReset[0]?.update({
-      userId: uniqueId,
       resetKey: generatedKey,
       expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
     });
@@ -309,6 +312,15 @@ class AuthenticationService {
         password,
         Number(serverConfig.SALT_ROUNDS)
       );
+
+
+      console.log("''''===============''''")
+
+      console.log(userId)
+      console.log(relatedUser)
+      console.log(hashedPassword)
+      console.log("''''===============''''")
+
       relatedUser.update({
         password: hashedPassword,
       });
