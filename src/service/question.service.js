@@ -379,7 +379,6 @@ async handleCreateAndUpdateTag(data) {
 
     }
 
-    console.log(UserInfo)
 
     function calculateMatchingPercentage(set1, set2) {
       const intersection = set1.filter(value => set2.includes(value));
@@ -423,11 +422,7 @@ async handleCreateAndUpdateTag(data) {
     const threshold = 50; 
     const result = findMatchingUsers(UserInfo, threshold);
 
-
-    console.log(result);
-    
-
-    try {
+    try {  
 
       for (let index = 0; index < result.length; index++) {
         const element = result[index];
@@ -482,7 +477,7 @@ async handleCreateAndUpdateTag(data) {
     throw new SystemError(error.name,error.parent)
   }
   
-}
+ }
 
 
 

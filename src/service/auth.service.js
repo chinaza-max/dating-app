@@ -163,7 +163,6 @@ class AuthenticationService {
     const { emailOrPhone ,type} = await authUtil.validateUserEmail.validateAsync(data);
 
 
-
     let matchedUser=null
     if(type=="user"){
 
@@ -206,14 +205,6 @@ class AuthenticationService {
     }
 
 
-    console.log("===ssssssssssssssss======")
-    console.log("===ssssssssssss=====")
-    console.log(emailOrPhone)
-    console.log(type)
-    console.log(matchedUser)
-
-
-
 
     if (matchedUser == null){
       throw new NotFoundError("This email does not correspond to any user");
@@ -250,7 +241,7 @@ class AuthenticationService {
       subject: "Reset Password",
       templateName: "reset_password",
       variables: {
-        resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/PasswordReset.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/PasswordReset.html?${params.toString()}`
+        resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/ResetPassword/sendPasswordLink.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/Passwor?${params.toString()}`
       },
     });
 
