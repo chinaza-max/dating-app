@@ -173,6 +173,9 @@ class AuthenticationService {
           { emailAddress:emailOrPhone },
           { tel: emailOrPhone }, 
         ],
+        isEmailValid:true, 
+        disableAccount:false, 
+        isDeleted:false
       }
       });
         
@@ -190,6 +193,8 @@ class AuthenticationService {
         { emailAddress:emailOrPhone },
         { tel: emailOrPhone }, 
       ],
+      isEmailValid:true, 
+      isDeleted:false
     }
     });
     }
@@ -200,6 +205,8 @@ class AuthenticationService {
         { emailAddress:emailOrPhone },
         { tel: emailOrPhone }, 
       ],
+      isEmailValid:true, 
+      isDeleted:false
     }
     });
     }
