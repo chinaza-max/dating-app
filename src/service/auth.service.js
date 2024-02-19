@@ -316,7 +316,9 @@ class AuthenticationService {
 
       console.log("''''===============''''")
 
+      console.log(type)
       console.log(userId)
+
       console.log(relatedUser)
       console.log(hashedPassword)
       console.log("''''===============''''")
