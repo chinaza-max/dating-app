@@ -318,7 +318,7 @@ class AuthenticationService {
 
       console.log(type)
       console.log(userId)
-
+      console.log(resetPasswordKey)
       console.log(relatedUser)
       console.log(hashedPassword)
       console.log("''''===============''''")
