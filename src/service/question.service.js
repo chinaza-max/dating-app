@@ -456,7 +456,7 @@ async rematchUser(){
 
           console.log("updating updating")
 
-          console.log(element.matchingData)
+          console.log(element)
 
           console.log("updating updating")
 
@@ -466,6 +466,17 @@ async rematchUser(){
             matchPercentage:element.matchingPercentage
           });
         } else if(existingMatch2) {
+
+
+          
+          console.log("updating updating")
+
+          console.log(element)
+
+          console.log("updating updating")
+
+
+
           await existingMatch2.update({
             matchInformation:JSON.stringify(element.matchingData),
             matchPercentage:element.matchingPercentage
