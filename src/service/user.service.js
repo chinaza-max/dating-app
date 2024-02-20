@@ -331,7 +331,7 @@ class UserService {
       let result =await this.UserModel.findByPk(userId)
       
 
-      this.rematchUser
+      this.rematchUser()
       return result.dataValues
     } catch (error) {
       console.log(error)

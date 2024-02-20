@@ -341,7 +341,7 @@ async handleCreateAndUpdateTag(data) {
 }
 
 
- async rematchUser(){
+async rematchUser(){
   
   try {
     const usersWithProfiles =await  this.UserModel.findAll({
@@ -367,17 +367,17 @@ async handleCreateAndUpdateTag(data) {
       const tags=JSON.parse(userArray.dataValues.tags)
       
 
-      let totalArray=[]
+      let answerAndquestionIdArray=[]
       for (let index2 = 0; index2 < userArray.UserAnswers.length; index2++) {
         const userAnswerArray = userArray.UserAnswers[index2];
         const answer=userAnswerArray.dataValues.answer
         const questionId=userAnswerArray.dataValues.partnerPersonaltyQId
         const answerAndquestionId=answer+'_'+questionId
-        totalArray.push(answerAndquestionId)
+        answerAndquestionIdArray.push(answerAndquestionId)
       }
-      const combinedArray = [...tags,...totalArray];
+      const combinedArray = [...tags,...answerAndquestionIdArray];
 
-      UserInfo.push({userId:userArray.dataValues.id,userData:combinedArray})
+      UserInfo.push({userId:userArray.dataValues.id,userData:combinedArray,preferedGender:userArray.dataValues.preferedGender,gender:userArray.dataValues.gender})
 
     }
 
@@ -395,18 +395,41 @@ async handleCreateAndUpdateTag(data) {
         for (let j = i + 1; j < data.length; j++) {
           const user1 = data[i];
           const user2 = data[j];
-    
-          const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
-    
-          if (matchingPercentage >= threshold) {
-            const matchingData = user1.userData.filter(value => user2.userData.includes(value));
-            matchingUsers.push({
-              userId1: user1.userId,
-              userId2: user2.userId,
-              matchingPercentage,
-              matchingData,
-            });
+
+
+          if(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender){
+
+
+            console.log("yes they can be match")
+            console.log("yes they can be match")
+            console.log("yes they can be match")
+            console.log("yes they can be match")
+            console.log("yes they can be match")
+
+            const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
+            console.log("match percentage ")
+            console.log("match percentage ")
+            console.log(matchingPercentage)
+            console.log(matchingPercentage)
+            console.log(matchingPercentage)
+
+            console.log("match percentage ")
+            console.log("match percentage ")
+
+
+            if (matchingPercentage >= threshold) {
+              const matchingData = user1.userData.filter(value => user2.userData.includes(value));
+              matchingUsers.push({
+                userId1: user1.userId,
+                userId2: user2.userId,
+                matchingPercentage,
+                matchingData,
+              });
+            }
+          }else{
+            continue
           }
+          
         }
       }
 
@@ -447,7 +470,7 @@ async handleCreateAndUpdateTag(data) {
 
         if (existingMatch1) {
 
-          await existingMatch1.update({ 
+          await existingMatch1.update({
             matchInformation:JSON.stringify(element.matchingData),
             matchPercentage:element.matchingPercentage+'%'
           });
@@ -456,7 +479,7 @@ async handleCreateAndUpdateTag(data) {
             matchInformation:JSON.stringify(element.matchingData),
             matchPercentage:element.matchingPercentage+'%'
           });
-        }  
+        }
         else{
           await this.UserMatchModel.create({
             userId:element.userId1,
