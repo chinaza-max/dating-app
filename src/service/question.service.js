@@ -390,11 +390,21 @@ async rematchUser(){
     
     function findMatchingUsers(data, threshold) {
       const matchingUsers = [];
-    
+      console.log("match data")
+      console.log(data)
+
+      console.log("match data")
+
+
+
       for (let i = 0; i < data.length - 1; i++) {
         for (let j = i + 1; j < data.length; j++) {
           const user1 = data[i];
           const user2 = data[j];
+
+          console.log("condition")
+          console.log(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender)
+          console.log("condition")
 
 
           if(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender){
@@ -402,6 +412,7 @@ async rematchUser(){
 
             console.log("yes they can be match")
             console.log("yes they can be match")
+            
             console.log("yes they can be match")
             console.log("yes they can be match")
             console.log("yes they can be match")
