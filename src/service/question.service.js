@@ -228,7 +228,7 @@ async handleCreateAnswer(data) {
 
  for (let index = 0; index < details.length; index++) {
   const element = details[index];
-  try {
+  try { 
 
     const [userAnswer, created] = await this.UserAnswerModel.findOrCreate({
       where: {
