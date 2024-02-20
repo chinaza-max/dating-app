@@ -454,14 +454,21 @@ async rematchUser(){
 
         if (existingMatch1) {
 
+          console.log("updating updating")
+
+          console.log(element.matchingData)
+
+          console.log("updating updating")
+
+
           await existingMatch1.update({
             matchInformation:JSON.stringify(element.matchingData),
-            matchPercentage:element.matchingPercentage+'%'
+            matchPercentage:element.matchingPercentage
           });
         } else if(existingMatch2) {
           await existingMatch2.update({
             matchInformation:JSON.stringify(element.matchingData),
-            matchPercentage:element.matchingPercentage+'%'
+            matchPercentage:element.matchingPercentage
           });
         }
         else{
@@ -538,12 +545,7 @@ async getCommonBioDetail(userId1,userId2){
       result.push('Single Parent')
     }
 
-
-
     return result
-
-
-    
 
   } catch (error) {
     console.log(error)
