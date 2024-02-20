@@ -534,8 +534,8 @@ async getCommonBioDetail(userId1,userId2){
       result.push('Hobby')
     }
 
-    if(user1Details.recreationalActivity==user2Details.recreationalActivity){
-      result.push('Hobby')
+    if(user1Details.haveChildren==user2Details.haveChildren){
+      result.push('Single Parent')
     }
 
 
