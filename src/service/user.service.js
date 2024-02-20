@@ -3,7 +3,7 @@ import { User,Admin ,
   EmailandTelValidationAdmin,
   BusinessSpot,Business,
   EmailandTelValidationBusiness,
-  UserAnswer,Match,Request,Date,SubscriptionPlan
+  UserAnswer,UserMatch,Request,Date,SubscriptionPlan
   ,Subscription,WishList,Review } from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
@@ -29,7 +29,7 @@ class UserService {
   EmailandTelValidationBusinessModel=EmailandTelValidationBusiness
   BusinessSpotsModel=BusinessSpot
   UserAnswerModel=UserAnswer
-  MatchModel=Match
+  UserMatchModel=UserMatch
   RequestModel=Request
   DateModel=Date
   SubscriptionPlanModel=SubscriptionPlan
@@ -94,7 +94,7 @@ class UserService {
     const{ matchId,userId}=await userUtil.verifyHandleReJectMatch.validateAsync(data);
  
     try {
-      const matchDetail=await this.MatchModel.findOne({
+      const matchDetail=await this.UserMatchModel.findOne({
         where: {
           [Op.or]: [
             {
@@ -107,7 +107,7 @@ class UserService {
           id:matchId
         },
       })
-      if (!matchDetail) throw new NotFoundError("match not found.");
+      if (!matchDetail) throw new NotFoundError("User match not found.");
       await matchDetail.update({ isMatchRejected:true })
     } catch (error) {
       console.log(error)
@@ -205,7 +205,7 @@ class UserService {
       matchId           
     } = await userUtil.verifyHandleCreateRequest.validateAsync(data);
 
-    let matchDetail=await this.MatchModel.findOne({
+    let matchDetail=await this.UserMatchModel.findOne({
       where: {
         [Op.or]: [
           {
@@ -236,7 +236,7 @@ class UserService {
 
 
     if(requestDetail) return 
-    if(!matchDetail) throw new NotFoundError("match not found.");
+    if(!matchDetail) throw new NotFoundError("User match not found.");
 
 
   try {
@@ -482,7 +482,7 @@ class UserService {
   
       for (let index = 0; index < details.length; index++) {
         const element = details[index];
-        let matchDetail=await this.MatchModel.findOne({
+        let matchDetail=await this.UserMatchModel.findOne({
           where: {
             [Op.or]: [
               {
@@ -843,7 +843,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -883,7 +883,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -924,7 +924,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -964,7 +964,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       }
@@ -1012,7 +1012,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       }
@@ -1054,7 +1054,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1091,7 +1091,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1130,7 +1130,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1168,7 +1168,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1215,7 +1215,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       }
@@ -1256,7 +1256,7 @@ class UserService {
                     },
                     include:[
                       {
-                        model: this.MatchModel,
+                        model: this.UserMatchModel,
                         where: {
                           isDeleted: false,
                         },
@@ -1289,7 +1289,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1322,7 +1322,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1354,7 +1354,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1387,7 +1387,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       }
@@ -1428,7 +1428,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       }
@@ -1462,7 +1462,7 @@ class UserService {
                     },
                     include:[
                       {
-                        model: this.MatchModel,
+                        model: this.UserMatchModel,
                         where: {
                           isDeleted: false,
                         },
@@ -1493,7 +1493,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1524,7 +1524,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1554,7 +1554,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       },
@@ -1585,7 +1585,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       }
@@ -1624,7 +1624,7 @@ class UserService {
                   },
                   include:[
                     {
-                      model: this.MatchModel,
+                      model: this.UserMatchModel,
                       where: {
                         isDeleted: false,
                       }
@@ -1675,11 +1675,11 @@ class UserService {
                 tel: element.dataValues.BusinessSpot.tel ,
               },
               matchDetails:{
-                id: element.dataValues.Request.dataValues.Match.dataValues.id,
-                userId: element.dataValues.Request.dataValues.Match.dataValues.userId,
-                userId2: element.dataValues.Request.dataValues.Match.dataValues.userId2,
-                matchInformation:JSON.parse( element.dataValues.Request.dataValues.Match.dataValues.matchInformation),
-                matchPercentage: element.dataValues.Request.dataValues.Match.dataValues.matchPercentage,
+                id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
+                userId: element.dataValues.Request.dataValues.UserMatch.dataValues.userId,
+                userId2: element.dataValues.Request.dataValues.UserMatch.dataValues.userId2,
+                matchInformation:JSON.parse( element.dataValues.Request.dataValues.UserMatch.dataValues.matchInformation),
+                matchPercentage: element.dataValues.Request.dataValues.UserMatch.dataValues.matchPercentage,
               },
               dateReview:formattedReviews
   
@@ -1709,11 +1709,11 @@ class UserService {
                 tel: element.dataValues.BusinessSpot.tel ,
               },
               matchDetails:{
-                id: element.dataValues.Request.dataValues.Match.dataValues.id,
-                userId: element.dataValues.Request.dataValues.Match.dataValues.userId,
-                userId2: element.dataValues.Request.dataValues.Match.dataValues.userId2,
-                matchInformation:JSON.parse( element.dataValues.Request.dataValues.Match.dataValues.matchInformation),
-                matchPercentage: element.dataValues.Request.dataValues.Match.dataValues.matchPercentage,
+                id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
+                userId: element.dataValues.Request.dataValues.UserMatch.dataValues.userId,
+                userId2: element.dataValues.Request.dataValues.UserMatch.dataValues.userId2,
+                matchInformation:JSON.parse( element.dataValues.Request.dataValues.UserMatch.dataValues.matchInformation),
+                matchPercentage: element.dataValues.Request.dataValues.UserMatch.dataValues.matchPercentage,
               }
   
           })
@@ -1753,7 +1753,7 @@ class UserService {
               },
               include: [
                 {
-                  model: this.MatchModel,
+                  model: this.UserMatchModel,
                   where: {
                     isDeleted: false,
                   },
@@ -1768,7 +1768,7 @@ class UserService {
               },
               include: [
                 {
-                  model: this.MatchModel,
+                  model: this.UserMatchModel,
                   where: {
                     isDeleted: false,
                   },
@@ -1783,11 +1783,11 @@ class UserService {
             wishListId:element.dataValues.id,
             userId:element.dataValues.userId,
             matchDetails:{
-              matchId:element.dataValues.Match.id,
-              userId:element.dataValues.Match.userId,
-              userId2:element.dataValues.Match.userId,
-              matchInformation:JSON.parse(element.dataValues.Match.matchInformation),
-              matchPercentage:element.dataValues.Match.matchPercentage,
+              matchId:element.dataValues.UserMatch.id,
+              userId:element.dataValues.UserMatch.userId,
+              userId2:element.dataValues.UserMatch.userId,
+              matchInformation:JSON.parse(element.dataValues.UserMatch.matchInformation),
+              matchPercentage:element.dataValues.UserMatch.matchPercentage,
             },
           
            /* userId: element.dataValues.userId,
@@ -1808,11 +1808,11 @@ class UserService {
               tel: element.dataValues.BusinessSpot.tel ,
             },
             matchDetails:{
-              id: element.dataValues.Request.dataValues.Match.dataValues.id,
-              userId: element.dataValues.Request.dataValues.Match.dataValues.userId,
-              userId2: element.dataValues.Request.dataValues.Match.dataValues.userId2,
-              matchInformation:JSON.parse( element.dataValues.Request.dataValues.Match.dataValues.matchInformation),
-              matchPercentage: element.dataValues.Request.dataValues.Match.dataValues.matchPercentage,
+              id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
+              userId: element.dataValues.Request.dataValues.UserMatch.dataValues.userId,
+              userId2: element.dataValues.Request.dataValues.UserMatch.dataValues.userId2,
+              matchInformation:JSON.parse( element.dataValues.Request.dataValues.UserMatch.dataValues.matchInformation),
+              matchPercentage: element.dataValues.Request.dataValues.UserMatch.dataValues.matchPercentage,
             }
 */
         })
@@ -1849,7 +1849,7 @@ class UserService {
       let result=[]
       if(Number(offset)){
 
-       result = await this.MatchModel.findAll({
+       result = await this.UserMatchModel.findAll({
           where: conditions,
           limit: Number(offset),
           offset: Number(pageSize),
@@ -1858,7 +1858,7 @@ class UserService {
       }
       else{
 
-        result = await this.MatchModel.findAll({
+        result = await this.UserMatchModel.findAll({
           where: conditions,
           attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage']
         });
@@ -1990,7 +1990,7 @@ class UserService {
       
       if(Number(pageSize)){
       
-        matchResult =await this.MatchModel.findAll({
+        matchResult =await this.UserMatchModel.findAll({
           where: conditions,
           limit: Number(pageSize),
           offset: Number(offset),
@@ -2001,7 +2001,7 @@ class UserService {
       }
       else{
 
-          matchResult = await this.MatchModel.findAll({
+          matchResult = await this.UserMatchModel.findAll({
           where: conditions,
           attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
           order: [['matchPercentage', 'ASC']],
@@ -2809,14 +2809,14 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
         const element = result[index];
 
         
-        const existingMatch1 = await this.MatchModel.findOne({
+        const existingMatch1 = await this.UserMatchModel.findOne({
           where: {   
             userId:element.userId1,
             userId2:element.userId2,
             isDeleted:false },
         });
 
-        const existingMatch2 = await this.MatchModel.findOne({
+        const existingMatch2 = await this.UserMatchModel.findOne({
           where: {   
             userId:element.userId2,
             userId2:element.userId1,
@@ -2837,7 +2837,7 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
           });
         }
         else{
-          await this.MatchModel.create({
+          await this.UserMatchModel.create({
             userId:element.userId1,
             userId2:element.userId2,
             matchInformation:JSON.stringify(element.matchingData),

@@ -13,7 +13,7 @@ import Date, { init as initDate } from "./date.js";
 //import SearchSetting, { init as initSearchSetting } from "./searchSetting.js";
 import Review, { init as initReview } from "./review.js";
 import PasswordReset, { init as initPasswordReset } from "./passwordReset.js";
-import Match, { init as initMatch } from "./match.js";
+import UserMatch, { init as initUserMatch } from "./match.js";
 import Transaction, { init as initTransaction } from "./transaction.js";
 import EmailandTelValidation, { init as initEmailandTelValidation } from "./emailAndTelValidation.js";
 import EmailandTelValidationAdmin, { init as initEmailandTelValidationAdmin } from "./emailAndTelValidationAdmin.js";
@@ -45,11 +45,11 @@ function associate() {
   })
 
   
-  Match.hasOne(WishList, {
+  UserMatch.hasOne(WishList, {
     foreignKey: 'matchId',
     as: "MatchWishLists",
   });
-  WishList.belongsTo(Match, {
+  WishList.belongsTo(UserMatch, {
     foreignKey: 'matchId'
   })
 
@@ -149,11 +149,11 @@ function associate() {
     foreignKey: 'userId2' 
   })
 
-  Match.hasMany(Request, {
+  UserMatch.hasMany(Request, {
     foreignKey: 'matchId',
     as: "MatchRequest",
   });
-  Request.belongsTo(Match, {
+  Request.belongsTo(UserMatch, {
     foreignKey: 'matchId'
   })
 
@@ -191,22 +191,22 @@ function associate() {
   })
 
 
-  User.hasMany(Match, {
+  User.hasMany(UserMatch, {
     foreignKey: 'userId',
     as: "UserMatchs",
   });
-  Match.belongsTo(User, {
+  UserMatch.belongsTo(User, {
     foreignKey: 'userId', 
   })
 
 
 
 
-  User.hasMany(Match, {
+  User.hasMany(UserMatch, {
     foreignKey: 'userId2',
     as: "User2Matchs",
   });
-  Match.belongsTo(User, {
+  UserMatch.belongsTo(User, {
     foreignKey: 'userId2', 
   })
 
@@ -253,7 +253,7 @@ export {
   EmailandTelValidationAdmin,
   EmailandTelValidationBusiness,
   Tag,
-  Match
+  UserMatch
 }
 
 export function init(connection) {
@@ -271,7 +271,7 @@ export function init(connection) {
   initReview(connection)
   initAdmin(connection)
   initPasswordReset(connection)
-  initMatch(connection)
+  initUserMatch(connection)
   initTransaction(connection)
   initEmailandTelValidation(connection)
   initEmailandTelValidationAdmin(connection)

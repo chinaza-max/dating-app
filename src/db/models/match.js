@@ -6,10 +6,10 @@ import {
 
   import serverConfig from "../../config/server.js";
 
-  class Match extends Model {}
+  class UserMatch extends Model {}
 
   export function init(connection) {
-    Match.init({
+    UserMatch.init({
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -42,14 +42,14 @@ import {
         defaultValue:false 
       }
     }, {
-      tableName: 'Match',
+      tableName: 'UserMatch',
       sequelize: connection,
       timestamps: true, 
       underscored:false
     });
   }
 
-export default Match ;
+export default UserMatch ;
 
 
 

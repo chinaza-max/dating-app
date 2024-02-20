@@ -2,7 +2,7 @@ import { User,Admin
   ,EmailandTelValidation,
   PartnerPersonaltyQ,
   UserAnswer,
-  Match,
+  UserMatch,
   Tag
 } from "../db/models/index.js";
 import questionUtil from "../utils/question.util.js";
@@ -27,9 +27,8 @@ class UserService {
   PartnerPersonaltyQModel=PartnerPersonaltyQ;
   TagModel=Tag;
   UserAnswerModel=UserAnswer
-  MatchModel=Match
+  UserMatchModel=UserMatch
   
-
  async handleCreateQuestion(data) {
     
    const{  
@@ -428,14 +427,14 @@ async handleCreateAndUpdateTag(data) {
         const element = result[index];
 
         
-        const existingMatch1 = await this.MatchModel.findOne({
+        const existingMatch1 = await this.UserMatchModel.findOne({
           where: {   
             userId:element.userId1,
             userId2:element.userId2,
             isDeleted:false },
         });
 
-        const existingMatch2 = await this.MatchModel.findOne({
+        const existingMatch2 = await this.UserMatchModel.findOne({
           where: {   
             userId:element.userId2,
             userId2:element.userId1,
@@ -445,7 +444,7 @@ async handleCreateAndUpdateTag(data) {
 
         if (existingMatch1) {
 
-          await existingMatch1.update({
+          await existingMatch1.update({ 
             matchInformation:JSON.stringify(element.matchingData),
             matchPercentage:element.matchingPercentage+'%'
           });
@@ -454,9 +453,9 @@ async handleCreateAndUpdateTag(data) {
             matchInformation:JSON.stringify(element.matchingData),
             matchPercentage:element.matchingPercentage+'%'
           });
-        }
+        }  
         else{
-          await this.MatchModel.create({
+          await this.UserMatchModel.create({
             userId:element.userId1,
             userId2:element.userId2,
             matchInformation:JSON.stringify(element.matchingData),
