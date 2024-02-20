@@ -366,7 +366,7 @@ async rematchUser(){
       const userArray = usersWithProfiles[index];
       const tags=JSON.parse(userArray.dataValues.tags)
       
-
+       
       let answerAndquestionIdArray=[]
       for (let index2 = 0; index2 < userArray.UserAnswers.length; index2++) {
         const userAnswerArray = userArray.UserAnswers[index2];
@@ -390,44 +390,17 @@ async rematchUser(){
     
     function findMatchingUsers(data, threshold) {
       const matchingUsers = [];
-      console.log("match data")
-      console.log(data)
-
-      console.log("match data")
-
-
 
       for (let i = 0; i < data.length - 1; i++) {
         for (let j = i + 1; j < data.length; j++) {
           const user1 = data[i];
           const user2 = data[j];
-
-          console.log("condition")
-          console.log(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender)
-          console.log("condition")
    
 
           if(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender){
 
-
-            console.log("yes they can be match")
-            console.log("yes they can be match")
-            
-            console.log("yes they can be match")
-            console.log("yes they can be match")
-            console.log("yes they can be match")
-
             const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
-            console.log("match percentage ")
-            console.log("match percentage ")
-            console.log(matchingPercentage)
-            console.log(matchingPercentage)
-            console.log(matchingPercentage)
-
-            console.log("match percentage ")
-            console.log("match percentage ")
-
-
+  
             if (matchingPercentage >= threshold) {
               const matchingData = user1.userData.filter(value => user2.userData.includes(value));
               matchingUsers.push({
@@ -462,7 +435,7 @@ async rematchUser(){
 
       for (let index = 0; index < result.length; index++) {
         const element = result[index];
-
+        element.matchingData=await this.getCommonBioDetail(element.userId1,element.userId2,)
         
         const existingMatch1 = await this.UserMatchModel.findOne({
           where: {   
@@ -513,7 +486,72 @@ async rematchUser(){
     throw new SystemError(error.name,error.parent)
   }
   
- }
+}
+
+
+
+async getCommonBioDetail(userId1,userId2){
+  
+  try {
+   
+    let user1Details=await this.UserModel.findByPk(userId1)
+    let user2Details=await this.UserModel.findByPk(userId2)
+    let result=[]
+
+    if(user1Details.relationshipGoal==user2Details.user2Details){
+        result.push('Relationship Goal')
+    }
+    if(user1Details.maritalStatus==user2Details.maritalStatus){
+      result.push('marital Status')
+    }
+    if(user1Details.numberOfChildren==user2Details.numberOfChildren){
+      result.push('Number of Children')
+    }
+
+    if(user1Details.language==user2Details.language){
+      result.push('Language')
+    }
+    if(user1Details.ethnicity==user2Details.ethnicity){
+      result.push('Ethnicity')
+    }
+    if(user1Details.religion==user2Details.religion){
+      result.push('Religion')
+    }
+
+    if(user1Details.education==user2Details.education){
+      result.push('Education')
+    }
+
+    if(user1Details.courseOfStudy==user2Details.courseOfStudy){
+      result.push('Course of Study')
+    }
+
+    if(user1Details.occupation==user2Details.occupation){
+      result.push('Profession')
+    }
+
+    if(user1Details.recreationalActivity==user2Details.recreationalActivity){
+      result.push('Hobby')
+    }
+
+    if(user1Details.recreationalActivity==user2Details.recreationalActivity){
+      result.push('Hobby')
+    }
+
+
+
+    return result
+
+
+    
+
+  } catch (error) {
+    console.log(error)
+    throw new SystemError(error.name,error.parent)
+  }
+  
+}
+
 
 
 
