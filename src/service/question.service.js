@@ -405,7 +405,7 @@ async rematchUser(){
           console.log("condition")
           console.log(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender)
           console.log("condition")
-
+   
 
           if(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender){
 
