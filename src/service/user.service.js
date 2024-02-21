@@ -2206,8 +2206,16 @@ class UserService {
     const birthDateObj = new Date(birthdate);
     const currentDate = new Date();
 
-    console.log('birthdate')
+    console.log('===============birthdate start====================')
+
     console.log(birthdate)
+    console.log(currentDate)
+
+    console.log( new Date(birthdate))
+    console.log(new Date())
+
+    console.log('===============birthdate  end ====================')
+
 
     // Calculate the difference in milliseconds
     const timeDiff = currentDate - birthDateObj;
