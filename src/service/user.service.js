@@ -139,7 +139,7 @@ class UserService {
       throw new SystemError('SystemError','An error occured while processing your request(handleUserCreation) while hashing password ');
     }
 
-  var existingUser = await this.isUserExistingAdmin(emailAddress,tel);
+  let existingUser = await this.isUserExistingAdmin(emailAddress,tel);
 
   if (existingUser != null)throw new ConflictError(existingUser);
 
@@ -2243,7 +2243,7 @@ class UserService {
       throw new SystemError('SystemError','An error occured while processing your request(handleBusinessCreation) while hashing password ');
     }
 
-  var existingUser = await this.isBusinessExisting(emailAddress,tel);
+  let existingUser = await this.isBusinessExisting(emailAddress,tel);
 
   if (existingUser != null)throw new ConflictError(existingUser);
   
@@ -2328,7 +2328,7 @@ class UserService {
     }
 
 
-  var existingUser = await this.isBusinessExisting(emailAddress,tel);
+  let existingUser = await this.isBusinessExisting(emailAddress,tel);
 
   if (existingUser != null)throw new ConflictError(existingUser);
   
@@ -2381,7 +2381,7 @@ class UserService {
     }
 
 
-  var existingUser = await this.isBusinessExisting(emailAddress,tel);
+  let existingUser = await this.isBusinessExisting(emailAddress,tel);
 
   if (existingUser != null)throw new ConflictError(existingUser);
   
@@ -2612,7 +2612,7 @@ async handleSendVerificationCodeEmailOrTelAdmin(data) {
     type,
   } = await userUtil.verifyHandleSendVerificationCodeEmailOrTelAdmin.validateAsync(data);
 
-  var relatedUser = await this.AdminModel.findOne({
+  let relatedUser = await this.AdminModel.findOne({
     where: { id: userId },
   });
 
@@ -2740,7 +2740,7 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
 
   try {
     
-      var keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
+      let keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
       const verificationCode =Math.floor(Math.random() * 9000000) + 100000;
   
       await this.EmailandTelValidationBusinessModel.upsert({
@@ -3027,21 +3027,24 @@ async getCommonBioDetail(userId1,userId2){
 
 
  async getDistanceBetween(lat1, long1, lat2, long2,distance) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = deg2rad(lat2 - lat1); // deg2rad below
-  var dLon = deg2rad(long2 - long1);
-  var a =
+
+  function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
+
+  let R = 6371; // Radius of the earth in km
+  let dLat = deg2rad(lat2 - lat1); // deg2rad below
+  let dLon = deg2rad(long2 - long1);
+  let a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) *
     Math.cos(deg2rad(lat2)) *
     Math.sin(dLon / 2) *
     Math.sin(dLon / 2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  var d = R * c; // Distance in km
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  let d = R * c; // Distance in km
   d = d * 1000; //Distance in meters
 
-
-  
   if(d > (distance*1000)){
     return false
   }else{
