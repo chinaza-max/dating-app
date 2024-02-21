@@ -54,6 +54,7 @@ class UserRoutes extends UserController {
     this.router.get("/checkActiveSubscription", this.checkActiveSubscription);
     this.router.get("/getSubcription", this.getSubcription);
     this.router.post("/updateProfile", this.updateProfile);
+    this.router.post("/updateLocation", this.updateLocation);
 
 
   } 

@@ -343,6 +343,15 @@ class UserUtil {
     active: Joi.boolean().required(),
   });
 
+
+  verifyHandleUpdateLocation= Joi.object({
+    userId: Joi.number().required(),
+    latitude: Joi.number().required(),
+    logitude: Joi.number().required(),
+  });
+  
+
+
   verifyHandleCheckActiveSubscription= Joi.object({
     userId: Joi.number().required()
   });

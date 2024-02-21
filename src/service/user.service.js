@@ -343,6 +343,39 @@ class UserService {
 
   }
 
+  
+  async handleUpdateLocation(data) {
+    let {      
+      userId,  
+      latitude,
+      logitude
+    } = await userUtil.verifyHandleUpdateLocation.validateAsync(data);
+
+
+    try {
+      
+
+      await this.UserModel.update(
+        {
+          locationCoordinate:JSON.stringify({ latitude,
+            logitude})
+        },
+        {
+          where: {
+            id: userId
+          }
+        }
+      );
+      
+    } catch (error) {
+      throw new SystemError(error.name, error.parent)
+    }
+
+  }
+
+
+  
+
 
   
   async handleGetRequest(data,offset,pageSize) {

@@ -27,6 +27,10 @@ import {
         type: DataTypes.STRING,
         allowNull: false
       }, 
+      locationCoordinate: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }, 
       matchPercentage: {
         type: DataTypes.INTEGER,
         allowNull: false
