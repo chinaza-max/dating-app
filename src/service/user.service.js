@@ -2101,6 +2101,15 @@ class UserService {
                 console.log("age is in range")
 
               } else {
+
+                console.log(ageToCheck)
+
+                console.log(ageRangeMin)
+
+                console.log(ageRangeMax)
+
+
+
                 console.log("age is not in range")
 
                 continue;
