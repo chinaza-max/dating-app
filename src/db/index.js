@@ -54,7 +54,7 @@ class DB {
           });   
 
 
-          async function getAllTableNames() {
+          const getAllTableNames =async ()=> {
             try {
               const tableNames = await this.sequelize.showAllSchemas();
               console.log('Available table names:', tableNames);

@@ -9,7 +9,7 @@ import Subscription, { init as initSubscription } from "./subscription.js";
 import SubscriptionPlan, { init as initSubscriptionPlan } from "./subscriptionPlan.js";
 import Request, { init as initRequest } from "./request.js";
 import WishList, { init as initWishList } from "./wishList.js";
-import Date, { init as initDate } from "./date.js";
+import UserDate, { init as initDate } from "./date.js";
 //import SearchSetting, { init as initSearchSetting } from "./searchSetting.js";
 import Review, { init as initReview } from "./review.js";
 import PasswordReset, { init as initPasswordReset } from "./passwordReset.js";
@@ -63,18 +63,18 @@ function associate() {
   })
 
 
-/*
-  BusinessSpot.hasMany(Date, {
+
+  BusinessSpot.hasMany(UserDate, {
     foreignKey: 'businessIdSpotId',
     as: "DateBusinessSpots",
   });
-  Date.belongsTo(BusinessSpot, {
+  UserDate.belongsTo(BusinessSpot, {
     foreignKey: 'businessIdSpotId', 
   })
   
   console.log(BusinessSpot.associations)
-  console.log(Date.associations)
-*/
+  console.log(UserDate.associations)
+
   PartnerPersonaltyQ.hasMany(UserAnswer, {
     foreignKey: 'partnerPersonaltyQId',
     as: "UserAnswerQs",
@@ -103,33 +103,33 @@ function associate() {
     foreignKey: 'subscriptionPlanId', 
   })
 
-/*
-  Request.hasOne(Date, {
+
+  Request.hasOne(UserDate, {
     foreignKey: 'requestId',
     as: "RequestDates",
   });
-  Date.belongsTo(Request, {
+  UserDate.belongsTo(Request, {
     foreignKey: 'requestId', 
-  })*/
+  })
 
-  /*
-  User.hasMany(Date, {
+  
+  User.hasMany(UserDate, {
     foreignKey: 'userId',
     as: "UserDates",
   });
-  Date.belongsTo(User, {
+  UserDate.belongsTo(User, {
     foreignKey: 'userId', 
-  })*/
+  })
 
 
-/*
-  User.hasMany(Date, {
+
+  User.hasMany(UserDate, {
     foreignKey: 'userId2',
     as: "User2Dates",
   });
-  Date.belongsTo(User, {
+  UserDate.belongsTo(User, {
     foreignKey: 'userId2', 
-  })*/
+  })
 
   User.hasMany(Request, {
     foreignKey: 'userId',
@@ -181,14 +181,14 @@ function associate() {
 
 
 
-/*
-  Date.hasMany(Review, {
+
+  UserDate.hasMany(Review, {
     foreignKey: 'dateId',
     as: "DateReviews",
   });
-  Review.belongsTo(Date, {
+  Review.belongsTo(UserDate, {
     foreignKey: 'dateId',   
-  })*/
+  })
 
 
   User.hasMany(UserMatch, {
@@ -243,7 +243,7 @@ export {
   SubscriptionPlan,
   Request,
   WishList,
-  Date,
+  UserDate,
  // SearchSetting,
   Review,
   Admin,
