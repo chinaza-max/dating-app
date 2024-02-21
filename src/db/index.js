@@ -2,6 +2,9 @@ import { Sequelize } from "sequelize";
 import serverConfig from "../config/server.js";
 import { init as initModels } from "./models/index.js";
 
+import {UserDate } from "./models/index.js";
+
+
 
 class DB {
    constructor() {
@@ -31,8 +34,18 @@ class DB {
 
     initModels(this.sequelize);
     if (serverConfig.NODE_ENV === "development") {
-      await this.sequelize.sync({ alter: true });
+      //await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true });
+
+        UserDate.sync({ force: true })
+  .then(() => {
+    console.log('Table dropped successfully.');
+  })
+  .catch((error) => {
+    console.error('Error dropping table:', error);
+  });
+
+
     } 
   }
 
