@@ -99,9 +99,6 @@ export function init(connection) {
 
 
 
-export default UserDate ;
-
-
 UserDate.sync({ force: true })
 .then(() => {
   console.log('Table dropped successfully.');
@@ -109,5 +106,11 @@ UserDate.sync({ force: true })
 .catch((error) => {
   console.error('Error dropping table:', error);
 });
+
+
+export default UserDate ;
+
+
+
 
   
