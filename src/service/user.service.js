@@ -2207,13 +2207,16 @@ class UserService {
   async calculateAge(birthdate) {
     const birthDateObj = new Date(birthdate);
     const currentDate = new Date();
-  
+
+    console.log('birthdate')
+    console.log(birthdate)
+
     // Calculate the difference in milliseconds
     const timeDiff = currentDate - birthDateObj;
   
     // Calculate the age
     const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365.25));
-  
+    console.log(age)
     return age;
   }
   async handleAddBusinessSpot(data) {
