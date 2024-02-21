@@ -63,7 +63,7 @@ function associate() {
   })
 
 
-
+/*
   BusinessSpot.hasMany(Date, {
     foreignKey: 'businessIdSpotId',
     as: "DateBusinessSpots",
@@ -74,7 +74,7 @@ function associate() {
   
   console.log(BusinessSpot.associations)
   console.log(Date.associations)
-
+*/
   PartnerPersonaltyQ.hasMany(UserAnswer, {
     foreignKey: 'partnerPersonaltyQId',
     as: "UserAnswerQs",
@@ -103,33 +103,33 @@ function associate() {
     foreignKey: 'subscriptionPlanId', 
   })
 
-
+/*
   Request.hasOne(Date, {
     foreignKey: 'requestId',
     as: "RequestDates",
   });
   Date.belongsTo(Request, {
     foreignKey: 'requestId', 
-  })
+  })*/
 
-  
+  /*
   User.hasMany(Date, {
     foreignKey: 'userId',
     as: "UserDates",
   });
   Date.belongsTo(User, {
     foreignKey: 'userId', 
-  })
+  })*/
 
 
-
+/*
   User.hasMany(Date, {
     foreignKey: 'userId2',
     as: "User2Dates",
   });
   Date.belongsTo(User, {
     foreignKey: 'userId2', 
-  })
+  })*/
 
   User.hasMany(Request, {
     foreignKey: 'userId',
@@ -181,14 +181,14 @@ function associate() {
 
 
 
-
+/*
   Date.hasMany(Review, {
     foreignKey: 'dateId',
     as: "DateReviews",
   });
   Review.belongsTo(Date, {
     foreignKey: 'dateId',   
-  })
+  })*/
 
 
   User.hasMany(UserMatch, {

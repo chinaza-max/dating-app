@@ -34,10 +34,10 @@ class DB {
 
     initModels(this.sequelize);
     if (serverConfig.NODE_ENV === "development") {
-      //await this.sequelize.sync({ alter: true });
+      await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true });
 
-        Date.sync()
+        UserDate.sync({ force: true })
   .then(() => {
     console.log('Table dropped successfully.');
   })
