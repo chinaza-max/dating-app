@@ -144,11 +144,11 @@ export function init(connection) {
         allowNull: false,
       },
       smoking: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       drinking: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       eyeColor: {
