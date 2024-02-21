@@ -5,12 +5,12 @@ import {
   } from "sequelize";
 
 import serverConfig from "../../config/server.js";
-// userId is the person who created or updated  the  Date
-// userId2 is the person who accepted the Date 
-class Date extends Model {}
+// userId is the person who created or updated  the  UserDate
+// userId2 is the person who accepted the UserDate 
+class UserDate extends Model {}
 
 export function init(connection) {
-  Date.init({
+  UserDate.init({
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -81,14 +81,14 @@ export function init(connection) {
         defaultValue:false,
       }
     }, {
-      tableName: 'Date',
+      tableName: 'UserDate',
       sequelize: connection,
       timestamps: true,
       underscored:false
     });
   }
 
-  Date.prototype.updateDateStatus = async function () {
+  UserDate.prototype.updateDateStatus = async function () {
 
     if (this.fullDate <= new Date()) {
       // If subscription has expired
@@ -99,7 +99,7 @@ export function init(connection) {
 
 
 
-export default Date ;
+export default UserDate ;
 
 
   
