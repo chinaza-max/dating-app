@@ -2096,7 +2096,7 @@ class UserService {
 
               console.log(myMatchUser.dataValues.dateOfBirth)
 
-              let ageToCheck=await this.calculateAge(myMatchUser.dataValues.dateOfBirth)
+              let ageToCheck=this.calculateAge(myMatchUser.dataValues.dateOfBirth)
               if (ageToCheck >= ageRangeMin && ageToCheck <= ageRangeMax) {
 
                 console.log("age is in range")
@@ -2205,7 +2205,7 @@ class UserService {
   }
 
 
-  async calculateAge(birthdate) {
+  calculateAge(birthdate) {
     const birthDateObj = new Date(birthdate);
     const currentDate = new Date();
 
@@ -2220,6 +2220,7 @@ class UserService {
     console.log(age)
     return age;
   }
+
   async handleAddBusinessSpot(data) {
     let { 
       firstName,
