@@ -2180,6 +2180,7 @@ class UserService {
 
               console.loh(lat1, lon1 ,lat2 ,lon2)
               const result=await this.getDistanceBetween(lat1, lon1 ,lat2 ,lon2 ,distance)
+              console.loh(result)
 
               if(!result) continue; 
 
