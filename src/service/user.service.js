@@ -2136,10 +2136,10 @@ class UserService {
 
             if(distance){
               matchResult
-              let lat1=JSON.parse( matchResult.dataValues).
-              let lon1=matchResult.dataValues
-              let lat2=myMatchUser.dataValues
-              let lon2=myMatchUser.dataValues
+              let lat1=JSON.parse( matchResult.dataValues.locationCoordinate).latitude
+              let lon1= JSON.parse(matchResult.dataValues.locationCoordinate).longitude
+              let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
+              let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
 
 
               if(haveChildren!= myMatchUser.dataValues.haveChildren ) continue; 
