@@ -2005,7 +2005,7 @@ class UserService {
       userId
     } = await userUtil.verifyHandGetAllMatchSingleUserForUser.validateAsync(data);
 
-    const {age,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren}=query
+    const {ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor}=query
     try {
       const conditions = {
         [Op.or]: [
@@ -2090,8 +2090,12 @@ class UserService {
             if(havePendingRequest) continue;                  
 
 
-            if(Number(age)){
-              if(Number(age)!= Number(await this.calculateAge(myMatchUser.dataValues.dateOfBirth)) ) continue; 
+            if(Number(ageRangeMin)||Number(ageRangeMax)){
+              let ageToCheck=await this.calculateAge(myMatchUser.dataValues.dateOfBirth)
+              if (ageToCheck >= ageRangeMin && ageToCheck <= ageRangeMax) {
+              } else {
+                continue;
+              }
             }
 
             if(Number(height)){
@@ -2118,6 +2122,27 @@ class UserService {
 
             if(maritalStatus){
               if(maritalStatus!= myMatchUser.dataValues.maritalStatus ) continue; 
+            }
+
+
+            if(lookingFor){
+              if(lookingFor!= myMatchUser.dataValues.relationshipGoal ) continue; 
+            }
+
+            if(haveChildren){
+              if(haveChildren!= myMatchUser.dataValues.haveChildren ) continue; 
+            }
+
+
+            if(distance){
+              matchResult
+              let lat1=JSON.parse( matchResult.dataValues).
+              let lon1=matchResult.dataValues
+              let lat2=myMatchUser.dataValues
+              let lon2=myMatchUser.dataValues
+
+
+              if(haveChildren!= myMatchUser.dataValues.haveChildren ) continue; 
             }
 
             
@@ -2970,6 +2995,31 @@ async getCommonBioDetail(userId1,userId2){
   
 }
 
+
+ async getDistanceBetween(lat1, long1, lat2, long2,distance) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2 - lat1); // deg2rad below
+  var dLon = deg2rad(long2 - long1);
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+    Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c; // Distance in km
+  d = d * 1000; //Distance in meters
+
+
+  
+  if(d > (distance*1000)){
+    return false
+  }else{
+    return true
+  }
+
+  return d;
+}
 
 
 }

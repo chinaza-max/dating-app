@@ -139,6 +139,10 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      locationCoordinate: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       haveChildren: {
         type: DataTypes.STRING,
         allowNull: false,
