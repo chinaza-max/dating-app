@@ -2054,7 +2054,7 @@ class UserService {
             let me=await this.UserModel.findOne({
               where:{id:userId,
                       isDeleted:false},
-                      attributes:['preferedGender']
+                      //attributes:['preferedGender']
               })
             let myMatchUser=await this.UserModel.findOne({
               where:{id:myMatchId,
@@ -2062,11 +2062,7 @@ class UserService {
                      // attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren','gender']
               })
 
-            let myDetails=await this.UserModel.findOne({
-                where:{id:userId,
-                        isDeleted:false},
-                       // attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren','gender']
-                })
+         
 
               
             if(me.dataValues.preferedGender!==myMatchUser.dataValues.gender) continue
@@ -2159,8 +2155,8 @@ class UserService {
 
 
 
-              let lat1=JSON.parse( myDetails.dataValues.locationCoordinate).latitude
-              let lon1= JSON.parse(myDetails.dataValues.locationCoordinate).longitude
+              let lat1=JSON.parse( me.dataValues.locationCoordinate).latitude
+              let lon1= JSON.parse(me.dataValues.locationCoordinate).longitude
               let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
               let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
 
