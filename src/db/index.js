@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import serverConfig from "../config/server.js";
 import { init as initModels } from "./models/index.js";
 
-import {UserDate } from "./models/index.js";
+import {Date   } from "./models/index.js";
 
 
 
@@ -37,7 +37,7 @@ class DB {
       //await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true });
 
-        UserDate.sync({ force: true })
+        Date.sync({ force: true })
   .then(() => {
     console.log('Table dropped successfully.');
   })
