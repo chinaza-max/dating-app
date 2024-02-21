@@ -2212,7 +2212,7 @@ class UserService {
     console.log(currentDate)
 
     console.log( new Date(birthdate))
-    console.log(new Date())
+    console.log(new Date())  
 
     console.log('===============birthdate  end ====================')
 
