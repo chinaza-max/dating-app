@@ -348,7 +348,7 @@ class UserService {
     let {      
       userId,  
       latitude,
-      logitude
+      longitude
     } = await userUtil.verifyHandleUpdateLocation.validateAsync(data);
 
 
@@ -358,7 +358,7 @@ class UserService {
       await this.UserModel.update(
         {
           locationCoordinate:JSON.stringify({ latitude,
-            logitude})
+            longitude})
         },
         {
           where: {

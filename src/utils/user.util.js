@@ -347,7 +347,7 @@ class UserUtil {
   verifyHandleUpdateLocation= Joi.object({
     userId: Joi.number().required(),
     latitude: Joi.number().required(),
-    logitude: Joi.number().required(),
+    longitude: Joi.number().required(),
   });
   
 
