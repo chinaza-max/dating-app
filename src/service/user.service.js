@@ -2172,13 +2172,23 @@ class UserService {
 
             if(distance){
               
+
+              console.log("hhhhhhhhhhhhhhhh===========")
+
+              console.log(matchResult)
+              console.log(myMatchUser)
+
+              console.log("hhhhhhhhhhhhhhhh===========")
+
+
+
               let lat1=JSON.parse( matchResult.dataValues.locationCoordinate).latitude
               let lon1= JSON.parse(matchResult.dataValues.locationCoordinate).longitude
               let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
               let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
 
 
-              console.loh(lat1, lon1 ,lat2 ,lon2)
+              console.log(lat1, lon1 ,lat2 ,lon2)
               const result=await this.getDistanceBetween(lat1, lon1 ,lat2 ,lon2 ,distance)
               console.loh(result)
 
@@ -2953,15 +2963,7 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
             });
           } else if(existingMatch2) {
   
-  
-            
-            console.log("updating updating")
-  
-            console.log(element)
-  
-            console.log("updating updating")
-  
-  
+
   
             await existingMatch2.update({
               matchInformation:JSON.stringify(element.matchingData),
