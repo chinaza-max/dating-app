@@ -2059,8 +2059,14 @@ class UserService {
             let myMatchUser=await this.UserModel.findOne({
               where:{id:myMatchId,
                       isDeleted:false},
-                      attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren','gender']
+                     // attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren','gender']
               })
+
+            let myDetails=await this.UserModel.findOne({
+                where:{id:userId,
+                        isDeleted:false},
+                       // attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren','gender']
+                })
 
               
             if(me.dataValues.preferedGender!==myMatchUser.dataValues.gender) continue
@@ -2094,44 +2100,15 @@ class UserService {
 
             if(Number(ageRangeMin)||Number(ageRangeMax)){
 
-              console.log("view date in render")
-              console.log(new Date())
-              console.log(new Date(myMatchUser.dataValues.dateOfBirth))
-
-
-              console.log("view date in render")
-
-
-
-              console.log(myMatchUser.dataValues.dateOfBirth)
-
               let ageToCheck=this.calculateAge(myMatchUser.dataValues.dateOfBirth)
               if (ageToCheck >= ageRangeMin && ageToCheck <= ageRangeMax) {
 
-                console.log("age is in range")
-
               } else {
-
-                console.log(ageToCheck)
-
-                console.log(ageRangeMin)
-
-                console.log(ageRangeMax)
-
-
-
-                console.log("age is not in range")
-
                 continue;
               }
             }
 
             if(Number(height)){
-
-              console.log('height')
-              console.log(height)
-              console.log(myMatchUser.dataValues.height>=Number(height))
-              console.log('height')
               if(myMatchUser.dataValues.height>=Number(height)){}
               else{
                 continue
@@ -2182,8 +2159,8 @@ class UserService {
 
 
 
-              let lat1=JSON.parse( matchResult.dataValues.locationCoordinate).latitude
-              let lon1= JSON.parse(matchResult.dataValues.locationCoordinate).longitude
+              let lat1=JSON.parse( myDetails.dataValues.locationCoordinate).latitude
+              let lon1= JSON.parse(myDetails.dataValues.locationCoordinate).longitude
               let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
               let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
 
