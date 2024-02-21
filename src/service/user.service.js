@@ -2094,6 +2094,15 @@ class UserService {
 
             if(Number(ageRangeMin)||Number(ageRangeMax)){
 
+              console.log("view date in render")
+              console.log(new Date())
+              console.log(new Date(myMatchUser.dataValues.dateOfBirth))
+
+
+              console.log("view date in render")
+
+
+
               console.log(myMatchUser.dataValues.dateOfBirth)
 
               let ageToCheck=this.calculateAge(myMatchUser.dataValues.dateOfBirth)
