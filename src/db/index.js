@@ -37,7 +37,7 @@ class DB {
       //await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true });
 
-        Date.sync({ force: true })
+        Date.sync()
   .then(() => {
     console.log('Table dropped successfully.');
   })
