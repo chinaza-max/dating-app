@@ -52,21 +52,24 @@ class DB {
           .catch((error) => {
             console.error('Error dropping table:', error);
           });   
+
+
+          async function getAllTableNames() {
+            try {
+              const tableNames = await this.sequelize.showAllSchemas();
+              console.log('Available table names:', tableNames);
+            } catch (error) {
+              console.error('Error fetching table names:', error);
+            }
+          }
+          
+          // Call the function
+          getAllTableNames();
         
         } 
 
 
-        async function getAllTableNames() {
-          try {
-            const tableNames = await this.sequelize.showAllSchemas();
-            console.log('Available table names:', tableNames);
-          } catch (error) {
-            console.error('Error fetching table names:', error);
-          }
-        }
-        
-        // Call the function
-        getAllTableNames();
+       
   }
 
 }
