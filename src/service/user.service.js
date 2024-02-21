@@ -2199,9 +2199,6 @@ class UserService {
       console.log(error)
         throw new SystemError(error.name,  error.parent)
     }
-
-   
-
   }
 
 
@@ -2214,7 +2211,12 @@ class UserService {
 
     // Calculate the difference in milliseconds
     const timeDiff = currentDate - birthDateObj;
-  
+    
+    console.log(birthDateObj)
+    console.log(currentDate)
+
+    console.log(timeDiff)
+
     // Calculate the age
     const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365.25));
     console.log(age)
