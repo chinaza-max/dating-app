@@ -43,7 +43,7 @@ class DB {
         const enableForeignKeyChecks = 'SET foreign_key_checks = 1;';
         
         // Execute SQL commands
-        sequelize.query(disableForeignKeyChecks)
+        this.sequelize.query(disableForeignKeyChecks)
           .then(() => sequelize.query(dropTable))
           .then(() => sequelize.query(enableForeignKeyChecks))
           .then(() => {
