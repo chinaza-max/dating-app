@@ -8,7 +8,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cron from "node-cron"
-import {Subscription,  Date} from "./src/db/models/index.js";
+import {Subscription,  UserDate} from "./src/db/models/index.js";
 import {  Op } from "sequelize";
 
 
@@ -49,7 +49,7 @@ class Server {
         
         async function checkIfDateAreCompleted(){
           try {
-            const Dates = await Date.findAll({
+            const Dates = await UserDate.findAll({
               where:{
                 [Op.or]: [{dateStatus:null}, {dateStatus:"active"}],
               }
