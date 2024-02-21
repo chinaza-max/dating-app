@@ -2105,6 +2105,24 @@ class UserService {
             }
 
             if(Number(height)){
+
+
+              console.log('kkkkkkkkkkkkkkkkkkk')
+              console.log(myMatchUser.dataValues.height)
+              console.log(Number(height))
+
+              console.log('first test')
+
+              console.log(myMatchUser.dataValues.height>=Number(height))
+
+              console.log('second test')
+
+              console.log(Number(myMatchUser.dataValues.height)>=Number(height))
+
+
+
+              console.log('kkkkkkkkkkkkkkkkkkk')
+
               if(myMatchUser.dataValues.height>=Number(height)){}
               else{
                 continue
@@ -2146,24 +2164,13 @@ class UserService {
             if(distance){
               
 
-              console.log("hhhhhhhhhhhhhhhh===========")
-
-              console.log(matchResult)
-              console.log(myMatchUser)
-
-              console.log("hhhhhhhhhhhhhhhh===========")
-
-
-
               let lat1=JSON.parse( me.dataValues.locationCoordinate).latitude
               let lon1= JSON.parse(me.dataValues.locationCoordinate).longitude
               let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
               let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
 
 
-              console.log(lat1, lon1 ,lat2 ,lon2)
               const result=await this.getDistanceBetween(lat1, lon1 ,lat2 ,lon2 ,distance)
-              console.log(result)
 
               if(!result) continue; 
 
