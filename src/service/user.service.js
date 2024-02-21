@@ -353,8 +353,7 @@ class UserService {
 
 
     try {
-      
-
+  
       await this.UserModel.update(
         {
           locationCoordinate:JSON.stringify({ latitude,
@@ -2006,6 +2005,10 @@ class UserService {
     } = await userUtil.verifyHandGetAllMatchSingleUserForUser.validateAsync(data);
 
     const {ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor}=query
+
+
+    console.log(ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor)
+
     try {
       const conditions = {
         [Op.or]: [
@@ -2089,17 +2092,31 @@ class UserService {
             if(!myMatchUser) continue;                  
             if(havePendingRequest) continue;                  
 
-
             if(Number(ageRangeMin)||Number(ageRangeMax)){
+
+
               let ageToCheck=await this.calculateAge(myMatchUser.dataValues.dateOfBirth)
               if (ageToCheck >= ageRangeMin && ageToCheck <= ageRangeMax) {
+
+                console.log("age is in range")
+
               } else {
+                console.log("age is not in range")
+
                 continue;
               }
             }
 
             if(Number(height)){
-              if(Number(height)!= myMatchUser.dataValues.height ) continue; 
+
+              console.log('height')
+              console.log(height)
+              console.log(myMatchUser.dataValues.height>=Number(height))
+              console.log('height')
+              if(myMatchUser.dataValues.height>=Number(height)){}
+              else{
+                continue
+              }
             }
 
             if(ethnicity){
@@ -2135,14 +2152,22 @@ class UserService {
 
 
             if(distance){
-              matchResult
+              
               let lat1=JSON.parse( matchResult.dataValues.locationCoordinate).latitude
               let lon1= JSON.parse(matchResult.dataValues.locationCoordinate).longitude
               let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
               let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
 
+              const result=await this.getDistanceBetween(lat1, lon1 ,lat2 ,lon2 ,distance)
 
-              if(haveChildren!= myMatchUser.dataValues.haveChildren ) continue; 
+              console.log('distance')
+              console.log(result)
+              console.log('distance')
+
+              
+
+              if(!result) continue; 
+
             }
 
             
