@@ -2,7 +2,6 @@ import { Sequelize } from "sequelize";
 import serverConfig from "../config/server.js";
 import { init as initModels } from "./models/index.js";
 
-import {Date   } from "./models/index.js";
 
 
 
@@ -34,37 +33,11 @@ class DB {
 
     initModels(this.sequelize);
     if (serverConfig.NODE_ENV === "development") {
-      // await this.sequelize.sync({ alter: true });
+       await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true });
 
 
-        const disableForeignKeyChecks = 'SET foreign_key_checks = 0;';
-        const dropTable = 'DROP TABLE IF EXISTS Date;';
-        const enableForeignKeyChecks = 'SET foreign_key_checks = 1;';
-        
-        // Execute SQL commands
-        this.sequelize.query(disableForeignKeyChecks)
-          .then(() => this.sequelize.query(dropTable))
-          .then(() => this.sequelize.query(enableForeignKeyChecks))
-          .then(() => {
-            console.log('Table dropped successfully.');
-          })
-          .catch((error) => {
-            console.error('Error dropping table:', error);
-          });   
-
-
-          const getAllTableNames =async ()=> {
-            try {
-              const tableNames = await this.sequelize.showAllSchemas();
-              console.log('Available table names:', tableNames);
-            } catch (error) {
-              console.error('Error fetching table names:', error);
-            }
-          }
-          
-          // Call the function
-          getAllTableNames();
+   
         
         } 
 
