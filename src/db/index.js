@@ -44,8 +44,8 @@ class DB {
         
         // Execute SQL commands
         this.sequelize.query(disableForeignKeyChecks)
-          .then(() => sequelize.query(dropTable))
-          .then(() => sequelize.query(enableForeignKeyChecks))
+          .then(() => this.sequelize.query(dropTable))
+          .then(() => this.sequelize.query(enableForeignKeyChecks))
           .then(() => {
             console.log('Table dropped successfully.');
           })
