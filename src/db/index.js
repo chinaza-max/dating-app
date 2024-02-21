@@ -34,19 +34,24 @@ class DB {
 
     initModels(this.sequelize);
     if (serverConfig.NODE_ENV === "development") {
-      await this.sequelize.sync({ alter: true });
+      // await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true });
 
-        Date.sync({ force: true })
-  .then(() => {
-    console.log('Table dropped successfully.');
-  })
-  .catch((error) => {
-    console.error('Error dropping table:', error);
-  });
 
-
-    } 
+        const disableForeignKeyChecks = 'SET foreign_key_checks = 0;';
+        const dropTable = 'DROP TABLE IF EXISTS UserDate;';
+        const enableForeignKeyChecks = 'SET foreign_key_checks = 1;';
+        
+        // Execute SQL commands
+        sequelize.query(disableForeignKeyChecks)
+          .then(() => sequelize.query(dropTable))
+          .then(() => sequelize.query(enableForeignKeyChecks))
+          .then(() => {
+            console.log('Table dropped successfully.');
+          })
+          .catch((error) => {
+            console.error('Error dropping table:', error);
+          });    } 
   }
 
 }
