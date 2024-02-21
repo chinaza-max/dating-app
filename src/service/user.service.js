@@ -3,7 +3,7 @@ import { User,Admin ,
   EmailandTelValidationAdmin,
   BusinessSpot,Business,
   EmailandTelValidationBusiness,
-  UserAnswer,UserMatch,Request,Date,SubscriptionPlan
+  UserAnswer,UserMatch,Request,UserDate,SubscriptionPlan
   ,Subscription,WishList,Review } from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
@@ -31,7 +31,7 @@ class UserService {
   UserAnswerModel=UserAnswer
   UserMatchModel=UserMatch
   RequestModel=Request
-  DateModel=Date
+  DateModel=UserDate
   SubscriptionPlanModel=SubscriptionPlan
   SubscriptionModel=Subscription
   WishListModel=WishList
