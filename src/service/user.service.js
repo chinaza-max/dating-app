@@ -2177,13 +2177,9 @@ class UserService {
               let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
               let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
 
+
+              console.loh(lat1, lon1 ,lat2 ,lon2)
               const result=await this.getDistanceBetween(lat1, lon1 ,lat2 ,lon2 ,distance)
-
-              console.log('distance')
-              console.log(result)
-              console.log('distance')
-
-              
 
               if(!result) continue; 
 
@@ -3076,7 +3072,6 @@ async getCommonBioDetail(userId1,userId2){
     return true
   }
 
-  return d;
 }
 
 
