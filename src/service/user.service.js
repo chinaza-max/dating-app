@@ -2094,6 +2094,7 @@ class UserService {
 
             if(Number(ageRangeMin)||Number(ageRangeMax)){
 
+              console.log(myMatchUser.dataValues.dateOfBirth)
 
               let ageToCheck=await this.calculateAge(myMatchUser.dataValues.dateOfBirth)
               if (ageToCheck >= ageRangeMin && ageToCheck <= ageRangeMax) {
