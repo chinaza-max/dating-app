@@ -1912,7 +1912,7 @@ class UserService {
 
   
 
-  async handleGetSubcriptionPlan(data,offset,pageSize,type) {
+  async handleGetSubcriptionPlan(data,offset,pageSize) {
    
     const {type}=await userUtil.verifyHandleGetSubcriptionPlan(data)
 
