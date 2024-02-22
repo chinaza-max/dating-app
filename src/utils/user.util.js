@@ -349,6 +349,10 @@ class UserUtil {
     latitude: Joi.number().required(),
     longitude: Joi.number().required(),
   });
+
+  verifyHandleCountData= Joi.object({
+    userId: Joi.number().required(),
+  });
   
 
 

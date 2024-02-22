@@ -683,6 +683,32 @@ export default class UserController {
 
   
 
+  async   countData
+  (
+    req,
+    res,
+    next
+  ){
+
+    const my_bj={
+      userId:req.user.id
+    }
+    try {
+    
+     let  result=await userService.handleCountData(my_bj);
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
   async checkActiveSubscription(
     req,
     res,

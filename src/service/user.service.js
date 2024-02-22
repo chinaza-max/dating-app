@@ -1940,6 +1940,32 @@ class UserService {
   }
 
 
+  
+  async handleCountData(data) {
+    let { 
+      userId        
+    } = await userUtil.verifyHandleCountData.validateAsync(data);
+
+
+    try {
+      let count={}
+
+      const wishListCount = await this.WishListModel.count({
+        where: {
+          userId: userId,
+        },
+      });
+      
+      return count['wishList']=wishListCount
+
+    } catch (error) {
+        throw new SystemError(error.name,  error.parent)
+    }
+
+
+  }
+
+
   async handleAddOrRemoveWishList(data) {
     let { 
       userId,
