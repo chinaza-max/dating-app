@@ -370,7 +370,7 @@ class UserUtil {
     type: Joi.string().valid(
       'active',
       'disable'
-    ).required()
+      ).required()
   });
 
 }
