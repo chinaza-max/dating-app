@@ -60,6 +60,12 @@ this.sequelize.query(disableForeignKeyChecks)
   .then(() => this.sequelize.query(enableForeignKeyChecks))
   .then(() => {
     console.log('Table dropped successfully.');
+    console.log('Table dropped successfully.');
+    console.log('Table dropped successfully.');
+    console.log('Table dropped successfully.');
+    console.log('Table dropped successfully.');
+    console.log('Table dropped successfully.');
+
   })
   .catch((error) => {
     console.error('Error dropping table:', error);
