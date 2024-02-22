@@ -49,7 +49,7 @@ class DB {
           }
         })();
 */
-
+/*
         const disableForeignKeyChecks = 'SET foreign_key_checks = 0;';
 const dropTable = 'DROP TABLE IF EXISTS WishList;';
 const enableForeignKeyChecks = 'SET foreign_key_checks = 1;';
@@ -70,17 +70,7 @@ this.sequelize.query(disableForeignKeyChecks)
   .catch((error) => {
     console.error('Error dropping table:', error);
   });
-
-  console.log('run run run run run ');
-  console.log('run run run run run ');
-  console.log('run run run run run ');
-  console.log('run run run run run ');
-  console.log('run run run run run ');
-  console.log('run run run run run ');
-  console.log('run run run run run ');
-  console.log('run run run run run ');
-  console.log('run run run run run ');
-  console.log('run run run run run ');
+*/
 
 
 
