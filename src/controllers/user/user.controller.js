@@ -695,7 +695,7 @@ export default class UserController {
       const my_bj = {
         type
       }
-      result=await userService.handleGetSubcriptionPlan(my_bj, offset,pageSize);
+      const result=await userService.handleGetSubcriptionPlan(my_bj, offset,pageSize);
 
 
       return res.status(200).json({
