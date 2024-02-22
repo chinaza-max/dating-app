@@ -173,13 +173,12 @@ async handleDeleteTag(data) {
     });
 
     if (user) {
-
-      throw new BadRequestError("You cant delete this, tag already in use")
+      throw new BadRequestError("You cant delete this tag, already in use")
     } 
 
   try {
   
-   // await obj.destroy();
+    await obj.destroy();
 
   } catch (error) {
     throw new ServerError("Failed to delete tag" );
