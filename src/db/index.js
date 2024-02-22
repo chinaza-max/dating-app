@@ -36,7 +36,7 @@ class DB {
        // await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true }); 
         } 
-
+/*
         (async () => {
           try {
             const [results] = await this.sequelize.query('SHOW TABLES;');
@@ -48,7 +48,7 @@ class DB {
             await this.sequelize.close();
           }
         })();
-
+*/
 
         const disableForeignKeyChecks = 'SET foreign_key_checks = 0;';
 const dropTable = 'DROP TABLE IF EXISTS `Match`;';
