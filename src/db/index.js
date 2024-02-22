@@ -51,7 +51,7 @@ class DB {
 
 
         const disableForeignKeyChecks = 'SET foreign_key_checks = 0;';
-const dropTable = 'DROP TABLE IF EXISTS Match;';
+const dropTable = 'DROP TABLE IF EXISTS `Match`;';
 const enableForeignKeyChecks = 'SET foreign_key_checks = 1;';
 
 // Execute SQL commands
