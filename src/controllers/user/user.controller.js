@@ -681,6 +681,35 @@ export default class UserController {
 
 
   
+  async getSubcriptionPlan(
+    req,
+    res,
+    next
+  ){
+    const {type}=req.query
+    const {offset}=req.query
+    const {pageSize}=req.query
+
+    try {
+            
+      const my_bj = {
+        type
+      }
+      result=await userService.handleGetSubcriptionPlan(my_bj, offset,pageSize);
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
+  
 
   async   countData
   (

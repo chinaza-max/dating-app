@@ -53,6 +53,8 @@ class UserRoutes extends UserController {
     this.router.post("/CUcommentAndRating", this.CUcommentAndRating);
     this.router.get("/checkActiveSubscription", this.checkActiveSubscription);
     this.router.get("/getSubcription", this.getSubcription);
+    this.router.get("/getSubcriptionPlan", this.getSubcriptionPlan);
+
     this.router.post("/updateProfile", this.updateProfile);
     this.router.post("/updateLocation", this.updateLocation);
     this.router.get("/countData", this.countData);

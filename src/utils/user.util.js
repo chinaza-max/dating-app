@@ -366,6 +366,13 @@ class UserUtil {
     'expired'
   ).required()
 
+  verifyHandleGetSubcriptionPlan= Joi.object({
+    type: Joi.string().valid(
+      'active',
+      'disable'
+    ).required()
+  });
+
 }
 
 export default new UserUtil();

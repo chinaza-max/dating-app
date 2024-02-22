@@ -4,7 +4,7 @@ import { User,Admin ,
   BusinessSpot,Business,
   EmailandTelValidationBusiness,
   UserAnswer,UserMatch,Request,UserDate,SubscriptionPlan
-  ,Subscription,WishList,Review } from "../db/models/index.js";
+  ,Subscription,WishList,Review  } from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -1907,12 +1907,64 @@ class UserService {
         throw new SystemError(error.name,  error.parent)
     }
 
-   
-
   }
 
 
   
+
+  async handleGetSubcriptionPlan(data,offset,pageSize,type) {
+   
+    const {type}=await userUtil.verifyHandleGetSubcriptionPlan(data)
+
+    try {
+
+      let result=[]
+
+      if(type=='active'){
+          const conditions={
+            isDeleted: false,
+            isDisable: false,
+          }
+
+        if(Number(offset)){
+          result = await this.SubscriptionPlanModel.findAll({
+            where: conditions,
+            limit: Number(offset),
+            offset: Number(pageSize),
+          });
+        }else{
+          result = await this.SubscriptionPlanModel.findAll({
+            where: conditions
+          });
+        }
+      }else{
+        const conditions={
+          isDeleted: false,
+          isDisable: true,
+        }
+
+      if(Number(offset)){
+        result = await this.SubscriptionPlanModel.findAll({
+          where: conditions,
+          limit: Number(offset),
+          offset: Number(pageSize),
+        });
+      }else{
+        result = await this.SubscriptionPlanModel.findAll({
+          where: conditions
+        });
+      }
+      }
+
+      return result||[]
+
+
+    } catch (error) {
+        throw new SystemError(error.name,  error.parent)
+    }
+
+
+  }
 
   async handleGetSubcription(data,offset,pageSize,userId) {
     let { 
