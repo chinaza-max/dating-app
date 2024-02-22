@@ -1955,8 +1955,8 @@ class UserService {
           userId: userId,
         },
       });
-      
-      return count['wishListCounter']=wishListCount
+      count['wishListCounter']=wishListCount
+      return count
 
     } catch (error) {
         throw new SystemError(error.name,  error.parent)
