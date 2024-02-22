@@ -167,7 +167,7 @@ async handleDeleteTag(data) {
     const user = await this.UserModel.findOne({
       where: {
         tags: {
-          [Op.contains]: [obj.dataValues.tag],
+          [Op.like]: `%${obj.dataValues.tag}%`,
         },
       },
     });
