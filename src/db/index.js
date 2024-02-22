@@ -33,9 +33,21 @@ class DB {
 
     initModels(this.sequelize);
     if (serverConfig.NODE_ENV === "development") {
-        await this.sequelize.sync({ alter: true });
+       // await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true }); 
         } 
+
+        (async () => {
+          try {
+            const [results] = await this.sequelize.query('SHOW TABLES;');
+            const tables = results.map(result => result.Tables_in_your_database_name);
+            console.log('List of tables:', tables);
+          } catch (error) {
+            console.error('Error retrieving tables:', error);
+          } finally {
+            await this.sequelize.close();
+          }
+        })();
 
 
         const disableForeignKeyChecks = 'SET foreign_key_checks = 0;';
