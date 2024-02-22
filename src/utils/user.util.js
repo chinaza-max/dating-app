@@ -247,6 +247,7 @@ class UserUtil {
     name: Joi.string().required(),
     price: Joi.number().required(),
     createdBy: Joi.number().required(),
+    benefits: Joi.array().required(),
     durationMonths: Joi.number().required()
   });
 

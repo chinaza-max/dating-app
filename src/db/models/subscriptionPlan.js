@@ -27,6 +27,15 @@ export function init(connection) {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      benefits: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      }, 
+      isDisable: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:false
+      },
       createdBy: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -3,7 +3,6 @@ import {
     Model
   } from "sequelize";
 
-import serverConfig from "../../config/server.js";
 class Subscription extends Model {}
 
 export function init(connection) {

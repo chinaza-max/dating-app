@@ -162,9 +162,23 @@ async handleDeleteTag(data) {
  const obj = await this.TagModel.findByPk(tagId);
  if (!obj) throw new NotFoundError("tag not found.");
 
+
+    const user = await this.UserModel.findOne({
+      where: {
+        dataColumn: {
+          [Op.contains]: [obj.tag],
+        },
+      },
+    });
+
+    if (user) {
+
+      throw new BadRequestError("You cant delete this, tag already in use")
+    } 
+
   try {
   
-    await obj.destroy();
+   // await obj.destroy();
 
   } catch (error) {
     throw new ServerError("Failed to delete tag" );

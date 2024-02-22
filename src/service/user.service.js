@@ -15,6 +15,7 @@ import mailService from "../service/mail.service.js";
 import {
   NotFoundError,
   ConflictError,
+  BadRequestError,
   SystemError
 
 } from "../errors/index.js";
@@ -687,6 +688,7 @@ class UserService {
       name,
       price,
       durationMonths,
+      benefits,
       createdBy
     } = await userUtil.verifyHandleCreateSubscriptionPlan.validateAsync(data);
 
@@ -694,6 +696,7 @@ class UserService {
     const dateDetails=await this.SubscriptionPlanModel.findOne({
       where:{
         durationMonths,
+        isDisable:false,
         isDeleted:false
       }
     })
@@ -705,6 +708,7 @@ class UserService {
       name,
       price,
       durationMonths,
+      benefits:JSON.stringify(benefits),
       createdBy
     })
   
