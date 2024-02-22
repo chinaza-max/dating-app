@@ -18,6 +18,11 @@ class SystemMiddlewares {
             status: error.code,
             message: error.message,
           });
+        case "BadRequestError":
+          return res.status(400).json({
+            status: error.code,
+            message: error.message,
+          });
         case "UnAuthorizedError":
           return res.status(401).json({
             status: error.code,
