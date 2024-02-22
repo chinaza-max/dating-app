@@ -1815,14 +1815,12 @@ class UserService {
 
         result.push({
             wishListId:element.dataValues.id,
-            userId:element.dataValues.userId,
-            matchInformation:{
               matchId:element.dataValues.UserMatch.id,
               userId:element.dataValues.UserMatch.userId,
               userId2:element.dataValues.UserMatch.userId2,
               matchInformation:JSON.parse(element.dataValues.UserMatch.matchInformation),
               matchPercentage:element.dataValues.UserMatch.matchPercentage,
-            },
+            
           
            /* userId: element.dataValues.userId,
             userId2: element.dataValues.userId2,
