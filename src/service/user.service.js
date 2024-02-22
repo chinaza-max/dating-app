@@ -1929,12 +1929,18 @@ class UserService {
         if(Number(offset)){
           result = await this.SubscriptionPlanModel.findAll({
             where: conditions,
+            attributes: {
+              exclude: ['isDeleted', 'createdBy', 'isDisable'],
+            },
             limit: Number(offset),
             offset: Number(pageSize),
           });
         }else{
           result = await this.SubscriptionPlanModel.findAll({
-            where: conditions
+            where: conditions,
+            attributes: {
+              exclude: ['isDeleted', 'createdBy', 'isDisable'],
+            }
           });
         }
       }else{
@@ -1946,21 +1952,27 @@ class UserService {
       if(Number(offset)){
         result = await this.SubscriptionPlanModel.findAll({
           where: conditions,
+          attributes: {
+            exclude: ['isDeleted', 'createdBy', 'isDisable'],
+          },
           limit: Number(offset),
           offset: Number(pageSize),
         });
       }else{
         result = await this.SubscriptionPlanModel.findAll({
-          where: conditions
+          where: conditions,
+          attributes: {
+            exclude: ['isDeleted', 'createdBy', 'isDisable'],
+          },
         });
       }
       }
 
 
-      const result2 = result.dataValues.map(plan => {
+      const result2 = result.map(data => {
         return {
-          ...plan,
-          benefits: JSON.parse(plan.benefits),
+          ...data.dataValues,
+          benefits: JSON.parse(data.dataValues.benefits),
         };
       });
 
