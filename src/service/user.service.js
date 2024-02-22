@@ -1957,7 +1957,7 @@ class UserService {
       }
 
 
-      const result2 = result.map(plan => {
+      const result2 = result.dataValues.map(plan => {
         return {
           ...plan,
           benefits: JSON.parse(plan.benefits),
