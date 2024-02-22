@@ -1811,13 +1811,15 @@ class UserService {
 
       for (let index = 0; index < details.length; index++) {
         const element = details[index];
+
+
         result.push({
             wishListId:element.dataValues.id,
             userId:element.dataValues.userId,
             matchDetails:{
               matchId:element.dataValues.UserMatch.id,
               userId:element.dataValues.UserMatch.userId,
-              userId2:element.dataValues.UserMatch.userId,
+              userId2:element.dataValues.UserMatch.userId2,
               matchInformation:JSON.parse(element.dataValues.UserMatch.matchInformation),
               matchPercentage:element.dataValues.UserMatch.matchPercentage,
             },
