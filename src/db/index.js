@@ -71,6 +71,19 @@ this.sequelize.query(disableForeignKeyChecks)
     console.error('Error dropping table:', error);
   });
 
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+  console.log('run run run run run ');
+
+
+
 
        
   }
