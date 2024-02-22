@@ -440,6 +440,11 @@ class AuthenticationService {
         issuer: serverConfig.TOKEN_ISSUER,
       });
 
+      console.log(token)
+      console.log('serverConfig.TOKEN_EXPIRES_IN')
+      console.log(serverConfig.TOKEN_EXPIRES_IN)
+
+
 
       return token;
     } catch (error) {

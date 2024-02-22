@@ -140,6 +140,7 @@ export default class AuthenticationController {
 
       const token = await authService.generateToken(user.dataValues);
 
+      console.log(token)
       const excludedProperties = ['isDeleted', 'password'];
 
       const modifiedUser = Object.keys(user.dataValues)
