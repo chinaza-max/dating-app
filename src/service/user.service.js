@@ -1956,7 +1956,15 @@ class UserService {
       }
       }
 
-      return result||[]
+
+      const result2 = result.map(plan => {
+        return {
+          ...plan,
+          benefits: JSON.parse(plan.benefits),
+        };
+      });
+
+      return result2||[]
 
 
     } catch (error) {
