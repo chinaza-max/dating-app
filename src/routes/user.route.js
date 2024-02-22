@@ -46,7 +46,6 @@ class UserRoutes extends UserController {
 
     this.router.post("/addOrRemoveWishList", this.addOrRemoveWishList);
     this.router.get("/getWishList", this.getWishList);
-
     this.router.get("/getDatesDate", this.getDatesDate);
     
 
