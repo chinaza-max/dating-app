@@ -1955,7 +1955,7 @@ class UserService {
           userId: userId,
         },
       });
-      count['wishListCounter']=3
+      count['wishListCounter']=wishListCount
       return count
 
     } catch (error) {

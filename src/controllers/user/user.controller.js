@@ -486,19 +486,18 @@ export default class UserController {
     res,
     next
   ){
-    const data=req.body
+    const {userId}=req.query
     const {offset}=req.query
     const {pageSize}=req.query
 
     try {
     
         const my_bj = {
-          ...data,
+          userId:userId,
         }
                           
         const result=await userService.handleGetWishList(my_bj,offset,pageSize);
   
-
 
       return res.status(200).json({
         status: 200,
