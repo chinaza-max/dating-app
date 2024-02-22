@@ -1930,7 +1930,7 @@ class UserService {
           result = await this.SubscriptionPlanModel.findAll({
             where: conditions,
             attributes: {
-              exclude: ['isDeleted', 'createdBy', 'isDisable'],
+              exclude: ['isDeleted', 'createdBy', 'isDisable', 'createdAt', 'updatedAt'],
             },
             limit: Number(offset),
             offset: Number(pageSize),
@@ -1939,7 +1939,7 @@ class UserService {
           result = await this.SubscriptionPlanModel.findAll({
             where: conditions,
             attributes: {
-              exclude: ['isDeleted', 'createdBy', 'isDisable'],
+              exclude: ['isDeleted', 'createdBy', 'isDisable', 'createdAt', 'updatedAt'],
             }
           });
         }
@@ -1953,7 +1953,7 @@ class UserService {
         result = await this.SubscriptionPlanModel.findAll({
           where: conditions,
           attributes: {
-            exclude: ['isDeleted', 'createdBy', 'isDisable'],
+            exclude: ['isDeleted', 'createdBy', 'isDisable', 'createdAt', 'updatedAt'],
           },
           limit: Number(offset),
           offset: Number(pageSize),
@@ -1962,7 +1962,7 @@ class UserService {
         result = await this.SubscriptionPlanModel.findAll({
           where: conditions,
           attributes: {
-            exclude: ['isDeleted', 'createdBy', 'isDisable'],
+            exclude: ['isDeleted', 'createdBy', 'isDisable', 'createdAt', 'updatedAt'],
           },
         });
       }
