@@ -84,8 +84,6 @@ function associate() {
     foreignKey: 'partnerPersonaltyQId', 
   })
 
-
-
   User.hasMany(Subscription, {
     foreignKey: 'userId',
     as: "Subscriptions",

@@ -1948,8 +1948,6 @@ class UserService {
     } = await userUtil.verifyHandleAddOrRemoveWishList.validateAsync(data);
 
 
-    
-
     if(type=='add'){
       try {
    
@@ -1961,7 +1959,7 @@ class UserService {
           });
       
         if(result)return
-
+          
         console.log(userId,
           type,
           matchId )
@@ -2105,28 +2103,6 @@ class UserService {
             }
 
             if(Number(height)){
-
-
-
-              console.log('userid 1 : ', userId)
-              console.log('userid 2 : ', myMatchId)
-
-
-              console.log('kkkkkkkkkkkkkkkkkkk')
-              console.log(myMatchUser.dataValues.height)
-              console.log(Number(height))
-
-              console.log('first test')
-
-              console.log(myMatchUser.dataValues.height>=Number(height))
-
-              console.log('second test')
-
-              console.log(Number(myMatchUser.dataValues.height)>=Number(height))
-
-
-
-              console.log('kkkkkkkkkkkkkkkkkkk')
 
               if(myMatchUser.dataValues.height>=Number(height)){}
               else{
