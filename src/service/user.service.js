@@ -749,7 +749,8 @@ class UserService {
     }
     else if(type=='disable'){
       dateDetails.update({
-        isDisable:true
+        isDisable:true,
+        createdBy
       })
     }
     else{
