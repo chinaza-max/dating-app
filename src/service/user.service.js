@@ -753,8 +753,9 @@ class UserService {
       })
     }
     else{
-        await this.SubscriptionPlanModel.findByPk(subscriptionPlanId).destroy()
-    }
+        const SubscriptionPlanDetail=await this.SubscriptionPlanModel.findByPk(subscriptionPlanId)
+        SubscriptionPlanDetail.destroy()
+    } 
 
   
 
