@@ -696,6 +696,8 @@ class UserService {
     const dateDetails=await this.SubscriptionPlanModel.findOne({
       where:{
         durationMonths,
+        benefits:JSON.stringify(benefits),
+        price:price,
         isDisable:false,
         isDeleted:false
       }
