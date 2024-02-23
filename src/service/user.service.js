@@ -1919,6 +1919,7 @@ class UserService {
     try {
 
       let result=[]
+      let result2=[]
 
       if(type=='active'){
           const conditions={
@@ -1968,13 +1969,17 @@ class UserService {
       }
       }
 
+      for (let index = 0; index < result.length; index++) {
+        const element = result[index].dataValues;
+        result2.push({
+          durationMonths:element.durationMonths,
+          benefits:JSON.parse(element.benefits),
+          price:element.price,
+          name:element.name,
+          id:element.id
+        })
+      }
 
-      const result2 = result.map(data => {
-        return {
-          ...data.dataValues,
-          benefits: JSON.parse(data.dataValues.benefits),
-        };
-      });
 
       return result2||[]
 
