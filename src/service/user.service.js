@@ -732,12 +732,7 @@ class UserService {
 
     try{
 
-    const dateDetails=await this.SubscriptionPlanModel.findOne({
-      where:{
-        id:subscriptionPlanId,
-        isDeleted:false
-      }
-    })
+    const dateDetails=await this.SubscriptionPlanModel.findByPk(subscriptionPlanId)
 
     if(!dateDetails) throw new NotFoundError('subscription plan not found')
     
@@ -750,10 +745,13 @@ class UserService {
           durationMonths,
       })
     }
-    else{
+    else if(type=='disable'){
       dateDetails.update({
-        isDeleted:true
+        isDisable:true
       })
+    }
+    else{
+        await this.SubscriptionPlanModel.findByPk(subscriptionPlanId).destroy()
     }
 
   

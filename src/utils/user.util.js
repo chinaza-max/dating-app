@@ -257,6 +257,7 @@ class UserUtil {
     createdBy: Joi.number().required(),
     type: Joi.string().valid(
       'update',
+      'disable',
       'delete'
     ).required(),
     name: Joi.when('type', {
