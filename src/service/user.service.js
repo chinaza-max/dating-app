@@ -861,21 +861,32 @@ class UserService {
       console.log(result)
 
       if(result){
-        details=result.dataValues.map((obj,index)=>{
+        details=result.map((obj,index)=>{
           console.log(obj)
 
           return(
-            {count:index,id:obj.id,firstName:obj.firstName,
-              lastName:obj.lastName,emailAddress:obj.emailAddress,
-              isEmailValid:obj.isEmailValid,tel:obj.tel,isTelValid:obj.isTelValid,
-              businessId:obj.businessId,availabilty:obj.availabilty,
-              ...(obj.dataValues.BusinessSpots && {
+            {count:index,id:obj.dataValues.id,
+                  firstName:obj.dataValues.firstName,
+                  lastName:obj.dataValues.lastName,
+                  emailAddress:obj.dataValues.emailAddress,
+                  isEmailValid:obj.dataValues.isEmailValid,
+                  tel:obj.dataValues.tel,
+                  isTelValid:obj.dataValues.isTelValid,
+                  businessId:obj.dataValues.businessId,
+                  availabilty:obj.dataValues.availabilty,
+              ...((obj.dataValues.BusinessSpots && obj.dataValues.BusinessSpots.length > 0) &&  {
                 _children:obj.dataValues.BusinessSpots?.map((obj2,index2)=>{
                   return{
-                      id:obj2.id, name:obj2.name, address:obj2.address, city:obj2.city,
-                      openHours:obj2.openHours, closeHours:obj2.closeHours, tel:obj2.tel
-                      ,emailAddress:obj2.emailAddress, contactPerson:obj2.contactPerson
-                      ,availabilty:obj2.availabilty,
+                      id:obj2.dataValues.id, 
+                      name:obj2.dataValues.name, 
+                      address:obj2.dataValues.address,
+                      city:obj2.dataValues.city,
+                      openHours:obj2.dataValues.openHours,
+                      closeHours:obj2.dataValues.closeHours,
+                      tel:obj2.dataValues.tel,
+                      emailAddress:obj2.dataValues.emailAddress,
+                      contactPerson:obj2.dataValues.contactPerson,
+                      availabilty:obj2.dataValues.availabilty,
                   }
                 })
               })
