@@ -858,8 +858,11 @@ class UserService {
 
       let details
 
+      console.log(result)
+
       if(result){
         details=result.dataValues.map((obj,index)=>{
+          console.log(obj)
 
           return(
             {count:index,id:obj.id,firstName:obj.firstName,
