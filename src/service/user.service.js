@@ -847,8 +847,10 @@ class UserService {
                 include:[
                   {
                     model:this.BusinessSpotsModel,
+                    as: 'BusinessSpots', 
                     attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
                     required: false,
+
                   }
                 ],
               attributes: [],
