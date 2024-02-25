@@ -2430,7 +2430,7 @@ class UserService {
   if (existingUser != null)throw new ConflictError(existingUser);
   
   try {
-    const user = await this.BusinessModel.create({
+    const result = await this.BusinessModel.create({
       firstName,
       lastName,
       tel,
@@ -2440,9 +2440,9 @@ class UserService {
       createdBy
     });
 
-    await this.sendEmailVerificationCode(user.emailAddress,user.id,password)
+    await this.sendEmailVerificationCode(result.emailAddress,result.id,password)
   
-    return user;
+    return {id:result.dataValues.id};
   } catch (error) {
       console.log(error)  
       throw new SystemError('SystemError','An error occured while creating business');

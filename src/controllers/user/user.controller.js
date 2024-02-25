@@ -827,11 +827,13 @@ export default class UserController {
         createdBy:req.user.id,
       }
 
-      await userService.handleCreateBusiness(my_bj);
+      let result=await userService.handleCreateBusiness(my_bj);
 
       return res.status(200).json({
         status: 200,
         message: "Business created successfully.",
+        data:result,
+
       });
     } catch (error) {
       next(error);
