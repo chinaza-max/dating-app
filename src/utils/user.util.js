@@ -21,7 +21,7 @@ class UserUtil {
     emailAddress: Joi.string().email().required(),
     password: Joi.string().required(),
     tel: Joi.number().required(),
-    businessId: Joi.number().required(),
+    businessId: Joi.string().required(),
     createdBy: Joi.number().required(),
   });
 

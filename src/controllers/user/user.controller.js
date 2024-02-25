@@ -821,7 +821,6 @@ export default class UserController {
       
       const data=req.body
 
-      console.log(data)
       const my_bj = {
         ...data,
         createdBy:req.user.id,
