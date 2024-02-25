@@ -50,7 +50,7 @@ export  function init(connection) {
         allowNull: false,
       },
       businessId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       businessPicture: {
