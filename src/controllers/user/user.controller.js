@@ -449,6 +449,37 @@ export default class UserController {
     }
   }
 
+  
+  async getBusinessAndSpot(
+    req,
+    res,
+    next
+  ){
+    
+    const {offset}=req.query
+    const {pageSize}=req.query
+
+
+    try {
+       
+                          
+        const result=await userService.handleGetBusinessAndSpot(offset,pageSize);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+
+
+
   async getDate(
     req,
     res,

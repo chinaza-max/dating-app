@@ -53,7 +53,6 @@ function associate() {
     foreignKey: 'matchId'
   })
 
-
   Business.hasMany(BusinessSpot, {
     foreignKey: 'businessId',
     as: "BusinessSpots",

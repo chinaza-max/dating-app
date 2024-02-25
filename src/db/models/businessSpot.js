@@ -47,6 +47,10 @@ export function init(connection) {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    locationCoordinate: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     availabilty: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

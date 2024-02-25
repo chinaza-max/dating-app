@@ -836,6 +836,55 @@ class UserService {
   }
 
 
+  
+
+  async handleGetBusinessAndSpot(data,offset,pageSize) {
+
+
+    try {
+
+      let result=await this.BusinessModel.findAll({
+                include:[
+                  {
+                    model:this.BusinessSpotsModel,
+                    attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
+                    required: false,
+                  }
+                ],
+              attributes: [],
+      }) 
+   
+
+      let details=result.dataValues.map((obj,index)=>{
+
+        return(
+          {count:index,id:obj.id,firstName:obj.firstName,
+            lastName:obj.lastName,emailAddress:obj.emailAddress,
+            isEmailValid:obj.isEmailValid,tel:obj.tel,isTelValid:obj.isTelValid,
+            businessId:obj.businessId,availabilty:obj.availabilty,
+            ...(obj.dataValues.BusinessSpots && {
+              _children:obj.dataValues.BusinessSpots?.map((obj2,index2)=>{
+                return{
+                    id:obj2.id, name:obj2.name, address:obj2.address, city:obj2.city,
+                    openHours:obj2.openHours, closeHours:obj2.closeHours, tel:obj2.tel
+                    ,emailAddress:obj2.emailAddress, contactPerson:obj2.contactPerson
+                    ,availabilty:obj2.availabilty,
+                }
+              })
+            })
+          }
+        )
+      })
+
+      console.log(details)
+      return details||[]
+    } catch (error) {
+      console.log(error)
+        throw new SystemError(error.name,  error.parent)
+    }
+
+  }
+
   async handleGetDate(data,offset,pageSize) {
     let { 
       userId,
