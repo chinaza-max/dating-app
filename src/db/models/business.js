@@ -37,7 +37,7 @@ export  function init(connection) {
         defaultValue:false
       }, 
       tel: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       }, 
       isTelValid: {
