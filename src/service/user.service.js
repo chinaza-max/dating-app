@@ -2873,11 +2873,15 @@ async handleRemoveBusinessSpot(data) {
 
 
   try {
-      await this.BusinessSpotsModel.findOne({
-        where:{
-          id:businessSpotId
-        }
-      }).destroy();
+     
+
+      const record = await BusinessSpotsModel.findByPk(businessSpotId);
+
+      if (record) {
+        await record.destroy();
+      } 
+
+
 
   } catch (error) {
     throw new ServerError('SystemError',"Failed to delete businessSpot" );
@@ -2899,13 +2903,15 @@ async handleDeleteBusiness(data) {
 
   try {
 
-    
-    await this.BusinessModel.findOne({
-      where:{
-        id:businessId
-      }
-    }).destroy();
+
+    const record = await BusinessModel.findByPk(businessId);
+
+      if (record) {
+        await record.destroy();
+      } 
+
   } catch (error) {
+    console.log(error)
     throw new ServerError('SystemError',"Failed to delete business" );
   }
  
