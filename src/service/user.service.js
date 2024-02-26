@@ -2873,7 +2873,11 @@ async handleRemoveBusinessSpot(data) {
 
 
   try {
-      await this.BusinessSpotsModel.findByPk(businessSpotId).destroy();
+      await this.BusinessSpotsModel.findOne({
+        where:{
+          id:businessSpotId
+        }
+      }).destroy();
 
   } catch (error) {
     throw new ServerError('SystemError',"Failed to delete businessSpot" );
@@ -2894,7 +2898,13 @@ async handleDeleteBusiness(data) {
   if (businessSpot) throw new BadRequestError("Business can not be deleted");
 
   try {
-    await this.BusinessModel.findByPk(businessId).destroy();
+
+    
+    await this.BusinessModel.findOne({
+      where:{
+        id:businessId
+      }
+    }).destroy();
   } catch (error) {
     throw new ServerError('SystemError',"Failed to delete business" );
   }
