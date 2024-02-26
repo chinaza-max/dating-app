@@ -2904,7 +2904,7 @@ async handleDeleteBusiness(data) {
   try {
 
 
-    const record = await BusinessModel.findByPk(businessId);
+    const record = await this.BusinessModel.findByPk(businessId);
 
       if (record) {
         await record.destroy();
