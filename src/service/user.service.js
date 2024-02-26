@@ -2885,17 +2885,20 @@ async handleDeleteBusiness(data) {
 
   let {businessId} = await userUtil.verifyHandleDeleteBusiness.validateAsync(data);
 
-  const user = await this.BusinessModel.findOne({
-    where:{
-     id: businessId,
-     isDeleted:false
-    }
-  });
-  if (!user) throw new NotFoundError("Business not found.");
+  const businessSpot=await this.BusinessSpotsModel.findOne({
+    businessId
+  })
+
+  if(businessSpot){
+
+  }
+  if (businessSpot) throw new BadRequestError("Business can not be deleted");
+
+
+
+ 
   try {
-    await user.update({    
-      isDeleted:true
-    });
+    await this.BusinessModel.findByPk(businessId).destroy();
   } catch (error) {
     throw new ServerError('SystemError',"Failed to delete business" );
   }
