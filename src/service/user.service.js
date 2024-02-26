@@ -866,8 +866,7 @@ class UserService {
 
           return(
             {count:index,id:obj.dataValues.id,
-                  firstName:obj.dataValues.firstName,
-                  lastName:obj.dataValues.lastName,
+                  fullName: obj.dataValues.lastName+' '+obj.dataValues.firstName,
                   emailAddress:obj.dataValues.emailAddress,
                   isEmailValid:obj.dataValues.isEmailValid,
                   tel:obj.dataValues.tel,
@@ -887,6 +886,7 @@ class UserService {
                       emailAddress:obj2.dataValues.emailAddress,
                       contactPerson:obj2.dataValues.contactPerson,
                       availabilty:obj2.dataValues.availabilty,
+                      coordinate:obj2.dataValues.locationCoordinate,
                   }
                 })
               })
