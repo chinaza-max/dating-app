@@ -109,8 +109,12 @@ class UserUtil {
   });
   
 
-  verifyHandleDeleteBusiness= Joi.object({
+  verifyHandleDDBusiness= Joi.object({
     businessId: Joi.number().required(),
+    type: Joi.string().valid(
+      'delete',
+      'disable',
+    ).required(),
     createdBy: Joi.number().required()
   });
 

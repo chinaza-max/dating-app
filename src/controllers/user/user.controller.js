@@ -795,7 +795,7 @@ export default class UserController {
 
 
 
-  async deleteBusiness(
+  async DDBusiness(
     req,
     res,
     next
@@ -809,7 +809,7 @@ export default class UserController {
         createdBy:req.user.id,
       }
                         
-      await userService.handleDeleteBusiness(my_bj);
+      await userService.handleDDBusiness(my_bj);
 
       return res.status(200).json({
         status: 200,
