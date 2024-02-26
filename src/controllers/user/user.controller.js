@@ -811,10 +811,28 @@ export default class UserController {
                         
       await userService.handleDDBusiness(my_bj);
 
-      return res.status(200).json({
-        status: 200,
-        message: "Business deleted successfully.",
-      });
+
+      if(data.type=='delete'){
+        return res.status(200).json({
+          status: 200,
+          message: "Business deleted successfully.",
+        });
+      }
+      else if(data.type=='disable'){
+        return res.status(200).json({
+          status: 200,
+          message: "Business disable successfully.",
+        });
+      }
+      else{
+        return res.status(200).json({
+          status: 200,
+          message: "Business enable successfully.",
+        });
+      }
+      
+
+
     } catch (error) {
       next(error);
     }
