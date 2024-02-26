@@ -158,7 +158,10 @@ export default class UserController {
           createdBy:req.user.id,
         }          
         await userService.handleCUBusinessSpot(my_bj);
-  
+        return res.status(200).json({
+          status: 200,
+          message: "successfull.",
+        });
       }
       else{
         
@@ -167,12 +170,15 @@ export default class UserController {
           createdBy:req.user.id,
         }            
         await userService.handleDDEBusinessSpot(my_bj);
+
+
+        return res.status(200).json({
+          status: 200,
+          message: "action was successfull.",
+        });
       }
 
-      return res.status(200).json({
-        status: 200,
-        message: "action was successfull.",
-      });
+     
     } catch (error) {
       console.log(error)
       next(error);

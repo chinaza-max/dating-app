@@ -85,9 +85,10 @@ class UserUtil {
     openHours: Joi.string().required(),
     closeHours: Joi.string().required(),
     tel: Joi.string().required(),
+    locationCoordinate: Joi.string().required(),
     emailAddress: Joi.string().email().required(),
     contactPerson: Joi.string().required(),
-    availabilty: Joi.boolean().required(),
+    availabilty: Joi.boolean().optional(),
     type: Joi.string().required(),
     createdBy: Joi.number().required(),
 

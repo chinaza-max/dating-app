@@ -566,6 +566,7 @@ class UserService {
       emailAddress,
       contactPerson,
       availabilty,
+      locationCoordinate,
       tel              
     } = await userUtil.verifyHandleCUBusinessSpot.validateAsync(data);
 
@@ -2864,6 +2865,7 @@ async handleAddOrUpdatefilter(data) {
 async handleDDEBusinessSpot(data) {
 
   let {businessSpotId, type} = await userUtil.handleDDEBusinessSpot.validateAsync(data);
+
 
   if(type=='delete'){
 
