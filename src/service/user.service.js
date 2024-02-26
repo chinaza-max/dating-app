@@ -2864,17 +2864,16 @@ async handleRemoveBusinessSpot(data) {
 
   let {businessSpotId} = await userUtil.verifyHandleRemoveBusinessSpot.validateAsync(data);
 
-  const user = await this.BusinessSpotsModel.findOne({
-    where:{
-     id: businessSpotId,
-     isDeleted:false
-    }
-  });
-  if (!user) throw new NotFoundError("Business spot  not found.");
+  const userDate=await this.DateModel.findOne({
+    businessIdSpotId:businessSpotId
+  })
+
+  if (userDate) throw new BadRequestError("Business Spot can not be deleted");
+
+
   try {
-    await user.update({    
-      isDeleted:true
-    });
+      await this.BusinessSpotsModel.findByPk(businessSpotId).destroy();
+
   } catch (error) {
     throw new ServerError('SystemError',"Failed to delete businessSpot" );
   }
@@ -2889,9 +2888,6 @@ async handleDeleteBusiness(data) {
     businessId
   })
 
-  if(businessSpot){
-
-  }
   if (businessSpot) throw new BadRequestError("Business can not be deleted");
 
 
