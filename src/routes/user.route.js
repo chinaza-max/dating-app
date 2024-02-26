@@ -21,7 +21,6 @@ class UserRoutes extends UserController {
     this.router.post("/createBusiness",  this.createBusiness);
     this.router.post("/updateBusiness",  this.UpdateBusiness);
     this.router.post("/deleteBusiness",  this.deleteBusiness);
-    this.router.post("/deleteBusiness",  this.deleteBusiness);
     this.router.post("/createOrUpdateOrRemoveBusinessImage", uploadHandler.image.array("image"), this.createOrUpdateOrRemoveBusinessImage);
     this.router.post("/createBusiness", this.createOrUpdateOrRemoveBusinessImage);
     this.router.post("/CUDBusinessSpot", this.CUDBusinessSpot);
