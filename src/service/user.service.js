@@ -2915,13 +2915,25 @@ async handleDDBusiness(data) {
       console.log(error)
       throw new ServerError('SystemError',"Failed to delete business" );
     }
-  }else{
+  }
+  else if(type=='disable'){
 
     const record = await this.BusinessModel.findByPk(businessId);
   
     if (record) {
       await record.update({
         availabilty:false
+      });
+    } 
+
+  }
+  else if(type=='enable'){
+
+    const record = await this.BusinessModel.findByPk(businessId);
+  
+    if (record) {
+      await record.update({
+        availabilty:true
       });
     } 
 

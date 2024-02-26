@@ -114,6 +114,7 @@ class UserUtil {
     type: Joi.string().valid(
       'delete',
       'disable',
+      'enable'
     ).required(),
     createdBy: Joi.number().required()
   });
