@@ -864,10 +864,9 @@ class UserService {
 
       if(result){
         details=result.map((obj,index)=>{
-          console.log(obj)
 
           return(
-            {count:index,id:obj.dataValues.id,
+            {id:obj.dataValues.id,
                   fullName: obj.dataValues.lastName+' '+obj.dataValues.firstName,
                   emailAddress:obj.dataValues.emailAddress,
                   isEmailValid:obj.dataValues.isEmailValid,
