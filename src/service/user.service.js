@@ -2865,7 +2865,8 @@ async handleRemoveBusinessSpot(data) {
   let {businessSpotId} = await userUtil.verifyHandleRemoveBusinessSpot.validateAsync(data);
 
   const userDate=await this.DateModel.findOne({
-    businessIdSpotId:businessSpotId
+    where:{businessIdSpotId:businessSpotId
+    }
   })
 
   if (userDate) throw new BadRequestError("Business Spot can not be deleted");
@@ -2885,14 +2886,13 @@ async handleDeleteBusiness(data) {
   let {businessId} = await userUtil.verifyHandleDeleteBusiness.validateAsync(data);
 
   const businessSpot=await this.BusinessSpotsModel.findOne({
-    businessId
+    where:{
+      businessId
+    }
   })
 
   if (businessSpot) throw new BadRequestError("Business can not be deleted");
 
-
-
- 
   try {
     await this.BusinessModel.findByPk(businessId).destroy();
   } catch (error) {
