@@ -142,7 +142,7 @@ export default class UserController {
 
 
   
-  async CUDBusinessSpot(
+  async CUDDBusinessSpot(
     req,
     res,
     next
@@ -156,25 +156,17 @@ export default class UserController {
         const my_bj = {
           ...data,
           createdBy:req.user.id,
-        }
-                          
+        }          
         await userService.handleCUBusinessSpot(my_bj);
-  
-      }
-      else if(data.type=='delete'){
-        const my_bj = {
-          ...data,
-          createdBy:req.user.id,
-        }
-                          
-        await userService.handleRemoveBusinessSpot(my_bj);
   
       }
       else{
         
-      return res.status(400).json({
-        message: "type is missing in the request or is not correct(CreateOrUpdate delete)",
-      });
+        const my_bj = {
+          ...data,
+          createdBy:req.user.id,
+        }            
+        await userService.handleDDEBusinessSpot(my_bj);
       }
 
       return res.status(200).json({

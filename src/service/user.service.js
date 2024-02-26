@@ -585,11 +585,11 @@ class UserService {
         where: {   
           businessId,
           name,
+          locationCoordinate,
           isDeleted:false },
       });
 
       if (existingBusinessSpot) {
-
         await existingBusinessSpot.update({
           name,
           address,
@@ -599,6 +599,7 @@ class UserService {
           emailAddress,
           contactPerson,
           availabilty,
+          locationCoordinate,
           tel
         });
       } else {
@@ -611,7 +612,7 @@ class UserService {
             closeHours,
             emailAddress,
             contactPerson,
-            availabilty,
+            locationCoordinate,
             tel
         });
       }
@@ -2860,34 +2861,60 @@ async handleAddOrUpdatefilter(data) {
 }*/
 
 
-async handleRemoveBusinessSpot(data) {
+async handleDDEBusinessSpot(data) {
 
-  let {businessSpotId} = await userUtil.verifyHandleRemoveBusinessSpot.validateAsync(data);
+  let {businessSpotId, type} = await userUtil.handleDDEBusinessSpot.validateAsync(data);
 
-  const userDate=await this.DateModel.findOne({
-    where:{businessIdSpotId:businessSpotId
-    }
-  })
+  if(type=='delete'){
 
-  if (userDate) throw new BadRequestError("Business Spot can not be deleted");
+      const dateResult=await this.DateModel.findOne({
+        where:{
+          businessIdSpotId:businessSpotId
+        }
+      })
+    
+      if (dateResult) throw new BadRequestError("Business spot can not be deleted");
+    
+      try {
+    
+        const record = await this.BusinessSpotsModel.findByPk(businessSpotId);
+    
+          if (record) {
+            await record.destroy();
+          } 
+    
+      } catch (error) {
+        console.log(error)
+        throw new ServerError('SystemError',"Failed to delete business spot" );
+      }
+  } else if(type=='disable'){
 
+    const record = await this.BusinessSpotsModel.findByPk(businessSpotId);
+  
+    if (record) {
+      await record.update({
+        availabilty:false
+      });
+    } 
 
-  try {
-     
-
-      const record = await BusinessSpotsModel.findByPk(businessSpotId);
-
-      if (record) {
-        await record.destroy();
-      } 
-
-
-
-  } catch (error) {
-    throw new ServerError('SystemError',"Failed to delete businessSpot" );
   }
+  else if(type=='enable'){
+
+    const record = await this.BusinessSpotsModel.findByPk(businessSpotId);
+  
+    if (record) {
+      await record.update({
+        availabilty:true
+      });
+    } 
+
+  }
+
  
 }
+
+
+
 
 async handleDDBusiness(data) {
 

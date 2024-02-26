@@ -119,9 +119,13 @@ class UserUtil {
     createdBy: Joi.number().required()
   });
 
-  verifyHandleRemoveBusinessSpot= Joi.object({
+  handleDDEBusinessSpot= Joi.object({
     businessSpotId: Joi.number().required(),
-    type: Joi.string().required(),
+    type: Joi.string().valid(
+      'delete',
+      'disable',
+      'enable'
+    ).required(),
     createdBy: Joi.number().required()
   });
 
