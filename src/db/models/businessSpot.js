@@ -35,7 +35,7 @@ export function init(connection) {
       allowNull: false,
     },
     tel: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     emailAddress: {
