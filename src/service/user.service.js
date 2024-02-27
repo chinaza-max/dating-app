@@ -838,6 +838,22 @@ class UserService {
 
 
   
+  
+
+  async handleGetMatchDetails(data) {
+
+    const {type ,matchId}=await userUtil.verifyhandleGetMatchDetails.validateAsync(data);
+
+
+    if(type=='single'){
+        const result =await this.UserMatchModel.findByPk(matchId)
+
+        return result.dataValues
+    }
+   
+  
+
+  }
 
   async handleDateSelectionData(data) {
 

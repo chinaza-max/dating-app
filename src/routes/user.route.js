@@ -59,6 +59,7 @@ class UserRoutes extends UserController {
     this.router.post("/updateLocation", this.updateLocation);
     this.router.get("/countData", this.countData); 
     this.router.get("/dateSelectionData", this.dateSelectionData);
+    this.router.get("/getMatchDetails", this.getMatchDetails);
 
 
   } 

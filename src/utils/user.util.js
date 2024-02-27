@@ -401,6 +401,10 @@ class UserUtil {
       }),
   });
 
+  verifyhandleGetMatchDetails=Joi.object({
+    type: Joi.string().required(),
+    matchId: Joi.number().required(),
+  });
 
   verifyHandleDateSelectionData= Joi.object({
     type: Joi.string().valid(

@@ -450,6 +450,38 @@ export default class UserController {
 
   
 
+  async getMatchDetails(
+    req,
+    res,
+    next
+  ){
+
+    const {type}=req.query
+    const {matchId}=req.query
+
+
+
+    const obj={
+      type:type,
+      matchId:matchId,
+    }
+
+    try {
+               
+        const result=await userService.handleGetMatchDetails(obj);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
   async dateSelectionData(
     req,
     res,
