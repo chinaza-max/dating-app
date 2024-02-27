@@ -845,19 +845,26 @@ class UserService {
     const {businessId, type}=await userUtil.verifyHandleGetBusinessAndSpot.validateAsync(data);
 
     if(type=='businessSpot'){
+
+
+
       try {
+
+        let businessDetail=await this.BusinessSpotsModel.findByPk(businessId) 
+
+
 
         let result=await this.BusinessSpotsModel.findAll({
           where:{
             businessId:businessId
           }
         }) 
-    
+        
         let details
   
         if(result){
           details=result.map((obj,index)=>{
-              
+
             return(
               {
                 id:obj.dataValues.id, 
@@ -875,9 +882,15 @@ class UserService {
             )
           })
         }
-  
+        const data={
+          BusinessSpots:details,
+          details:{
+            fullName:businessDetail.dataValues.lastName+' '+businessDetail.dataValues.firstName,
+            emailAddress:businessDetail.dataValues.emailAddress,
+          },
+        }
         console.log(details)
-        return details||[]
+        return  data
       } catch (error) {
         console.log(error)
           throw new SystemError(error.name,  error.parent)
