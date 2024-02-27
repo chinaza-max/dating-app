@@ -165,12 +165,12 @@ class UserService {
 
   async handleGetDatesDate(data) {
     let { 
-      userId        
+      userId ,userId2        
     } = await userUtil.verifyHandleGetDatesDate.validateAsync(data);
 
     try {
       const activeDates = await this.DateModel.findAll({
-        attributes: ['fullDate'], // Only select the fullDate field
+        attributes: ['fullDate'], 
         where: {
           [Op.or]: [
             { userId: userId },
@@ -185,7 +185,6 @@ class UserService {
       });
       
   
-      // Extract the fullDate values into an array
       const activeDatesArray = activeDates.map(date => date.fullDate);
       
       console.log(activeDatesArray);

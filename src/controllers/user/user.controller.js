@@ -589,7 +589,8 @@ export default class UserController {
     try {
     
         const my_bj = {
-          userId
+          userId,
+          userId2:req.user.id
         }
                           
         const result=await userService.handleGetDatesDate(my_bj);

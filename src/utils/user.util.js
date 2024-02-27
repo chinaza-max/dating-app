@@ -311,6 +311,8 @@ class UserUtil {
   });
   verifyHandleGetDatesDate= Joi.object({
     userId: Joi.number().required(),
+    userId2: Joi.number().required(),
+
   });
 
   verifyHandleCUcommentAndRating= Joi.object({
