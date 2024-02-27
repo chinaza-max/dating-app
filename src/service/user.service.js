@@ -842,67 +842,85 @@ class UserService {
 
   async handleGetBusinessAndSpot(data,offset,pageSize) {
 
+    const {businessId, type}=await userUtil.verifyHandleGetBusinessAndSpot.validateAsync(data);
 
-    try {
 
-      let result=await this.BusinessModel.findAll({
-                include:[
-                  {
-                    model:this.BusinessSpotsModel,
-                    as: 'BusinessSpots', 
-                    attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel'],
-                    required: false,
+    if(type=='businessSpot'){
+      try {
 
-                  }
-                ],
-      }) 
-   
-
-      let details
-
-      console.log(result)
-
-      if(result){
-        details=result.map((obj,index)=>{
-
-          return(
-            {id:obj.dataValues.id,
-                  fullName: obj.dataValues.lastName+' '+obj.dataValues.firstName,
-                  emailAddress:obj.dataValues.emailAddress,
-                  isEmailValid:obj.dataValues.isEmailValid,
-                  tel:obj.dataValues.tel,
-                  isTelValid:obj.dataValues.isTelValid,
-                  businessId:obj.dataValues.businessId,
-                  availabilty:obj.dataValues.availabilty,
-              ...((obj.dataValues.BusinessSpots && obj.dataValues.BusinessSpots.length > 0) &&  {
-                _children:obj.dataValues.BusinessSpots?.map((obj2,index2)=>{
-                  return{
-                      id:obj2.dataValues.id, 
-                      name:obj2.dataValues.name, 
-                      address:obj2.dataValues.address,
-                      city:obj2.dataValues.city,
-                      openHours:obj2.dataValues.openHours,
-                      closeHours:obj2.dataValues.closeHours,
-                      tel:obj2.dataValues.tel,
-                      emailAddress:obj2.dataValues.emailAddress,
-                      contactPerson:obj2.dataValues.contactPerson,
-                      availabilty:obj2.dataValues.availabilty,
-                      coordinate:obj2.dataValues.locationCoordinate,
-                  }
-                })
-              })
-            }
-          )
-        })
-      }
+        let result=await this.BusinessSpotsModel.findAll({
+          where:{
+            businessId:businessId
+          }
+        }) 
     
-
-      console.log(details)
-      return details||[]
-    } catch (error) {
-      console.log(error)
-        throw new SystemError(error.name,  error.parent)
+        let details
+  
+        if(result){
+          details=result.map((obj,index)=>{
+  
+            return(
+              {
+                id:obj.dataValues.id, 
+                name:obj.dataValues.name, 
+                address:obj.dataValues.address,
+                city:obj.dataValues.city,
+                openHours:obj.dataValues.openHours,
+                closeHours:obj.dataValues.closeHours,
+                tel:obj.dataValues.tel,
+                emailAddress:obj.dataValues.emailAddress,
+                contactPerson:obj.dataValues.contactPerson,
+                availabilty:obj.dataValues.availabilty,
+                coordinate:obj.dataValues.locationCoordinate,
+            }
+            )
+          })
+        }
+  
+        console.log(details)
+        return details||[]
+      } catch (error) {
+        console.log(error)
+          throw new SystemError(error.name,  error.parent)
+      }
     }
+    else{
+
+      try {
+
+        let result=await this.BusinessModel.findAll() 
+  
+        let details
+  
+        if(result){
+          details=result.map((obj,index)=>{
+  
+            return(
+              {id:obj.dataValues.id,
+                    fullName: obj.dataValues.lastName+' '+obj.dataValues.firstName,
+                    emailAddress:obj.dataValues.emailAddress,
+                    isEmailValid:obj.dataValues.isEmailValid,
+                    tel:obj.dataValues.tel,
+                    isTelValid:obj.dataValues.isTelValid,
+                    businessId:obj.dataValues.businessId,
+                    availabilty:obj.dataValues.availabilty
+              }
+            )
+          })
+        }
+      
+  
+        console.log(details)
+        return details||[]
+      } catch (error) {
+        console.log(error)
+          throw new SystemError(error.name,  error.parent)
+      }
+
+    }
+
+
+  
 
   }
 

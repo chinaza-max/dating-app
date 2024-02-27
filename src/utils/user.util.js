@@ -384,6 +384,25 @@ class UserUtil {
       ).required()
   });
 
+  verifyHandleGetBusinessAndSpot= Joi.object({
+    type: Joi.string().valid(
+      'businessSpot',
+      'business'
+      ).required()
+  });
+
+
+  verifyHandleGetBusinessAndSpot= Joi.object({
+    type: Joi.string().valid(
+      'businessSpot',
+      'business'
+      ).required(),
+      businessId: Joi.when('type', {
+        is: 'businessSpot',
+        then: Joi.string().required(),
+        otherwise: Joi.string().allow('').optional(),
+      }),
+  });
 }
 
 export default new UserUtil();
