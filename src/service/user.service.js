@@ -850,7 +850,7 @@ class UserService {
 
       try {
 
-        let businessDetail=await this.BusinessSpotsModel.findByPk(businessId) 
+        let businessDetail=await this.BusinessModel.findByPk(businessId) 
 
 
 
@@ -883,7 +883,7 @@ class UserService {
           })
         }
         const data={
-          BusinessSpots:details,
+          businessSpots:details,
           details:{
             fullName:businessDetail.dataValues.lastName+' '+businessDetail.dataValues.firstName,
             emailAddress:businessDetail.dataValues.emailAddress,
