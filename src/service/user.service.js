@@ -877,7 +877,7 @@ class UserService {
                 emailAddress:obj.dataValues.emailAddress,
                 contactPerson:obj.dataValues.contactPerson,
                 availabilty:obj.dataValues.availabilty,
-                coordinate:JSON.parse(obj.dataValues.locationCoordinate),
+                coordinate:obj.dataValues.locationCoordinate,
             }
             )
           })
