@@ -852,7 +852,7 @@ class UserService {
         })
 
 
-        return result
+        return result||[]
     }
     else{
       const result =await this.BusinessSpotsModel.findAll({
