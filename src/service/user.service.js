@@ -844,7 +844,6 @@ class UserService {
 
     const {businessId, type}=await userUtil.verifyHandleGetBusinessAndSpot.validateAsync(data);
 
-
     if(type=='businessSpot'){
       try {
 

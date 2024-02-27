@@ -456,12 +456,16 @@ export default class UserController {
     
     const {offset}=req.query
     const {pageSize}=req.query
+    const {type}=req.query
 
+    const obj={
+      type:type
+    }
 
     try {
        
                           
-        const result=await userService.handleGetBusinessAndSpot(offset,pageSize);
+        const result=await userService.handleGetBusinessAndSpot(obj,offset,pageSize);
   
 
 
