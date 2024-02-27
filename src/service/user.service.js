@@ -871,6 +871,7 @@ class UserService {
                 name:obj.dataValues.name, 
                 address:obj.dataValues.address,
                 city:obj.dataValues.city,
+                city:obj.dataValues.city,
                 openHours:obj.dataValues.openHours,
                 closeHours:obj.dataValues.closeHours,
                 tel:obj.dataValues.tel,
