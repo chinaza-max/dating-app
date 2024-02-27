@@ -447,6 +447,40 @@ export default class UserController {
     }
   }
 
+
+  
+
+  async dateSelectionData(
+    req,
+    res,
+    next
+  ){
+
+    const {type}=req.query
+    const {city}=req.query
+
+
+
+    const obj={
+      type:type,
+      city:city,
+    }
+
+    try {
+               
+        const result=await userService.handleDateSelectionData(obj);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
   
   async getBusinessAndSpot(
     req,

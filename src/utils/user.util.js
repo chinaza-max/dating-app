@@ -384,14 +384,9 @@ class UserUtil {
       ).required()
   });
 
-  verifyHandleGetBusinessAndSpot= Joi.object({
-    type: Joi.string().valid(
-      'businessSpot',
-      'business'
-      ).required()
-  });
 
 
+  
   verifyHandleGetBusinessAndSpot= Joi.object({
     type: Joi.string().valid(
       'businessSpot',
@@ -399,6 +394,19 @@ class UserUtil {
       ).required(),
       businessId: Joi.when('type', {
         is: 'businessSpot',
+        then: Joi.string().required(),
+        otherwise: Joi.string().allow('').optional(),
+      }),
+  });
+
+
+  verifyHandleDateSelectionData= Joi.object({
+    type: Joi.string().valid(
+      'city',
+      'spot'
+      ).required(),
+      city: Joi.when('type', {
+        is: 'spot',
         then: Joi.string().required(),
         otherwise: Joi.string().allow('').optional(),
       }),

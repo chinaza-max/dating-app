@@ -840,103 +840,36 @@ class UserService {
 
   
 
-  async handleGetBusinessAndSpot(data,offset,pageSize) {
+  async handleDateSelectionData(data) {
 
-    const {businessId, type}=await userUtil.verifyHandleGetBusinessAndSpot.validateAsync(data);
-
-    if(type=='businessSpot'){
+    const {city, type}=await userUtil.verifyHandleDateSelectionData.validateAsync(data);
 
 
+    if(type=='city'){
+        const result =await this.BusinessSpotsModel.findAll({
+          where:{availabilty:true},
+          attributes:['city']
+        })
 
-      try {
 
-        let businessDetail=await this.BusinessModel.findByPk(businessId) 
-
-
-
-        let result=await this.BusinessSpotsModel.findAll({
-          where:{
-            businessId:businessId
-          }
-        }) 
-        
-        let details
-  
-        if(result){
-          details=result.map((obj,index)=>{
-
-            return(
-              {
-                id:obj.dataValues.id, 
-                name:obj.dataValues.name, 
-                address:obj.dataValues.address,
-                city:obj.dataValues.city,
-                openHours:obj.dataValues.openHours,
-                closeHours:obj.dataValues.closeHours,
-                tel:obj.dataValues.tel,
-                emailAddress:obj.dataValues.emailAddress,
-                contactPerson:obj.dataValues.contactPerson,
-                availabilty:obj.dataValues.availabilty,
-                coordinate:JSON.parse(obj.dataValues.locationCoordinate),
-            }
-            )
-          })
-        }
-        const data={
-          businessSpots:details,
-          details:{
-            fullName:businessDetail.dataValues.lastName+' '+businessDetail.dataValues.firstName,
-            emailAddress:businessDetail.dataValues.emailAddress,
-          },
-        }
-        console.log(details)
-        return  data
-      } catch (error) {
-        console.log(error)
-          throw new SystemError(error.name,  error.parent)
-      }
+        return result
     }
     else{
+      const result =await this.BusinessSpotsModel.findAll({
+        where:{city:city, availabilty:true}
+        ,
+        attributes:['city','name',
+        'address', 'openHours', 'closeHours','locationCoordinate' ]
+      })
 
-      try {
 
-        let result=await this.BusinessModel.findAll() 
-  
-        let details
-
-        if(result){
-          details=result.map((obj,index)=>{
-  
-            return(
-              {id:obj.dataValues.id,
-                    fullName: obj.dataValues.lastName+' '+obj.dataValues.firstName,
-                    emailAddress:obj.dataValues.emailAddress,
-                    isEmailValid:obj.dataValues.isEmailValid,
-                    tel:obj.dataValues.tel,
-                    isTelValid:obj.dataValues.isTelValid,
-                    businessId:obj.dataValues.businessId,
-                    availabilty:obj.dataValues.availabilty
-              }
-            )
-          })
-        }
-      
-  
-        console.log(details)
-
-        
-        return details||[]
-      } catch (error) {
-        console.log(error)
-          throw new SystemError(error.name,  error.parent)
-      }
-
+      return result
     }
-
-
   
 
   }
+
+
 
   async handleGetDate(data,offset,pageSize) {
     let { 
