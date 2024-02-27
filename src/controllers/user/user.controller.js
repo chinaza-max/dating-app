@@ -456,15 +456,16 @@ export default class UserController {
     
     const {offset}=req.query
     const {pageSize}=req.query
-    const {type}=req.query
+    const {type ,businessId}=req.query
+
 
     const obj={
-      type:type
+      type:type,
+      businessId:businessId
     }
 
     try {
-       
-                          
+               
         const result=await userService.handleGetBusinessAndSpot(obj,offset,pageSize);
   
 

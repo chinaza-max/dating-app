@@ -857,7 +857,7 @@ class UserService {
   
         if(result){
           details=result.map((obj,index)=>{
-  
+              
             return(
               {
                 id:obj.dataValues.id, 
@@ -890,7 +890,7 @@ class UserService {
         let result=await this.BusinessModel.findAll() 
   
         let details
-  
+
         if(result){
           details=result.map((obj,index)=>{
   
@@ -910,6 +910,8 @@ class UserService {
       
   
         console.log(details)
+
+        
         return details||[]
       } catch (error) {
         console.log(error)
