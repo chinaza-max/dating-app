@@ -858,12 +858,12 @@ class UserService {
       const result =await this.BusinessSpotsModel.findAll({
         where:{city:city, availabilty:true}
         ,
-        attributes:['city','name',
+        attributes:['id','city','name',
         'address', 'openHours', 'closeHours','locationCoordinate' ]
       })
 
 
-      return result
+      return result||[]
     }
   
 
