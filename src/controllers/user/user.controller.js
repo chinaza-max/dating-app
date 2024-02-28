@@ -995,13 +995,13 @@ export default class UserController {
   ){
     try {
       
-      const data=req.body
+      //const data=req.body
       const {offset}=req.query
       const {pageSize}=req.query
 
 
       const my_bj = {
-        ...data,
+        ...req.query,
       }
 
       const result=await userService.handleGetRequest(my_bj,offset,pageSize);

@@ -33,7 +33,7 @@ class UserRoutes extends UserController {
 
 
     this.router.post("/createRequest", this.createRequest);
-    this.router.post("/getRequest", this.getRequest);
+    this.router.get("/getRequest", this.getRequest);
     this.router.post("/requestAction", this.requestAction);
     
 
