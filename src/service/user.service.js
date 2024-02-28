@@ -874,7 +874,8 @@ class UserService {
     if(type=='city'){
         const result =await this.BusinessSpotsModel.findAll({
           where:{availabilty:true},
-          attributes:['city']
+          attributes:['city'],
+          group: ['city'],
         })
 
 

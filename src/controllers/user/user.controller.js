@@ -980,7 +980,7 @@ export default class UserController {
 
       return res.status(200).json({
         status: 200,
-        message: "Request created successfully.",
+        message: "Request sent.",
       });
     } catch (error) {
       next(error);
