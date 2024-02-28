@@ -226,9 +226,22 @@ class UserService {
 
 
     let requestDetail=await this.RequestModel.findOne({
+
       where: {
-        userId: userId,
-        userId2: userId2,
+        [Op.or]: [
+          {
+            [Op.and]: [
+              { userId: userId },
+              { userId2:userId2},
+            ],
+          },
+          {
+            [Op.and]: [
+              { userId: userId2 },
+              { userId2:userId },
+            ],
+          },
+        ],
         matchId:matchId,
         status:'pending'
       }
@@ -250,8 +263,6 @@ class UserService {
       throw new SystemError(error.name, error.parent)
   }
  
-
-
   }
 
 
@@ -2190,7 +2201,6 @@ class UserService {
           attributes: ['id','userId','userId2','isMatchRejected','matchInformation','matchPercentage'],
           order: [['matchPercentage', 'ASC']]
         });
-
       }
       else{
 
