@@ -2116,9 +2116,16 @@ class UserService {
       });
 
       
-      const requestPendingCount = await this.RequestModel.count({
+      const requestOutgoingCount = await this.RequestModel.count({
         where: {
           userId: userId,
+          status:'pending'
+        },
+      });
+
+      const requestIncomingCount = await this.RequestModel.count({
+        where: {
+          userId2: userId,
           status:'pending'
         },
       });
@@ -2138,7 +2145,8 @@ class UserService {
       });
 
       count['wishListCounter']=wishListCount
-      count['requestPendingCount']=requestPendingCount
+      count['requestOutgoingCount']=requestOutgoingCount
+      count['requestIncomingCount']=requestIncomingCount
       count['requestAcceptedCount']=requestAcceptedCount
       count['requestDeclineCount']=requestDeclineCount
 
