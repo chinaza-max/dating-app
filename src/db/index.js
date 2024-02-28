@@ -33,7 +33,7 @@ class DB {
 
     initModels(this.sequelize);
     if (serverConfig.NODE_ENV === "development") {
-       // await this.sequelize.sync({ alter: true });
+        await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true }); 
         }      
 /*
@@ -49,9 +49,9 @@ class DB {
           }
         })();
 */
-
+/*
         const disableForeignKeyChecks = 'SET foreign_key_checks = 0;';
-const dropTable = 'DROP TABLE IF EXISTS Request;';
+const dropTable = 'DROP TABLE IF EXISTS WishList;';
 const enableForeignKeyChecks = 'SET foreign_key_checks = 1;';
 
 // Execute SQL commands
@@ -70,7 +70,7 @@ this.sequelize.query(disableForeignKeyChecks)
   .catch((error) => {
     console.error('Error dropping table:', error);
   });
-
+*/z
 
 
 
