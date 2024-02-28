@@ -183,13 +183,27 @@ class UserService {
           },
         },
       });
+
+      const activeDates2 = await this.DateModel.findAll({
+        attributes: ['fullDate'], 
+        where: {
+          [Op.or]: [
+            { userId: userId2 },
+            { userId2: userId2 },
+          ],
+         // usersStatus: 'accepted', // Assuming 'accepted' is the status for active dates
+          isDeleted: false,
+          fullDate: {
+            [Op.gte]: new Date(), // Retrieve dates greater than or equal to the current date/time
+          },
+        },
+      });
       
-  
+      
       const activeDatesArray = activeDates.map(date => date.fullDate);
-      
-      console.log(activeDatesArray);
-      
-      return activeDatesArray
+      const activeDatesArray2 = activeDates2.map(date => date.fullDate);
+
+      return [...activeDatesArray,...activeDatesArray2]
     } catch (error) {
       console.log(error)
         throw new SystemError(error.name, error.parent)

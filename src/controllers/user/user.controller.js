@@ -616,13 +616,13 @@ export default class UserController {
     res,
     next
   ){
-    const {userId}=req.query
+    const {userId2}=req.query
 
     try {
     
         const my_bj = {
-          userId,
-          userId2:req.user.id
+          userId2,
+          userId:req.user.id
         }
                           
         const result=await userService.handleGetDatesDate(my_bj);
