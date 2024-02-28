@@ -33,7 +33,7 @@ class DB {
 
     initModels(this.sequelize);
     if (serverConfig.NODE_ENV === "development") {
-        await this.sequelize.sync({ alter: true });
+       // await this.sequelize.sync({ alter: true });
         //await this.sequelize.sync({ force: true }); 
         }      
 /*
@@ -70,7 +70,7 @@ this.sequelize.query(disableForeignKeyChecks)
   .catch((error) => {
     console.error('Error dropping table:', error);
   });
-*/z
+*/
 
 
 
