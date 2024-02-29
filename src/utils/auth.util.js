@@ -21,7 +21,7 @@ class AdminUtil {
       occupation: Joi.string().required(),
       recreationalActivity: Joi.string().required(),
       height: Joi.number().required(),
-      haveChildren: Joi.boolean().required(),
+      haveChildren: Joi.string().required(),
       smoking: Joi.string().required(),
       drinking: Joi.string().required(),
       eyeColor: Joi.string().required(),
