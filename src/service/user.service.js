@@ -3106,10 +3106,21 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
         },
       });
       
+
+      console.log("profile deatils profile deatilsprofile deatilsprofile deatils")
+      console.log(usersWithProfiles)
+
+      console.log("profile deatils profile deatilsprofile deatilsprofile deatils")
+
       let UserInfo=[]
       for (let index = 0; index < usersWithProfiles.length; index++) {
         const userArray = usersWithProfiles[index];
         const tags=JSON.parse(userArray.dataValues.tags)
+
+        console.log("each user each user each user each user each user")
+        console.log(userArray)
+  
+        console.log("each user each user each user each user each user")
         
          
         let answerAndquestionIdArray=[]
