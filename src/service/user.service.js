@@ -505,6 +505,13 @@ class UserService {
                 [Op.or]:[
                   { userId2:userId,userId:userId,}
                 ],
+                include:[
+                  {
+                    model: this.DateModel,
+                    as: "RequestDates",
+                    required:false
+                  }
+                ],
                 status:'accepted',
                 isDeleted:false
               },
@@ -560,13 +567,15 @@ class UserService {
           },
         })
   
+        console.log(element)
         result.push({
           userId: element.dataValues.userId,
           userId2:element.dataValues.userId2,
           matchInformation:JSON.parse(matchDetail.dataValues.matchInformation),
           requestId:element.dataValues.id,
           matchId:matchDetail.dataValues.id,
-          createdAt:element.dataValues.createdAt
+          createdAt:element.dataValues.createdAt,
+
         })
       }
     
