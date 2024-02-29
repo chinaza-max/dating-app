@@ -2525,7 +2525,7 @@ class UserService {
       })
 
 
-      for (let index = 0; result2 < array.length; index++) {
+      for (let index = 0; index < result2.length; index++) {
         const element = array[index];
 
 
@@ -2554,7 +2554,7 @@ class UserService {
       })
 
 
-      for (let index = 0; result2 < array.length; index++) {
+      for (let index = 0; index < result2.length; index++) {
         const element = array[index];
 
 
@@ -2577,9 +2577,6 @@ class UserService {
 
     }
 
-
- 
- 
 
   }
 
