@@ -2526,7 +2526,7 @@ class UserService {
 
 
       for (let index = 0; index < result2.length; index++) {
-        const element = array[index];
+        const element = result2[index];
 
 
         result1.push({id:element.dataValues.id,
@@ -2555,7 +2555,7 @@ class UserService {
 
 
       for (let index = 0; index < result2.length; index++) {
-        const element = array[index];
+        const element = result2[index];
 
 
         result1.push({id:element.dataValues.id,
