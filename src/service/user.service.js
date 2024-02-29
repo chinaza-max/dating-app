@@ -504,13 +504,17 @@ class UserService {
             console.log('my request my request  my request')
 
             details=await this.RequestModel.findAll({
-              where:{
-                [Op.or]:[
-                  { userId2:userId,
-                    userId:userId}
+              where: {
+                [Op.and]: [
+                  {
+                    [Op.or]: [
+                      { userId: userId },
+                      { userId2: userId },
+                    ],
+                  },
+                  { status: 'accepted' },
+                  { isDeleted: false },
                 ],
-                status:'accepted',
-                isDeleted:false
               },
                 include:[
                   {
