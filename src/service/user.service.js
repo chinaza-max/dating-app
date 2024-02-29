@@ -575,7 +575,7 @@ class UserService {
           requestId:element.dataValues.id,
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
-          hasDate:element.dataValues.RequestDates
+         // hasDate:element.dataValues.RequestDates
         })
       }
     
