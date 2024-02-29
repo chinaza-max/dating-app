@@ -500,10 +500,14 @@ class UserService {
               offset: Number(offset),
             })
           }else{
+
+            console.log('my request my request  my request')
+
             details=await this.RequestModel.findAll({
               where:{
                 [Op.or]:[
-                  { userId2:userId,userId:userId,}
+                  { userId2:userId,
+                    userId:userId}
                 ],
                 status:'accepted',
                 isDeleted:false
@@ -517,6 +521,12 @@ class UserService {
                 ] ,
               attributes:['userId','userId2','status','id','createdAt'],
             })
+            console.log(userId)
+            console.log(details)
+
+
+            console.log('my request my request  my request')
+
           }
         }
   
@@ -567,7 +577,6 @@ class UserService {
           },
         })
   
-        console.log(element)
         result.push({
           userId: element.dataValues.userId,
           userId2:element.dataValues.userId2,
@@ -2143,7 +2152,10 @@ class UserService {
 
       const requestAcceptedCount = await this.RequestModel.count({
         where: {
-          userId: userId,
+          [Op.or]: [
+            {userId: userId,
+            userId2: userId,}
+          ],
           status:'accepted'
         },
       });
