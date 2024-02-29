@@ -3086,6 +3086,8 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
  
   async rematchUser(){
   
+
+    console.log("start matching start matchingstart matchingstart matchingstart matching ")
     try {
       const usersWithProfiles =await  this.UserModel.findAll({
         attributes: ['id', 'tags'],
@@ -3138,12 +3140,25 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
           for (let j = i + 1; j < data.length; j++) {
             const user1 = data[i];
             const user2 = data[j];
+
+          
      
   
             if(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender){
-  
+              console.log("they are compatible they are compatible they are compatible")
+              
+              console.log("user data user datauser datauser datauser datauser data ")
+
+              console.log("user1.userData", user1.userData)
+              console.log("user2.userData", user2.userData)
+              console.log("user data  user data  user data  user data  user data ")
+
+
               const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
-    
+              console.log("User matchingPercentage")
+              console.log(matchingPercentage)
+        
+              console.log("User matchingPercentage")
               if (matchingPercentage >= threshold) {
                 const matchingData = user1.userData.filter(value => user2.userData.includes(value));
                 matchingUsers.push({
@@ -3154,6 +3169,8 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
                 });
               }
             }else{
+              console.log("they are not compatible they are  not compatible they are  not compatible")
+
               continue
             }
             
@@ -3172,6 +3189,13 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
       }
       
       const threshold = 50; 
+
+      console.log("User informations")
+      console.log(UserInfo)
+
+      console.log("User informations")
+
+
       const result = findMatchingUsers(UserInfo, threshold);
   
       try {  
