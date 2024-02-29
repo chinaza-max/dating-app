@@ -653,8 +653,13 @@ export default class UserController {
     console.log("pppppppppppppppppppppppppp")
 
     console.log("pppppppppppppppppppppppppp")
+    console.log(req)
     console.log(data)
-    console.log("pppppppppppppppppppppppppp")
+
+
+    const { files } = req;
+
+    console.log(files)
     console.log("pppppppppppppppppppppppppp")
     console.log("pppppppppppppppppppppppppp")
     console.log("pppppppppppppppppppppppppp")
