@@ -2509,6 +2509,87 @@ class UserService {
   }
 
 
+  
+  async handleGetBusinessAndSpot(data,offset,pageSize) {
+    let { 
+      type,
+      businessId,
+     
+    } = await userUtil.verifyHandleGetBusinessAndSpot.validateAsync(data);
+
+
+    if(type=='business'){
+
+      let result1=[]
+      const result2=await this.BusinessModel.findAll({
+      })
+
+
+      for (let index = 0; result2 < array.length; index++) {
+        const element = array[index];
+
+
+        result1.push({id:element.dataValues.id,
+                      fullName:element.dataValues.lastName+' '+element.dataValues.firstName,
+                      emailAddress,
+                      isEmailValid,
+                      tel,
+                      isTelValid,
+                      businessId,
+                      availabilty
+                    })
+        
+      }
+
+      return result1
+
+
+
+
+    }else{
+
+    }
+
+    
+    try {
+      hashedPassword = await bcrypt.hash(
+        password,
+        Number(serverConfig.SALT_ROUNDS)
+      );
+
+    } catch (error) {
+      console.error(error)
+      throw new SystemError('SystemError','An error occured while processing your request(handleBusinessCreation) while hashing password ');
+    }
+
+
+  let existingUser = await this.isBusinessExisting(emailAddress,tel);
+
+  if (existingUser != null)throw new ConflictError(existingUser);
+  
+  try {
+    const result = await this.BusinessModel.create({
+      firstName,
+      lastName,
+      tel,
+      emailAddress,
+      password:hashedPassword,
+      businessId,
+      createdBy
+    });
+
+    await this.sendEmailVerificationCode(result.emailAddress,result.id,password)
+  
+    return {id:result.dataValues.id};
+  } catch (error) {
+      console.log(error)  
+      throw new SystemError('SystemError','An error occured while creating business');
+  }
+ 
+
+ 
+
+  }
 
   async handleCreateBusiness(data) {
     let { 
@@ -3087,7 +3168,6 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
   async rematchUser(){
   
 
-    console.log("start matching start matchingstart matchingstart matchingstart matching ")
     try {
       const usersWithProfiles =await  this.UserModel.findAll({
         attributes: ['id', 'tags'],
@@ -3106,21 +3186,10 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
         },
       });
       
-
-      console.log("profile deatils profile deatilsprofile deatilsprofile deatils")
-      console.log(usersWithProfiles)
-
-      console.log("profile deatils profile deatilsprofile deatilsprofile deatils")
-
       let UserInfo=[]
       for (let index = 0; index < usersWithProfiles.length; index++) {
         const userArray = usersWithProfiles[index];
         const tags=JSON.parse(userArray.dataValues.tags)
-
-        console.log("each user each user each user each user each user")
-        console.log(userArray)
-  
-        console.log("each user each user each user each user each user")
         
          
         let answerAndquestionIdArray=[]
@@ -3151,25 +3220,12 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
           for (let j = i + 1; j < data.length; j++) {
             const user1 = data[i];
             const user2 = data[j];
-
-          
      
   
             if(user1.preferedGender==user2.gender&&user2.gender==user1.preferedGender){
-              console.log("they are compatible they are compatible they are compatible")
-              
-              console.log("user data user datauser datauser datauser datauser data ")
-
-              console.log("user1.userData", user1.userData)
-              console.log("user2.userData", user2.userData)
-              console.log("user data  user data  user data  user data  user data ")
-
-
+  
               const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
-              console.log("User matchingPercentage")
-              console.log(matchingPercentage)
-        
-              console.log("User matchingPercentage")
+    
               if (matchingPercentage >= threshold) {
                 const matchingData = user1.userData.filter(value => user2.userData.includes(value));
                 matchingUsers.push({
@@ -3180,8 +3236,6 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
                 });
               }
             }else{
-              console.log("they are not compatible they are  not compatible they are  not compatible")
-
               continue
             }
             
@@ -3200,11 +3254,6 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
       }
       
       const threshold = 50; 
-
-      console.log("User informations")
-      console.log(UserInfo)
-
-      console.log("User informations")
 
 
       const result = findMatchingUsers(UserInfo, threshold);
