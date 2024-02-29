@@ -2521,6 +2521,7 @@ class UserService {
     if(type=='business'){
 
       let result1=[]
+
       const result2=await this.BusinessModel.findAll({
       })
 
@@ -2554,6 +2555,11 @@ class UserService {
       })
 
 
+      const result3=await this.BusinessModel.findByPk(businessId)
+
+
+
+
       for (let index = 0; index < result2.length; index++) {
         const element = result2[index];
 
@@ -2572,8 +2578,16 @@ class UserService {
                     })
         
       }
+
+      const result4={
+        businessSpots:result1,
+        details:{
+          fullName:result3.dataValues.lastName+' '+result3.dataValues.firstName,
+          emailAddress:result3.dataValues.emailAddress
+        }
+      }
  
-      return result1
+      return result4
 
     }
 
