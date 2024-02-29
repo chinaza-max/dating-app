@@ -2574,7 +2574,7 @@ class UserService {
                       closeHours:element.dataValues.closeHours,
                       contactPerson:element.dataValues.contactPerson,
                       availabilty:element.dataValues.availabilty,
-                      coordinate:element.dataValues.locationCoordinate,
+                      coordinate:JSON.parse(element.dataValues.locationCoordinate),
                     })
         
       }
