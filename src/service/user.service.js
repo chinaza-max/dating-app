@@ -437,7 +437,8 @@ class UserService {
             })
           }
   
-        }else if(type=='outGoing'){
+        }
+        else if(type=='outGoing'){
           if(Number(pageSize)){
             details=await this.RequestModel.findAll({
               where:{
@@ -486,7 +487,7 @@ class UserService {
             })
           }
         }
-          else if(type=='accepted'){
+        else if(type=='accepted'){
           if(Number(pageSize)){
             details=await this.RequestModel.findAll({
               where:{
@@ -501,7 +502,9 @@ class UserService {
           }else{
             details=await this.RequestModel.findAll({
               where:{
-                userId2:userId,
+                [Op.or]:[
+                  { userId2:userId,userId:userId,}
+                ],
                 status:'accepted',
                 isDeleted:false
               },
