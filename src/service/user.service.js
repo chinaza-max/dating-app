@@ -65,7 +65,6 @@ class UserService {
     const requestRequest = await this.RequestModel.findByPk(requestId);
     if (!requestRequest) throw new NotFoundError("Request not found.");
      
-
         if(requestRequest.dataValues.userId2==userId){
 
           try {
