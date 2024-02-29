@@ -37,7 +37,7 @@ class UserRoutes extends UserController {
     this.router.post("/requestAction", this.requestAction);
     
 
-    this.router.post("/CUdate", this.CUdate);
+    this.router.post("/CUdate", this.CUdate);  
     this.router.get("/getDate", this.getDate);
     this.router.get("/getBusinessAndSpot", this.getBusinessAndSpot);
 
