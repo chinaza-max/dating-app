@@ -505,16 +505,16 @@ class UserService {
                 [Op.or]:[
                   { userId2:userId,userId:userId,}
                 ],
+                status:'accepted',
+                isDeleted:false
+              },
                 include:[
                   {
                     model: this.DateModel,
                     as: "RequestDates",
                     required:false
                   }
-                ],
-                status:'accepted',
-                isDeleted:false
-              },
+                ] ,
               attributes:['userId','userId2','status','id','createdAt'],
             })
           }
@@ -575,7 +575,7 @@ class UserService {
           requestId:element.dataValues.id,
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
-
+          hasDate:element.dataValues.RequestDates
         })
       }
     
