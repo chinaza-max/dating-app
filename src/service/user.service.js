@@ -2156,11 +2156,15 @@ class UserService {
 
       const requestAcceptedCount = await this.RequestModel.count({
         where: {
-          [Op.or]: [
-            {userId: userId,
-            userId2: userId,}
+          [Op.and]: [
+            {
+              [Op.or]: [
+                { userId: userId },
+                { userId2: userId },
+              ],
+            },
+            { status: 'accepted' },
           ],
-          status:'accepted'
         },
       });
 
