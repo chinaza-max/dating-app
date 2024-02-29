@@ -2531,12 +2531,12 @@ class UserService {
 
         result1.push({id:element.dataValues.id,
                       fullName:element.dataValues.lastName+' '+element.dataValues.firstName,
-                      emailAddress,
-                      isEmailValid,
-                      tel,
-                      isTelValid,
-                      businessId,
-                      availabilty
+                      emailAddress:element.dataValues.emailAddress,
+                      isEmailValid:element.dataValues.isEmailValid,
+                      tel:element.dataValues.tel,
+                      isTelValid:element.dataValues.isTelValid,
+                      businessId:element.dataValues.businessId,
+                      availabilty:element.dataValues.availabilty
                     })
         
       }
@@ -2548,45 +2548,38 @@ class UserService {
 
     }else{
 
-    }
-
-    
-    try {
-      hashedPassword = await bcrypt.hash(
-        password,
-        Number(serverConfig.SALT_ROUNDS)
-      );
-
-    } catch (error) {
-      console.error(error)
-      throw new SystemError('SystemError','An error occured while processing your request(handleBusinessCreation) while hashing password ');
-    }
+      let result1=[]
+      const result2=await this.BusinessSpotsModel.findAll({
+        where:{businessId}
+      })
 
 
-  let existingUser = await this.isBusinessExisting(emailAddress,tel);
+      for (let index = 0; result2 < array.length; index++) {
+        const element = array[index];
 
-  if (existingUser != null)throw new ConflictError(existingUser);
-  
-  try {
-    const result = await this.BusinessModel.create({
-      firstName,
-      lastName,
-      tel,
-      emailAddress,
-      password:hashedPassword,
-      businessId,
-      createdBy
-    });
 
-    await this.sendEmailVerificationCode(result.emailAddress,result.id,password)
-  
-    return {id:result.dataValues.id};
-  } catch (error) {
-      console.log(error)  
-      throw new SystemError('SystemError','An error occured while creating business');
-  }
+        result1.push({id:element.dataValues.id,
+                      name:element.dataValues.name ,
+                      city:element.dataValues.city,
+                      city:element.dataValues.city,
+                      city:element.dataValues.city,
+                      emailAddress:element.dataValues.emailAddress,
+
+                      city,
+                      tel,
+                      isTelValid,
+                      businessId,
+                      availabilty
+                    })
+        
+      }
  
+      return result1
 
+    }
+
+
+ 
  
 
   }
