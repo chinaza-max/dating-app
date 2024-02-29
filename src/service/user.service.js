@@ -2561,15 +2561,14 @@ class UserService {
         result1.push({id:element.dataValues.id,
                       name:element.dataValues.name ,
                       city:element.dataValues.city,
-                      city:element.dataValues.city,
-                      city:element.dataValues.city,
                       emailAddress:element.dataValues.emailAddress,
-
-                      city,
-                      tel,
-                      isTelValid,
-                      businessId,
-                      availabilty
+                      city:element.dataValues.city,
+                      tel:element.dataValues.tel,
+                      openHours:element.dataValues.openHours,
+                      closeHours:element.dataValues.closeHours,
+                      contactPerson:element.dataValues.contactPerson,
+                      availabilty:element.dataValues.availabilty,
+                      coordinate:element.dataValues.coordinate,
                     })
         
       }
