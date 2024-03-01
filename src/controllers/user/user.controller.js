@@ -205,7 +205,6 @@ export default class UserController {
         await userService.handleCUdate(my_bj);
   
 
-
       return res.status(200).json({
         status: 200,
         message: "success.",

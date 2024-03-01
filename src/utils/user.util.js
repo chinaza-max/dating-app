@@ -232,6 +232,7 @@ class UserUtil {
     businessIdSpotId: Joi.number().required(),
     requestId: Joi.number().required(),
     matchInformation: Joi.array().required(),
+    matchPercentage: Joi.number().required(),
   });
 
   verifyHandleGetDate= Joi.object({

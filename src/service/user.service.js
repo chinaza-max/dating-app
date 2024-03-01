@@ -819,10 +819,11 @@ class UserService {
       userId,
       userId2,
       fullDate,
-      businessIdSpotId,
+      businessIdSpotId,  
       requestId,
       matchInformation,
-      type,
+      matchPercentage,
+      type
     } = await userUtil.verifyHandleCUdate.validateAsync(data);
 
 
@@ -853,7 +854,8 @@ class UserService {
           fullDate,
           businessIdSpotId,
           requestId,
-          matchInformation,
+          matchInformation:JSON.stringify(matchInformation),
+          matchPercentage,
           usersStatus:'pending'
         })
       }
@@ -886,12 +888,11 @@ class UserService {
 
   async handleGetMatchDetails(data) {
 
-    const {type ,matchId}=await userUtil.verifyhandleGetMatchDetails.validateAsync(data);
+    const {type,matchId}=await userUtil.verifyhandleGetMatchDetails.validateAsync(data);
 
 
     if(type=='single'){
         const result =await this.UserMatchModel.findByPk(matchId)
-
         return result.dataValues
     }
    

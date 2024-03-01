@@ -40,6 +40,10 @@ export function init(connection) {
         ),
         allowNull: true,
       }, 
+      matchPercentage: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       reservationStatus: {
         type: DataTypes.ENUM(
           'accepted',
