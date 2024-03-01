@@ -525,12 +525,7 @@ class UserService {
                 ] ,
               attributes:['userId','userId2','status','id','createdAt'],
             })
-            console.log(userId)
-            console.log(details)
-
-
-            console.log('my request my request  my request')
-
+         
           }
         }
   
@@ -585,6 +580,7 @@ class UserService {
           userId: element.dataValues.userId,
           userId2:element.dataValues.userId2,
           matchInformation:JSON.parse(matchDetail.dataValues.matchInformation),
+          matchPercentage:element.dataValues.matchPercentage,
           requestId:element.dataValues.id,
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,

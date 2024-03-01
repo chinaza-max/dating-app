@@ -649,22 +649,6 @@ export default class UserController {
 
     const data=req.body
 
-
-    console.log("pppppppppppppppppppppppppp")
-
-    console.log("pppppppppppppppppppppppppp")
-    console.log(req)
-    console.log(data)
-
-
-    const { files } = req;
-
-    console.log(files)
-    console.log("pppppppppppppppppppppppppp")
-    console.log("pppppppppppppppppppppppppp")
-    console.log("pppppppppppppppppppppppppp")
-
-
  
     try {
     
