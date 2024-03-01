@@ -562,8 +562,8 @@ export default class UserController {
     
         const my_bj = {
           ...data,
-          type:req.user.id,
-          type2:req.user.id,
+          type,
+          type2,
           userId:req.user.id,
         }
                           
