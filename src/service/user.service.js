@@ -501,8 +501,6 @@ class UserService {
             })
           }else{
 
-            console.log('my request my request  my request')
-
             details=await this.RequestModel.findAll({
               where: {
                 [Op.and]: [
@@ -585,7 +583,7 @@ class UserService {
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
           hasDate:element.dataValues.RequestDates == null ? false : true
-        })
+        })   
       }
     
       return result
