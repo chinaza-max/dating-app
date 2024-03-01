@@ -812,7 +812,7 @@ export default class UserController {
 
   
 
-  async   countData
+  async countData
   (
     req,
     res,

@@ -6,7 +6,7 @@ import {
 
 import serverConfig from "../../config/server.js";
 // userId is the person who created or updated  the  UserDate
-// userId2 is the person who accepted the UserDate 
+// userId2 is the person who accepted or who is suppose to accept the date 
 class UserDate extends Model {}
 
 export function init(connection) {

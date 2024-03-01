@@ -2171,11 +2171,33 @@ class UserService {
         },
       });
 
+      //for the person receiving the date offer
+      const datePendingCount1 = await this.DateModel.count({
+        where: {
+          userId2: userId,
+          usersStatus:'pending'
+        },
+      });
+
+      //for the both user going for the  date 
+
+      const datePendingCount2 = await this.DateModel.count({
+        where: {
+          [Op.or]:[
+            {userId2: userId},
+            {userId: userId},
+          ],
+          usersStatus:'pending'
+        },
+      });
+
       count['wishListCounter']=wishListCount
       count['requestOutgoingCount']=requestOutgoingCount
       count['requestIncomingCount']=requestIncomingCount
       count['requestAcceptedCount']=requestAcceptedCount
       count['requestDeclineCount']=requestDeclineCount
+      count['datePendingCount1']=datePendingCount1
+      count['datePendingCount2']=datePendingCount2
 
       return count
 
