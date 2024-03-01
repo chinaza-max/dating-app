@@ -574,6 +574,7 @@ class UserService {
           },
         })
   
+        /*
         result.push({
           userId: element.dataValues.userId,
           userId2:element.dataValues.userId2,
@@ -583,7 +584,7 @@ class UserService {
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
           hasDate:element.dataValues.RequestDates == null ? false : true
-        })   
+        })  */ 
       }
     
       return result
