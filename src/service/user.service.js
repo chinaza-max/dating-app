@@ -579,9 +579,7 @@ class UserService {
           userId: element.dataValues.userId,
           userId2:element.dataValues.userId2,
           matchInformation:JSON.parse(matchDetail.dataValues.matchInformation),
-          matchPercentage:element.dataValues.matchPercentage,
-          matchPercentage2:element.dataValues,
-
+          matchPercentage:matchDetail.dataValues.matchPercentage,
           requestId:element.dataValues.id,
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
