@@ -574,17 +574,19 @@ class UserService {
           },
         })
   
-        /*
+        
         result.push({
           userId: element.dataValues.userId,
           userId2:element.dataValues.userId2,
           matchInformation:JSON.parse(matchDetail.dataValues.matchInformation),
           matchPercentage:element.dataValues.matchPercentage,
+          matchPercentage2:element.dataValues,
+
           requestId:element.dataValues.id,
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
           hasDate:element.dataValues.RequestDates == null ? false : true
-        })  */ 
+        })  
       }
     
       return result
