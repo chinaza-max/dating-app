@@ -1840,6 +1840,7 @@ class UserService {
                 openHours:element.dataValues.BusinessSpot.openHours ,
                 closeHours:element.dataValues.BusinessSpot.closeHours ,
                 tel: element.dataValues.BusinessSpot.tel ,
+                locationCoordinate: JSON.parse(element.dataValues.BusinessSpot.locationCoordinate),
               },
               matchDetails:{
                 id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
