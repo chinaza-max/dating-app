@@ -935,7 +935,6 @@ class UserService {
   async handleGetDate(data,offset,pageSize) {
     let { 
       userId,
-      adminId,    
       type,
       type2      
     } = await userUtil.verifyHandleGetDate.validateAsync(data);

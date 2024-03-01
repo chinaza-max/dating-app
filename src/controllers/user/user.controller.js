@@ -553,14 +553,17 @@ export default class UserController {
     res,
     next
   ){
-    const data=req.body
     const {offset}=req.query
     const {pageSize}=req.query
+    const {type}=req.query
+    const {type2}=req.query
 
     try {
     
         const my_bj = {
           ...data,
+          type:req.user.id,
+          type2:req.user.id,
           userId:req.user.id,
         }
                           
