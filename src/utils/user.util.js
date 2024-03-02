@@ -229,33 +229,27 @@ class UserUtil {
     userId: Joi.when('type', {
       is: 'offer',
       then: Joi.number().required(),
-      otherwise: Joi.string(), 
     }),
     userId2: Joi.when('type', {
       is: 'offer',
       then: Joi.number().required(),
-      otherwise: Joi.string(), 
     }),
     fullDate: Joi.when('type', {
       is: 'offer',
       then: Joi.date().iso().required(),
-      otherwise: Joi.string(), 
     }), 
     businessIdSpotId: Joi.when('type', {
       is: 'offer',
       then: Joi.number().required(),
-      otherwise: Joi.string(), 
     }),
     requestId: Joi.number().required(),
     matchInformation: Joi.when('type', {
       is: 'offer',
       then: Joi.array().required(),
-      otherwise: Joi.string(), 
     }), 
     matchPercentage: Joi.when('type', {
       is: 'offer',
       then: Joi.number().required(),
-      otherwise: Joi.string(), 
     }),
   });
 
@@ -298,17 +292,14 @@ class UserUtil {
     name: Joi.when('type', {
       is: 'update',
       then: Joi.string().required(),
-      otherwise: Joi.string(), // Not required for other types
     }),
     price: Joi.when('type', {
       is: 'update',
       then: Joi.number().required(),
-      otherwise: Joi.number(), // Not required for other types
     }),
     durationMonths: Joi.when('type', {
       is: 'update',
       then: Joi.number().required(),
-      otherwise: Joi.number(), // Not required for other types
     }),
   });
 
@@ -421,7 +412,6 @@ class UserUtil {
       businessId: Joi.when('type', {
         is: 'businessSpot',
         then: Joi.string().required(),
-        otherwise: Joi.string().allow('').optional(),
       }),
   });
 
@@ -438,7 +428,6 @@ class UserUtil {
       city: Joi.when('type', {
         is: 'spot',
         then: Joi.string().required(),
-        otherwise: Joi.string().allow('').optional(),
       }),
   });
 }
