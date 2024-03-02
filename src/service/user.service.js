@@ -1199,7 +1199,6 @@ class UserService {
           }
           else if(type=='decline'){
            
-
             details = await this.DateModel.findAll({
               where: {
                 [Op.or]: [
@@ -2203,6 +2202,19 @@ class UserService {
         },
       });
 
+      const dateAcceptCount = await this.DateModel.count({
+        where: {
+          [Op.or]:[
+            {userId2: userId},
+            {userId: userId},
+          ],
+          usersStatus:'accepted'
+        },
+      });
+
+
+      
+
       count['wishListCounter']=wishListCount
       count['requestOutgoingCount']=requestOutgoingCount
       count['requestIncomingCount']=requestIncomingCount
@@ -2211,6 +2223,7 @@ class UserService {
       count['datePendingCount1']=datePendingCount1
       count['datePendingCount2']=datePendingCount2
       count['dateDeclineCount']=dateDeclineCount
+      count['dateAcceptCount']=dateAcceptCount
 
       return count
 
