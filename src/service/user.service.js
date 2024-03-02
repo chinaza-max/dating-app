@@ -2193,6 +2193,16 @@ class UserService {
         },
       });
 
+      const dateDeclineCount = await this.DateModel.count({
+        where: {
+          [Op.or]:[
+            {userId2: userId},
+            {userId: userId},
+          ],
+          usersStatus:'decline'
+        },
+      });
+
       count['wishListCounter']=wishListCount
       count['requestOutgoingCount']=requestOutgoingCount
       count['requestIncomingCount']=requestIncomingCount
@@ -2200,6 +2210,7 @@ class UserService {
       count['requestDeclineCount']=requestDeclineCount
       count['datePendingCount1']=datePendingCount1
       count['datePendingCount2']=datePendingCount2
+      count['dateDeclineCount']=dateDeclineCount
 
       return count
 
