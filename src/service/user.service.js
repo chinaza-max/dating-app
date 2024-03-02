@@ -1836,7 +1836,7 @@ class UserService {
               businessSpotDetails:{
                 id:element.dataValues.BusinessSpot.id,
                 name:element.dataValues.BusinessSpot.name ,
-                address:element.dataValues.BusinessSpot.name ,
+                address:element.dataValues.BusinessSpot.address ,
                 city:element.dataValues.BusinessSpot.name ,
                 openHours:element.dataValues.BusinessSpot.openHours ,
                 closeHours:element.dataValues.BusinessSpot.closeHours ,
