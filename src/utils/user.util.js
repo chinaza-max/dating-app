@@ -226,13 +226,37 @@ class UserUtil {
       'decline',
       'accept',
     ).required(),
-    userId: Joi.number().required(),
-    userId2: Joi.number().required(),
-    fullDate: Joi.date().iso().required(),
-    businessIdSpotId: Joi.number().required(),
+    userId: Joi.when('type', {
+      is: 'offer',
+      then: Joi.number().required(),
+      otherwise: Joi.string(), 
+    }),
+    userId2: Joi.when('type', {
+      is: 'offer',
+      then: Joi.number().required(),
+      otherwise: Joi.string(), 
+    }),
+    fullDate: Joi.when('type', {
+      is: 'offer',
+      then: Joi.date().iso().required(),
+      otherwise: Joi.string(), 
+    }), 
+    businessIdSpotId: Joi.when('type', {
+      is: 'offer',
+      then: Joi.number().required(),
+      otherwise: Joi.string(), 
+    }),
     requestId: Joi.number().required(),
-    matchInformation: Joi.array().required(),
-    matchPercentage: Joi.number().required(),
+    matchInformation: Joi.when('type', {
+      is: 'offer',
+      then: Joi.array().required(),
+      otherwise: Joi.string(), 
+    }), 
+    matchPercentage: Joi.when('type', {
+      is: 'offer',
+      then: Joi.number().required(),
+      otherwise: Joi.string(), 
+    }),
   });
 
   verifyHandleGetDate= Joi.object({
