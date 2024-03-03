@@ -1815,6 +1815,10 @@ class UserService {
                   include:[
                     {
                       model: this.BusinessModel,
+                      as: 'BusinessSpots',
+                      where: {
+                        isDeleted: false,
+                      }
                     }
                   ]
                 },
@@ -1892,7 +1896,7 @@ class UserService {
           const element = details[index];
 
           console.log(element)   
-          
+
           result.push({
               DateId:element.dataValues.id,
               userId: element.dataValues.userId,
