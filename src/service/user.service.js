@@ -1790,10 +1790,7 @@ class UserService {
                   include:[
                     {
                       model: this.BusinessModel,
-                      as: 'BusinessSpots',
-                      where: {
-                        isDeleted: false,
-                      }
+                      
                     }
                   ]
                 },
