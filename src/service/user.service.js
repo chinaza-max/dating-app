@@ -1891,7 +1891,7 @@ class UserService {
         for (let index = 0; index < details.length; index++) {
           const element = details[index];
 
-          console.log(element.dataValues.BusinessSpot)
+          console.log(element)
           result.push({
               DateId:element.dataValues.id,
               userId: element.dataValues.userId,
