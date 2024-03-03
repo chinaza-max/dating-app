@@ -1767,6 +1767,70 @@ class UserService {
               ]
             })
           }
+          else if(type=='pendingReservation'){
+            details=await this.DateModel.findAll({
+              where: {
+                reservationStatus:'pending',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.UserMatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            })
+          }
+          else if(type=='pendingReservation'){
+            details=await this.DateModel.findAll({
+              where: {
+                reservationStatus:'pending',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.UserMatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            })
+          }
           
         }
        
@@ -2599,6 +2663,14 @@ class UserService {
       let result1=[]
 
       const result2=await this.BusinessModel.findAll({
+
+        include:[
+          {
+            model: this.BusinessSpotsModel,
+            as: "BusinessSpots",
+            required:false
+          }
+        ]
       })
 
 
@@ -2613,6 +2685,7 @@ class UserService {
                       tel:element.dataValues.tel,
                       isTelValid:element.dataValues.isTelValid,
                       businessId:element.dataValues.businessId,
+                      numberOfBusinessSpot:element.dataValues?.BusinessSpots?.length||0,
                       availabilty:element.dataValues.availabilty
                     })
         
