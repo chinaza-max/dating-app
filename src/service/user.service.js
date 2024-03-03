@@ -1893,7 +1893,7 @@ class UserService {
               },
               businessDetails:{
                 id:element.dataValues.BusinessSpot.Business.id,
-                name:element.dataValues.BusinessSpot.Business.name,
+                businessId:element.dataValues.BusinessSpot.Business.businessId,
               },
               matchDetails:{
                 id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
