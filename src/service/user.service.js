@@ -1842,15 +1842,44 @@ class UserService {
 
 
             console.log("+++++++++++++++++++++++++++++++++++++")
+            console.log("+++++++++++++++++++++++++++++++++++++")
+            console.log("+++++++++++++++++++++++++++++++++++++")
+            console.log("+++++++++++++++++++++++++++++++++++++")
+
             console.log(details)
 
             console.log("+++++++++++++++++++++++++++++++++++++")
+            console.log("+++++++++++++++++++++++++++++++++++++")
+            console.log("+++++++++++++++++++++++++++++++++++++")
+            console.log("+++++++++++++++++++++++++++++++++++++")
+            console.log("+++++++++++++++++++++++++++++++++++++")
 
             console.log("--------------------------------")
-
-            console.log(details.dataValues.BusinessSpot)  
             console.log("--------------------------------")
- 
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+
+            console.log(details.dataValues.BusinessSpot) 
+            
+            console.log(details.dataValues.BusinessSpot.BusinessSpots)  
+
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+            console.log("--------------------------------")
+
 
           }
           
@@ -1908,7 +1937,7 @@ class UserService {
         for (let index = 0; index < details.length; index++) {
           const element = details[index];
 
-          console.log(element)   
+         // console.log(element)   
 
           result.push({
               DateId:element.dataValues.id,
