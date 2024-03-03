@@ -1863,7 +1863,7 @@ class UserService {
             })     
 
           }
-          else if(type=='acceptReservation'){
+          else if(type=='acceptedReservation'){
             details=await this.DateModel.findAll({
               where: {
                 reservationStatus:'accepted',
