@@ -879,7 +879,7 @@ class UserService {
         dateDetails.update({
           reservationStatus:'decline'
         })
-      }
+      }  
     }
     else if(type=='acceptReservationStatus'){
       if (dateDetails){
