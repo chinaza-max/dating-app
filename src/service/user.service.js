@@ -1812,6 +1812,11 @@ class UserService {
                   where: {
                     isDeleted: false,
                   },
+                  include:[
+                    {
+                      model: this.BusinessModel,
+                    }
+                  ]
                 },
                 {
                   model: this.RequestModel,
@@ -1906,6 +1911,11 @@ class UserService {
                 closeHours:element.dataValues.BusinessSpot.closeHours ,
                 tel: element.dataValues.BusinessSpot.tel ,
                 locationCoordinate: JSON.parse(element.dataValues.BusinessSpot.locationCoordinate),
+              },
+              businessDetails:{
+                id:element.dataValues.BusinessSpot.Business.id,
+                name:element.dataValues.BusinessSpot.Business.name,
+                businessId:element.dataValues.BusinessSpot.Business.businessId ,
               },
               matchDetails:{
                 id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
