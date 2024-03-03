@@ -942,6 +942,12 @@ class UserService {
     let result =[];
     let details=[];
 
+    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    console.log(type)
+    console.log(type2)
+    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+
     try {
       if(type2=='user'){
 
@@ -1959,11 +1965,11 @@ class UserService {
                 tel: element.dataValues.BusinessSpot.tel ,
                 locationCoordinate: JSON.parse(element.dataValues.BusinessSpot.locationCoordinate),
               },
-              businessDetails:{
+             /* businessDetails:{
                 id:element.dataValues.BusinessSpot.Business.id,
                 name:element.dataValues.BusinessSpot.Business.name,
                 businessId:element.dataValues.BusinessSpot.Business.businessId ,
-              },
+              },*/
               matchDetails:{
                 id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
                 userId: element.dataValues.Request.dataValues.UserMatch.dataValues.userId,
