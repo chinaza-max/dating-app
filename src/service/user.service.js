@@ -1839,6 +1839,19 @@ class UserService {
 
               ]
             })
+
+
+            console.log("+++++++++++++++++++++++++++++++++++++")
+            console.log(details)
+
+            console.log("+++++++++++++++++++++++++++++++++++++")
+
+            console.log("--------------------------------")
+
+            console.log(details.dataValues.BusinessSpot)  
+            console.log("--------------------------------")
+ 
+
           }
           
         }
