@@ -874,6 +874,20 @@ class UserService {
         })
       }
     }
+    else if(type=='declineReservationStatus'){
+      if (dateDetails){
+        dateDetails.update({
+          reservationStatus:'decline'
+        })
+      }
+    }
+    else if(type=='acceptReservationStatus'){
+      if (dateDetails){
+        dateDetails.update({
+          reservationStatus:'accepted'
+        })
+      }
+    }
 
   } catch (error) {
     console.log(error);

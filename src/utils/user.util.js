@@ -225,6 +225,8 @@ class UserUtil {
       'offer',
       'decline',
       'accept',
+      'declineReservationStatus',
+      'acceptReservationStatus'
     ).required(),
     userId: Joi.when('type', {
       is: 'offer',
