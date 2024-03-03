@@ -956,11 +956,6 @@ class UserService {
     let result =[];
     let details=[];
 
-    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    console.log(type)
-    console.log(type2)
-    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
     try {
       if(type2=='user'){
@@ -1792,6 +1787,86 @@ class UserService {
             details=await this.DateModel.findAll({
               where: {
                 reservationStatus:'pending',
+                usersStatus:'accepted',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.BusinessModel,
+                      
+                    }
+                  ]
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.UserMatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            })     
+
+          }
+          else if(type=='declineReservation'){
+            details=await this.DateModel.findAll({
+              where: {
+                reservationStatus:'decline',
+                usersStatus:'accepted',
+                isDeleted:false
+              },
+              include: [
+                {
+                  model: this.BusinessSpotsModel,
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.BusinessModel,
+                      
+                    }
+                  ]
+                },
+                {
+                  model: this.RequestModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                  include:[
+                    {
+                      model: this.UserMatchModel,
+                      where: {
+                        isDeleted: false,
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            })     
+
+          }
+          else if(type=='acceptReservation'){
+            details=await this.DateModel.findAll({
+              where: {
+                reservationStatus:'accepted',
                 usersStatus:'accepted',
                 isDeleted:false
               },
