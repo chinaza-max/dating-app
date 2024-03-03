@@ -1778,6 +1778,7 @@ class UserService {
             details=await this.DateModel.findAll({
               where: {
                 reservationStatus:'pending',
+                usersStatus:'accepted',
                 isDeleted:false
               },
               include: [
