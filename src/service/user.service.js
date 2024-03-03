@@ -1773,38 +1773,7 @@ class UserService {
               ]
             })
           }
-          else if(type=='pendingReservation'){
-            details=await this.DateModel.findAll({
-              where: {
-                reservationStatus:'pending',
-                isDeleted:false
-              },
-              include: [
-                {
-                  model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
-                  where: {
-                    isDeleted: false,
-                  },
-                },
-                {
-                  model: this.RequestModel,
-                  where: {
-                    isDeleted: false,
-                  },
-                  include:[
-                    {
-                      model: this.UserMatchModel,
-                      where: {
-                        isDeleted: false,
-                      }
-                    }
-                  ]
-                }
-
-              ]
-            })
-          }
+        
           else if(type=='pendingReservation'){
             details=await this.DateModel.findAll({
               where: {
