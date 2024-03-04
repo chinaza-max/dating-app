@@ -2354,6 +2354,29 @@ class UserService {
         },
       });
 
+      
+      const dateReservationStatusdDeclineCount = await this.DateModel.count({
+        where: {
+          [Op.or]:[
+            {userId: userId},
+            {userId2: userId},
+          ],
+          reservationStatus: 'decline',
+        },
+      });
+
+      const dateDeclineCount2 = await this.DateModel.count({
+        where: {
+          [Op.or]:[
+            {usersStatus: 'pending'},
+          ],
+          userId2: userId
+        },
+      });
+
+
+      const dateCountNeedsAction=dateDeclineCount+dateReservationStatusdDeclineCount+dateDeclineCount2
+
 
       
 
@@ -2366,6 +2389,10 @@ class UserService {
       count['datePendingCount2']=datePendingCount2
       count['dateDeclineCount']=dateDeclineCount
       count['dateAcceptCount']=dateAcceptCount
+      count['dateCountNeedsAction']=dateCountNeedsAction
+
+
+      
 
       return count
 

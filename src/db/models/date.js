@@ -94,7 +94,11 @@ export function init(connection) {
 
   UserDate.prototype.updateDateStatus = async function () {
 
-    if (this.fullDate <= new Date()) {
+    const twentyFourHoursLater = new Date(this.fullDate);
+    twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
+
+
+    if (this.fullDate > twentyFourHoursLater) {
       // If subscription has expired
       this.dateStatus = "completed";
       await this.save();
