@@ -337,13 +337,21 @@ class UserUtil {
 
   verifyHandleCUcommentAndRating= Joi.object({
     userId: Joi.number().required(),
-    dateId: Joi.number().required(),
+    dateId: Joi.when('type', {
+      is: 'add',
+      then: Joi.number().required(),
+    }),
     star: Joi.number().required(),
     comment: Joi.string().required(),
     type:Joi.string().valid(
       'add',
       'edit'
-    ).required()
+    ).required(),
+    ReviewId: Joi.when('type', {
+      is: 'edit',
+      then: Joi.number().required(),
+    }),
+
   });
 
 

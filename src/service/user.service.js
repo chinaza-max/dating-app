@@ -2392,12 +2392,63 @@ class UserService {
       count['dateCountNeedsAction']=dateCountNeedsAction
 
 
-      
-
       return count
 
     } catch (error) {
         throw new SystemError(error.name,  error.parent)
+    }
+
+
+  }
+
+
+
+  
+
+  async handleCUcommentAndRating(data) {
+    let { 
+      userId,
+      dateId,
+      ReviewId,
+      star,
+      comment, 
+      type,
+    } = await userUtil.verifyHandleCUcommentAndRating.validateAsync(data);
+
+
+    if(type=='add'){
+      try {
+   
+        await this.RequestModel.findOne({
+            where: {
+              userId,
+              dateId,
+              star,
+              comment
+            },
+          });
+      
+       
+      } catch (error) {
+          console.log(error)
+          throw new SystemError(error.name,  error.parent)
+      }
+
+    }
+    else{
+      try {
+   
+        const result=await this.ReviewModel.findByPk(ReviewId);
+
+        result.update({
+          star,
+          comment, 
+        })
+ 
+      } catch (error) {
+        console.log(error)
+          throw new SystemError(error.name,  error.parent)
+      }
     }
 
 
