@@ -884,7 +884,8 @@ class UserService {
     else if(type=='acceptReservationStatus'){
       if (dateDetails){
         dateDetails.update({
-          reservationStatus:'accepted'
+          reservationStatus:'accepted',
+          whoAcceptedReservationId:userId
         })
       }
     }
@@ -1981,8 +1982,8 @@ class UserService {
                 locationCoordinate: JSON.parse(element.dataValues.BusinessSpot.locationCoordinate),
               },
               businessDetails:{
-                id:element.dataValues.BusinessSpot.Business.id,
-                businessId:element.dataValues.BusinessSpot.Business.businessId,
+                id:element.dataValues.BusinessSpot?.Business?.id,
+                businessId:element.dataValues.BusinessSpot?.Business?.businessId,
               },
               matchDetails:{
                 id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
