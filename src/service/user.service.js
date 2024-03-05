@@ -2417,6 +2417,8 @@ class UserService {
     } = await userUtil.verifyHandleCUcommentAndRating.validateAsync(data);
 
 
+    return 
+
     if(type=='add'){
       try {
    
