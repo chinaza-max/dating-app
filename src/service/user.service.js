@@ -2415,15 +2415,13 @@ class UserService {
       comment, 
       type,
     } = await userUtil.verifyHandleCUcommentAndRating.validateAsync(data);
-
-
-    return 
+ 
 
     if(type=='add'){
       try {
    
         if(star&&comment){
-          await this.RequestModel.create({
+          await this.ReviewModel.create({
             where: {
               userId,
               dateId,
@@ -2433,7 +2431,7 @@ class UserService {
           });
         }
         else if(star){
-          await this.RequestModel.create({
+          await this.ReviewModel.create({
             where: {
               userId,
               dateId,
@@ -2442,7 +2440,7 @@ class UserService {
           });
         }
         else if(comment){
-          await this.RequestModel.create({
+          await this.ReviewModel.create({
             where: {
               userId,
               dateId,
