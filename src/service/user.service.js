@@ -1938,8 +1938,8 @@ class UserService {
               businessSpotDetails:{
                 id:element.dataValues.BusinessSpot.id,
                 name:element.dataValues.BusinessSpot.name ,
-                address:element.dataValues.BusinessSpot.name ,
-                city:element.dataValues.BusinessSpot.name ,
+                address:element.dataValues.BusinessSpot.address ,
+                city:element.dataValues.BusinessSpot.city ,
                 openHours:element.dataValues.BusinessSpot.openHours ,
                 closeHours:element.dataValues.BusinessSpot.closeHours ,
                 tel: element.dataValues.BusinessSpot.tel ,
