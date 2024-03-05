@@ -1915,12 +1915,13 @@ class UserService {
           const element = details[index];
           let  formattedReviews=[]
 
-          if(element.dataValues.DateReviews){
+          if(element.dataValues?.DateReviews){
             formattedReviews= element.dataValues.DateReviews.map((review) => ({
               star: review.dataValues.star,
+              id: review.dataValues.id,
               comment: review.dataValues.comment,
               userId: review.dataValues.userId,
-              createdAt: review.dataValues.createdAt, // Assuming you want the createdAt field
+              createdAt: review.dataValues.createdAt,
             }));
           }
           
