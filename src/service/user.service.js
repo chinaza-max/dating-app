@@ -2424,30 +2424,26 @@ class UserService {
    
         if(star&&comment){
           await this.ReviewModel.create({
-            where: {
+            
               userId,
               dateId,
               star,
               comment
-            },
+            
           });
         }
         else if(star){
           await this.ReviewModel.create({
-            where: {
               userId,
               dateId,
               star,
-            },
           });
         }
         else if(comment){
           await this.ReviewModel.create({
-            where: {
               userId,
               dateId,
               comment
-            },
           });
         }
   
