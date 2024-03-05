@@ -4,7 +4,6 @@ import {
     Model
   } from "sequelize";
 
-import serverConfig from "../../config/server.js";
 
 
 class Review extends Model {}
