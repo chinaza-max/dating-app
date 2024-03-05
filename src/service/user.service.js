@@ -2460,10 +2460,22 @@ class UserService {
    
         const result=await this.ReviewModel.findByPk(ReviewId);
 
-        result.update({
-          star,
-          comment, 
-        })
+        if(star&&comment){
+          result.update({
+            star,
+            comment, 
+          })
+        }else if(star){
+          result.update({
+            star,
+          })
+        }
+        else if(comment){
+          result.update({
+            comment, 
+          })
+        }
+        
  
       } catch (error) {
         console.log(error)
