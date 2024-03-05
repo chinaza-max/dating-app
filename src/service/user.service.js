@@ -2420,7 +2420,8 @@ class UserService {
     if(type=='add'){
       try {
    
-        await this.RequestModel.findOne({
+        if(star&&comment){
+          await this.RequestModel.create({
             where: {
               userId,
               dateId,
@@ -2428,8 +2429,26 @@ class UserService {
               comment
             },
           });
-      
-       
+        }
+        else if(star){
+          await this.RequestModel.create({
+            where: {
+              userId,
+              dateId,
+              star,
+            },
+          });
+        }
+        else if(comment){
+          await this.RequestModel.create({
+            where: {
+              userId,
+              dateId,
+              comment
+            },
+          });
+        }
+  
       } catch (error) {
           console.log(error)
           throw new SystemError(error.name,  error.parent)

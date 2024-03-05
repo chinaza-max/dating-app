@@ -341,8 +341,8 @@ class UserUtil {
       is: 'add',
       then: Joi.number().required(),
     }),
-    star: Joi.number().required(),
-    comment: Joi.string().required(),
+    star: Joi.number().optional(),
+    comment: Joi.string().optional(),
     type:Joi.string().valid(
       'add',
       'edit'

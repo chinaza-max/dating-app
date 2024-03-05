@@ -26,11 +26,11 @@ export function init(connection) {
       },
       star: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       comment: { 
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,
