@@ -8,7 +8,7 @@ import { User,Admin ,
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
-import {  Op } from "sequelize";
+import {  Op, Sequelize } from "sequelize";
 import mailService from "../service/mail.service.js";
 
 
@@ -2610,7 +2610,7 @@ class UserService {
                         model: this.DateModel,
                         as: "UserReviews",
                         attributes: [
-                          [sequelize.fn('AVG', sequelize.col('star')), 'averageStar'],
+                          [Sequelize.fn('AVG', Sequelize.col('star')), 'averageStar'],
                         ],
                         required:false
                       }
