@@ -3789,8 +3789,10 @@ async getCommonBioDetail(userId1,userId2){
 }
 
 
-async calculateAverageRating(data) {
-  // Filter out objects without a rating
+async calculateAverage(data) {
+
+
+
   const validRatings = data.filter(obj => obj.dataValues.star !== undefined && obj.dataValues.star !== null);
 
   // Check if there are valid ratings
@@ -3820,6 +3822,7 @@ async calculateAverageRating(data) {
   return averageRating;
 }
 
+/*
 async calculateAverage(arr) {
   // Check if the array is not empty
   if (arr.length === 0) {
@@ -3837,6 +3840,7 @@ async calculateAverage(arr) {
 
   return roundedAverage;
 }
+*/
 
  async getDistanceBetween(lat1, long1, lat2, long2,distance) {
 
