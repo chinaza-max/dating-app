@@ -2675,7 +2675,7 @@ class UserService {
                 });
 
                 console.log('dddddddddddddddddd')
-
+   
             });
 
             console.log(myTotalReviewArray)
