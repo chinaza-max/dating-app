@@ -2621,7 +2621,7 @@ class UserService {
                           },
                           required: false,
                           attributes: [
-                            [Sequelize.fn('AVG',Sequelize.col('star')), 'averageStar']
+                            [Sequelize.fn('AVG',Sequelize.col('DateReviews.star')), 'averageStar']
                           ]
                         }
                       ]
@@ -2641,7 +2641,7 @@ class UserService {
                           },
                           required: false,
                           attributes: [
-                            [Sequelize.fn('AVG',Sequelize.col('star')), 'averageStar']
+                            [Sequelize.fn('AVG',Sequelize.col('DateReviews.star')), 'averageStar']
                           ]
                         }
                       ]
