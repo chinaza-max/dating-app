@@ -2319,6 +2319,8 @@ class UserService {
         },
       });
 
+     
+
       //for the person receiving the date offer
       const datePendingCount1 = await this.DateModel.count({
         where: {
@@ -2339,6 +2341,17 @@ class UserService {
         },
       });
 
+
+      const dateCompletedCount = await this.DateModel.count({
+        where: {
+          [Op.or]:[
+            {userId2: userId},
+            {userId: userId},
+          ],
+          dateStatus:'completed'
+        },
+      });
+
       const dateDeclineCount = await this.DateModel.count({
         where: {
           [Op.or]:[
@@ -2355,7 +2368,11 @@ class UserService {
             {userId2: userId},
             {userId: userId},
           ],
-          usersStatus:'accepted'
+          usersStatus:'accepted',
+          usersStatus:{
+            [Sequelize.Op.not]: 'completed',
+          }
+
         },
       });
 
@@ -2395,6 +2412,10 @@ class UserService {
       count['dateDeclineCount']=dateDeclineCount
       count['dateAcceptCount']=dateAcceptCount
       count['dateCountNeedsAction']=dateCountNeedsAction
+      count['dateCompletedCount']=dateCompletedCount
+
+
+      
 
 
       return count
