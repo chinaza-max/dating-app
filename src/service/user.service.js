@@ -3791,7 +3791,7 @@ async getCommonBioDetail(userId1,userId2){
 
 async calculateAverage(data) {
 
-
+  console.log(data)
 
   const validRatings = data.filter(obj => obj.dataValues.star !== undefined && obj.dataValues.star !== null);
 
