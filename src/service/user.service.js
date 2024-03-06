@@ -2601,10 +2601,21 @@ class UserService {
                       //attributes:['preferedGender']
               })
             let myMatchUser=await this.UserModel.findOne({
-              where:{id:myMatchId,
-                      isDeleted:false},
-                     // attributes:['id','dateOfBirth','height','ethnicity','bodyType','smoking','drinking','countryOfResidence','maritalStatus','haveChildren','gender']
-              })
+                  where:{
+                        id:myMatchId,
+                        isDeleted:false
+                      },
+                  include:[
+                      {  
+                        model: this.DateModel,
+                        as: "UserReviews",
+                        attributes: [
+                          [sequelize.fn('AVG', sequelize.col('star')), 'averageStar'],
+                        ],
+                        required:false
+                      }
+                  ]
+                })
 
          
 
@@ -2635,7 +2646,7 @@ class UserService {
 
 
             if(!myMatchUser) continue;
-            if(!myMatchUser) continue;                  
+            //if(!myMatchUser) continue;                  
             if(havePendingRequest) continue;                  
 
             if(Number(ageRangeMin)||Number(ageRangeMax)){
@@ -2705,13 +2716,19 @@ class UserService {
 
             
            
+            console.log(myMatchUser)
             result.push({
               matchId:element.dataValues.id,
               userId:element.dataValues.userId,
               userId2:element.dataValues.userId2,
               isMatchRejected:element.dataValues.isMatchRejected,
               matchInformation:JSON.parse(element.dataValues.matchInformation),
-              matchPercentage:element.dataValues.matchPercentage})
+              matchPercentage:element.dataValues.matchPercentage,
+              star:myMatchUser
+
+            }),
+
+              
        }
     
       
@@ -2729,24 +2746,11 @@ class UserService {
     const birthDateObj = new Date(birthdate);
     const currentDate = new Date();
 
-    console.log('===============birthdate start====================')
-
-    console.log(birthdate)
-    console.log(currentDate)
-
-    console.log( new Date(birthdate))
-    console.log(new Date())  
-
-    console.log('===============birthdate  end ====================')
-
+ 
 
     // Calculate the difference in milliseconds
     const timeDiff = currentDate - birthDateObj;
     
-    console.log(birthDateObj)
-    console.log(currentDate)
-
-    console.log(timeDiff)
 
     // Calculate the age
     const age = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365.25));
