@@ -2607,7 +2607,7 @@ class UserService {
                       },
                   include:[
                       {  
-                        model: this.DateModel,
+                        model: this.ReviewModel,
                         as: "UserReviews",
                         attributes: [
                           [Sequelize.fn('AVG', Sequelize.col('star')), 'averageStar'],
