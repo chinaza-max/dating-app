@@ -2614,7 +2614,8 @@ class UserService {
                         ],
                         required:false
                       }
-                  ]
+                  ],
+                  group: ['User.id']
                 })
 
          
