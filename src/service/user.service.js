@@ -2666,17 +2666,20 @@ class UserService {
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.UserDates.DateReviews)
            }else if(myMatchUser.dataValues?.User2Dates){
 
+            const myTotalReviewArray=[]
             myMatchUser.dataValues.User2Dates.forEach(element => {
                 console.log('dddddddddddddddddd')
 
-                console.log(element)
-
+                element.dataValues.DateReviews.forEach(element => {
+                  myTotalReviewArray.push(element)
+                });
 
                 console.log('dddddddddddddddddd')
 
             });
-            console.log(myMatchUser.dataValues.User2Dates.DateReviews)
-            ratingAverage=await this.calculateAverage(myMatchUser.dataValues.User2Dates.DateReviews)
+
+            console.log(myTotalReviewArray)
+            ratingAverage=await this.calculateAverage(myTotalReviewArray)
            }
            console.log('ratingAverage')
            console.log(myMatchUser.dataValues.User2Dates)
