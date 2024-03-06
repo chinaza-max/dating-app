@@ -2659,11 +2659,13 @@ class UserService {
           let ratingAverage=0
         
 
-           if(myMatchUser.dataValues.UserDates){
+           if(myMatchUser.dataValues?.UserDates?.DateReviews){
 
             console.log(myMatchUser.dataValues.UserDates.DateReviews)
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.UserDates.DateReviews)
-           }else if(myMatchUser.dataValues.User2Dates){
+           }else if(myMatchUser.dataValues?.User2Dates?.DateReviews){
+
+
             console.log(myMatchUser.dataValues.User2Dates.DateReviews)
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.User2Dates.DateReviews)
            }
