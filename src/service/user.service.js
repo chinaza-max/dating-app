@@ -975,6 +975,8 @@ class UserService {
                   }
                 ],
                 usersStatus:'accepted',
+                dateStatus:{[Sequelize.Op.not]: 'completed',
+              },
                 isDeleted:false
               },
               include: [
@@ -2669,13 +2671,6 @@ class UserService {
                 });
             });
 
-            console.log("ratingAverage")
-            console.log("ratingAverage")
-            console.log("ratingAverage")
-            console.log("ratingAverage")
-            console.log("ratingAverage")
-            console.log("ratingAverage")
-
             ratingAverage=await this.calculateAverage(myTotalReviewArray)
            }
          
@@ -3791,27 +3786,12 @@ async getCommonBioDetail(userId1,userId2){
 
 async calculateAverage(data) {
 
-  console.log(data)
-
   const validRatings = data.filter(obj => obj.dataValues.star !== undefined && obj.dataValues.star !== null);
 
   // Check if there are valid ratings
   if (validRatings.length === 0) {
     return 0; // Return 0 if no valid ratings are available
   }
-
-  console.log('=============================')
-  console.log('=============================')
-  console.log('=============================')
-  console.log('=============================')
-
-  console.log(validRatings)
-  console.log('=============================')
-  console.log('=============================')
-  console.log('=============================')
-  console.log('=============================')
-
-  console.log('============================')
 
   // Calculate the sum of valid ratings
   const sumOfRatings = validRatings.reduce((sum, obj) => sum + obj.dataValues.star, 0);
