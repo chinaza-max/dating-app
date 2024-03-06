@@ -2611,11 +2611,13 @@ class UserService {
                         as: "UserReviews",
                         attributes: [
                           [Sequelize.fn('AVG', Sequelize.col('star')), 'averageStar'],
+                          'userId', 
                         ],
-                        required:false
+                        required:false,
+                        group: ['userId'],
+
                       }
                   ],
-                  group: ['User.id']
                 })
 
          
