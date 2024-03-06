@@ -2646,12 +2646,7 @@ class UserService {
                 })
 
          
-                   
-           console.log('total total total total')
-           console.log(myMatchUser)
-           console.log('total total total total')
-
-
+   
 
 
           
@@ -2669,6 +2664,10 @@ class UserService {
             console.log(myMatchUser.dataValues.User2Dates.DateReviews)
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.User2Dates.DateReviews)
            }
+           console.log('ratingAverage')
+           console.log(myMatchUser.dataValues.User2Dates.DateReviews)
+           console.log('ratingAverage')
+
            console.log(ratingAverage)
 
 
