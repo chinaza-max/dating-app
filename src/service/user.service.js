@@ -2613,6 +2613,7 @@ class UserService {
                       include: [
                         {
                           model: this.ReviewModel, 
+                          as:'DateReviews', 
                           where: {
                             userId: {
                               [Sequelize.Op.ne]: myMatchId
@@ -2629,6 +2630,7 @@ class UserService {
                       include: [
                         {
                           model: this.ReviewModel, 
+                          as:'DateReviews', 
                           where: {
                             userId: {
                               [Sequelize.Op.ne]: myMatchId
