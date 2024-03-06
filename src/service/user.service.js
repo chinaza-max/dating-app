@@ -2658,14 +2658,18 @@ class UserService {
 
             console.log(myMatchUser.dataValues.UserDates.DateReviews)
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.UserDates.DateReviews)
-           }else if(myMatchUser.dataValues?.User2Dates?.DateReviews){
+           }else if(myMatchUser.dataValues?.User2Dates){
 
-
+            myMatchUser.dataValues.User2Dates.forEach(element => {
+              
+            });
             console.log(myMatchUser.dataValues.User2Dates.DateReviews)
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.User2Dates.DateReviews)
            }
            console.log('ratingAverage')
            console.log(myMatchUser.dataValues.User2Dates)
+           console.log(myMatchUser.dataValues.User2Dates.length)
+
            console.log('ratingAverage')
 
            console.log(ratingAverage)
