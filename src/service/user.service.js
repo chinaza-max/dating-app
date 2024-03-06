@@ -2619,7 +2619,10 @@ class UserService {
                               [Sequelize.Op.ne]: myMatchId
                             }
                           },
-                          required: false
+                          required: false,
+                          attributes: [
+                            [Sequelize.fn('AVG',Sequelize.col('star')), 'averageStar']
+                          ]
                         }
                       ]
                     },
@@ -2636,7 +2639,10 @@ class UserService {
                               [Sequelize.Op.ne]: myMatchId
                             }
                           },
-                          required: false
+                          required: false,
+                          attributes: [
+                            [Sequelize.fn('AVG',Sequelize.col('star')), 'averageStar']
+                          ]
                         }
                       ]
                     }
