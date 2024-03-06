@@ -2620,9 +2620,7 @@ class UserService {
                             }
                           },
                           required: false,
-                          attributes: [
-                            [Sequelize.fn('AVG',Sequelize.col('DateReviews.star')), 'averageStar']
-                          ]
+                        
                         }
                       ]
                     },
@@ -2640,9 +2638,7 @@ class UserService {
                             }
                           },
                           required: false,
-                          attributes: [
-                            [Sequelize.fn('AVG',Sequelize.col('DateReviews.star')), 'averageStar']
-                          ]
+                         
                         }
                       ]
                     }
@@ -2651,9 +2647,19 @@ class UserService {
 
          
                    
-           console.log('myMatchUser myMatchUser myMatchUser myMatchUsermyMatchUser myMatchUser')
+           console.log('total total total total')
            console.log(myMatchUser)
-           console.log('myMatchUser myMatchUser myMatchUser myMatchUser myMatchUser')
+           console.log('total total total total')
+
+
+
+           console.log('date date date ')
+
+           console.log(myMatchUser.dataValues.UserDates)
+           console.log(myMatchUser.dataValues.User2Dates)
+           console.log('date date date ')
+
+
               
             if(me.dataValues.preferedGender!==myMatchUser.dataValues.gender) continue
              
