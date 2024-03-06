@@ -2651,11 +2651,6 @@ class UserService {
                   ],
                 })
 
-         
-   
-
-
-          
 
           let ratingAverage=0
         
@@ -2668,23 +2663,17 @@ class UserService {
 
             const myTotalReviewArray=[]
             myMatchUser.dataValues.User2Dates.forEach(element => {
-                console.log('dddddddddddddddddd')
 
                 element.dataValues.DateReviews.forEach(element => {
                   myTotalReviewArray.push(element)
                 });
 
-                console.log('dddddddddddddddddd')
    
             });
 
-            console.log(myTotalReviewArray)
             ratingAverage=await this.calculateAverage(myTotalReviewArray)
            }
-           console.log('ratingAverage')
-           console.log(myMatchUser.dataValues.User2Dates)
-
-           console.log('ratingAverage')
+         
    
            console.log(ratingAverage)
 
@@ -3792,6 +3781,30 @@ async getCommonBioDetail(userId1,userId2){
     throw new SystemError(error.name,error.parent)
   }
   
+}
+
+
+async calculateAverageRating(data) {
+  // Filter out objects without a rating
+  const validRatings = data.filter(obj => obj.dataValues.star !== undefined && obj.dataValues.star !== null);
+
+  // Check if there are valid ratings
+  if (validRatings.length === 0) {
+    return 0; // Return 0 if no valid ratings are available
+  }
+
+  console.log('=============================')
+  console.log(validRatings)
+
+  console.log('============================')
+
+  // Calculate the sum of valid ratings
+  const sumOfRatings = validRatings.reduce((sum, obj) => sum + obj.dataValues.star, 0);
+
+  // Calculate the average and round to the nearest integer
+  const averageRating = Math.round(sumOfRatings / validRatings.length);
+
+  return averageRating;
 }
 
 async calculateAverage(arr) {
