@@ -2606,17 +2606,16 @@ class UserService {
                         isDeleted:false
                       },
                   include:[
-                      {  
-                        model: this.ReviewModel,
-                        as: "UserReviews",
-                        attributes: [
-                          [Sequelize.fn('AVG', Sequelize.col('star')), 'averageStar'],
-                          'userId', 
-                        ],
-                        required:false,
-                        group: ['userId'],
-
-                      }
+                    {
+                      model: this.DateModel, 
+                      as: 'UserDates',
+                      required: false
+                    },
+                    {
+                      model: this.DateModel, 
+                      as: 'User2Dates',
+                      required: false
+                    }
                   ],
                 })
 

@@ -119,7 +119,6 @@ function associate() {
   })
 
 
-
   User.hasMany(UserDate, {
     foreignKey: 'userId2',
     as: "User2Dates",
