@@ -2657,14 +2657,16 @@ class UserService {
 
           
 
-           let allRating =myMatchUser.dataValues.UserDates.length
-
+          let ratingAverage=0
            if(myMatchUser.dataValues.UserDates.length!=0){
 
             console.log(myMatchUser.dataValues.UserDates.DateReviews)
+            ratingAverage=await this.calculateAverage(myMatchUser.dataValues.UserDates.DateReviews)
            }else if(myMatchUser.dataValues.User2Dates.length!=0){
             console.log(myMatchUser.dataValues.User2Dates.DateReviews)
+            ratingAverage=await this.calculateAverage(myMatchUser.dataValues.User2Dates.DateReviews)
            }
+           console.log(ratingAverage)
 
 
               
@@ -2771,8 +2773,7 @@ class UserService {
               isMatchRejected:element.dataValues.isMatchRejected,
               matchInformation:JSON.parse(element.dataValues.matchInformation),
               matchPercentage:element.dataValues.matchPercentage,
-              star:myMatchUser
-
+              star:ratingAverage
             })
               
        }
