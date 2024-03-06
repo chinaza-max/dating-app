@@ -2715,8 +2715,7 @@ class UserService {
             }
 
             
-           
-            console.log(myMatchUser)
+           console.log(myMatchUser)
             result.push({
               matchId:element.dataValues.id,
               userId:element.dataValues.userId,
@@ -2726,8 +2725,7 @@ class UserService {
               matchPercentage:element.dataValues.matchPercentage,
               star:myMatchUser
 
-            }),
-
+            })
               
        }
     
