@@ -2671,7 +2671,7 @@ class UserService {
            console.log(myMatchUser.dataValues.User2Dates.length())
 
            console.log('ratingAverage')
-
+   
            console.log(ratingAverage)
 
 
