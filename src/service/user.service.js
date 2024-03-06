@@ -2617,6 +2617,9 @@ class UserService {
                           where: {
                             userId: {
                               [Sequelize.Op.ne]: myMatchId
+                            },
+                            star: {
+                              [Sequelize.Op.not]: null
                             }
                           },
                           required: false,
@@ -2635,6 +2638,9 @@ class UserService {
                           where: {
                             userId: {
                               [Sequelize.Op.ne]: myMatchId
+                            },
+                            star: {
+                              [Sequelize.Op.not]: null
                             }
                           },
                           required: false,
@@ -2661,6 +2667,12 @@ class UserService {
            }else if(myMatchUser.dataValues?.User2Dates){
 
             myMatchUser.dataValues.User2Dates.forEach(element => {
+                console.log('dddddddddddddddddd')
+
+                console.log(element)
+
+
+                console.log('dddddddddddddddddd')
 
             });
             console.log(myMatchUser.dataValues.User2Dates.DateReviews)
@@ -2668,7 +2680,6 @@ class UserService {
            }
            console.log('ratingAverage')
            console.log(myMatchUser.dataValues.User2Dates)
-           console.log(myMatchUser.dataValues.User2Dates.length())
 
            console.log('ratingAverage')
    
