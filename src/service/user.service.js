@@ -3801,7 +3801,7 @@ async calculateAverage(arr) {
   }
 
   // Calculate the sum of values in the array
-  const sum = arr.reduce((acc, obj) => acc + obj.star, 0);
+  const sum = arr.reduce((acc, obj) => acc + obj.dataValues.star, 0);
 
   // Calculate the average
   const average = sum / arr.length;
