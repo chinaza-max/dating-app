@@ -2655,9 +2655,16 @@ class UserService {
 
            console.log('date date date ')
 
-           console.log(myMatchUser.dataValues.UserDates)
-           console.log(myMatchUser.dataValues.User2Dates)
-           console.log('date date date ')
+          
+
+           let allRating =myMatchUser.dataValues.UserDates.length
+
+           if(myMatchUser.dataValues.UserDates.length!=0){
+
+            console.log(myMatchUser.dataValues.UserDates.DateReviews)
+           }else if(myMatchUser.dataValues.User2Dates.length!=0){
+            console.log(myMatchUser.dataValues.User2Dates.DateReviews)
+           }
 
 
               
@@ -3766,6 +3773,23 @@ async getCommonBioDetail(userId1,userId2){
   
 }
 
+async calculateAverage(arr) {
+  // Check if the array is not empty
+  if (arr.length === 0) {
+    return 0; // Return 0 for an empty array or handle it as per your requirement
+  }
+
+  // Calculate the sum of values in the array
+  const sum = arr.reduce((acc, obj) => acc + obj.star, 0);
+
+  // Calculate the average
+  const average = sum / arr.length;
+
+  // Round the average to an integer (you can use Math.floor, Math.ceil, or Math.round based on your rounding preference)
+  const roundedAverage = Math.round(average);
+
+  return roundedAverage;
+}
 
  async getDistanceBetween(lat1, long1, lat2, long2,distance) {
 
