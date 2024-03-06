@@ -2609,18 +2609,43 @@ class UserService {
                     {
                       model: this.DateModel, 
                       as: 'UserDates',
-                      required: false
+                      required: false,
+                      include: [
+                        {
+                          model: this.ReviewModel, 
+                          where: {
+                            userId: {
+                              [Sequelize.Op.ne]: myMatchId
+                            }
+                          },
+                          required: false
+                        }
+                      ]
                     },
                     {
                       model: this.DateModel, 
                       as: 'User2Dates',
-                      required: false
+                      required: false,
+                      include: [
+                        {
+                          model: this.ReviewModel, 
+                          where: {
+                            userId: {
+                              [Sequelize.Op.ne]: myMatchId
+                            }
+                          },
+                          required: false
+                        }
+                      ]
                     }
                   ],
                 })
 
          
-
+                   
+           console.log('myMatchUser myMatchUser myMatchUser myMatchUsermyMatchUser myMatchUser')
+           console.log(myMatchUser)
+           console.log('myMatchUser myMatchUser myMatchUser myMatchUser myMatchUser')
               
             if(me.dataValues.preferedGender!==myMatchUser.dataValues.gender) continue
              
@@ -2716,8 +2741,8 @@ class UserService {
 
             }
 
-            
-           console.log(myMatchUser)
+         
+
             result.push({
               matchId:element.dataValues.id,
               userId:element.dataValues.userId,
