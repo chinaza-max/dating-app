@@ -2667,9 +2667,14 @@ class UserService {
                 element.dataValues.DateReviews.forEach(element => {
                   myTotalReviewArray.push(element)
                 });
-
-   
             });
+
+            console.log("ratingAverage")
+            console.log("ratingAverage")
+            console.log("ratingAverage")
+            console.log("ratingAverage")
+            console.log("ratingAverage")
+            console.log("ratingAverage")
 
             ratingAverage=await this.calculateAverage(myTotalReviewArray)
            }
