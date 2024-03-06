@@ -2653,11 +2653,22 @@ class UserService {
 
 
 
-           console.log('date date date ')
 
           
 
           let ratingAverage=0
+          console.log('date date date ')
+          console.log('ppppppp ')
+
+          console.log(myMatchUser.dataValues.UserDates)
+          console.log('ppppppp ')
+          console.log('ssssssssss ')
+
+          console.log(myMatchUser.dataValues.User2Dates)
+          console.log('ssssssssss ')
+
+          console.log('date date date ')
+
            if(myMatchUser.dataValues.UserDates.length!=0){
 
             console.log(myMatchUser.dataValues.UserDates.DateReviews)
