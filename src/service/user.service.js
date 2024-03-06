@@ -2661,7 +2661,15 @@ class UserService {
           console.log('ppppppp ')
 
           console.log(myMatchUser.dataValues.UserDates)
+          console.log(myMatchUser.dataValues.User2Dates.length())
+
+          if(myMatchUser.dataValues.UserDates){
+              console.log("run run run run run run")
+              console.log("run run run run run run")
+              console.log("run run run run run run")
+          }
           console.log(myMatchUser.dataValues.UserDates.length())
+
 
           console.log('ppppppp ')
           console.log('ssssssssss ')
