@@ -2657,33 +2657,13 @@ class UserService {
           
 
           let ratingAverage=0
-          console.log('date date date ')
-          console.log('ppppppp ')
+        
 
-          console.log(myMatchUser.dataValues.UserDates)
-          console.log(myMatchUser.dataValues.User2Dates.length())
-
-          if(myMatchUser.dataValues.UserDates){
-              console.log("run run run run run run")
-              console.log("run run run run run run")
-              console.log("run run run run run run")
-          }
-          console.log(myMatchUser.dataValues.UserDates.length())
-
-
-          console.log('ppppppp ')
-          console.log('ssssssssss ')
-
-          console.log(myMatchUser.dataValues.User2Dates)
-          console.log('ssssssssss ')
-
-          console.log('date date date ')
-
-           if(myMatchUser.dataValues.UserDates.length!=0){
+           if(myMatchUser.dataValues.UserDates){
 
             console.log(myMatchUser.dataValues.UserDates.DateReviews)
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.UserDates.DateReviews)
-           }else if(myMatchUser.dataValues.User2Dates.length!=0){
+           }else if(myMatchUser.dataValues.User2Dates){
             console.log(myMatchUser.dataValues.User2Dates.DateReviews)
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.User2Dates.DateReviews)
            }
