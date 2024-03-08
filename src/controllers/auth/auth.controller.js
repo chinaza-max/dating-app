@@ -46,12 +46,27 @@ export default class AuthenticationController {
         ...data,
       }
 
-      const obj = await authService.handleVerifyEmailorTel(my_bj);
+      const user = await authService.handleVerifyEmailorTel(my_bj);
+
+
+      const token = await authService.generateToken(user.dataValues);
+
+      const excludedProperties = ['isDeleted', 'password'];
+
+      const modifiedUser = Object.keys(user.dataValues)
+        .filter(key => !excludedProperties.includes(key))
+        .reduce((acc, key) => {
+          acc[key] = user.dataValues[key];
+          return acc;
+        }, {});
+
 
       return res.status(200).json({
         status: 200,
         message: "verification completed",
+        data: { user: modifiedUser, token },
       });
+
     } catch (error) {
       console.log(error);
       next(error)
@@ -78,6 +93,7 @@ export default class AuthenticationController {
         message: "user registered successfully",
         data:{id:result.dataValues.id,type:'email'} ,
       });
+      
     } catch (error) {
       console.log(error);
       next(error)
@@ -140,7 +156,6 @@ export default class AuthenticationController {
 
       const token = await authService.generateToken(user.dataValues);
 
-      console.log(token)
       const excludedProperties = ['isDeleted', 'password'];
 
       const modifiedUser = Object.keys(user.dataValues)
@@ -322,14 +337,22 @@ export default class AuthenticationController {
 
     const user=await authService.handleUploadPicture(my_bj,file);
 
-    
-   const token = await authService.generateToken(user.dataValues);
 
+      const token = await authService.generateToken(user.dataValues);
+
+      const excludedProperties = ['isDeleted', 'password'];
+
+      const modifiedUser = Object.keys(user.dataValues)
+        .filter(key => !excludedProperties.includes(key))
+        .reduce((acc, key) => {
+          acc[key] = user.dataValues[key];
+          return acc;
+        }, {});
 
     return res.status(200).json({
       status: 200,
       message: "verification successful.",
-      data: { user: {firstName:user.dataValues.firstName,firstName:user.dataValues.lastName }, token },
+      data: { user: modifiedUser, token },
     });
      
     } catch (error) {

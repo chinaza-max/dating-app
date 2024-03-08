@@ -364,7 +364,8 @@ class AuthenticationService {
 
           accessPath = serverConfig.DOMAIN+file.path.replace("public", "");
         }
-        await user.update({ image: accessPath });
+        await user.update({ image: accessPath ,
+                        isImageVerified:true});
 
         return user
       } catch (error) {
@@ -534,7 +535,7 @@ class AuthenticationService {
     }
     try {
      
-      if('email'){
+      if(type==='email'){
         relatedUser.update({
           isEmailValid: true,
         });
@@ -542,13 +543,19 @@ class AuthenticationService {
         relatedEmailoRTelValidationCode.update({
           expiresIn: new Date(),
         });
+
+        return  relatedUser
       }
       else{
         relatedUser.update({
           isTelValid: true,
         });
+
+        return  relatedUser
+
       }
-  
+      
+
     } catch (error) {
       throw new ServerError("Failed to update "+type );
     }
