@@ -64,7 +64,6 @@ class UserRoutes extends UserController {
     this.router.get("/getMatchDetails", this.getMatchDetails);
     this.router.get("/getProfileDetail", this.getProfileDetail);
 
-
   } 
 
 }
