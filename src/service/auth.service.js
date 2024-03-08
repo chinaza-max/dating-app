@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from'bcrypt';
-import { User,  EmailandTelValidation ,  Admin,  PasswordReset,  Business,  EmailandTelValidationAdmin } from "../db/models/index.js";
+import { User,  EmailandTelValidation ,  Admin,  PasswordReset,  Business,  EmailandTelValidationAdmin,
+  UserAnswer } from "../db/models/index.js";
 import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
 import mailService from "../service/mail.service.js";
@@ -21,6 +22,7 @@ class AuthenticationService {
    EmailandTelValidationAdminModel=EmailandTelValidationAdmin
    BusinessModel=Business
    PasswordResetModel=PasswordReset
+   UserAnswerModel=UserAnswer
 
 
   verifyToken(token) {
@@ -420,7 +422,14 @@ class AuthenticationService {
           { isDeleted: false}
           
         ],       
-      },     
+      }, 
+      include:[
+        {
+          model:this.UserAnswerModel,
+          as: 'UserAnswers',
+          required:false
+        }
+      ]    
     });   
 
 
