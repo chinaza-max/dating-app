@@ -443,6 +443,13 @@ class UserUtil {
         then: Joi.string().required(),
       }),
   });
+
+
+  verifyHandleGetProfileDetail= Joi.object({
+        userId: Joi.number().required(),
+  });
+
+
 }
 
 export default new UserUtil();

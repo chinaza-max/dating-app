@@ -447,7 +447,35 @@ export default class UserController {
   }
 
 
+
+  async  getProfileDetail
+  (
+    req,
+    res,
+    next
+  ){
+
+    const {userId}=req.query
+
+
+    const obj={
+      userId:userId,
+    }
+
+    try {
+               
+        const result=await userService.handleGetProfileDetail(obj);
   
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
 
   async getMatchDetails(
     req,

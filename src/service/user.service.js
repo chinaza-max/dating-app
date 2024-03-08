@@ -899,7 +899,19 @@ class UserService {
 
 
   
-  
+  async handleGetProfileDetail(data) {
+
+    const {userId}=await userUtil.verifyHandleGetProfileDetail.validateAsync(data);
+
+
+      const result =await this.UserModel.findOne({
+        where: { id: userId}, 
+        attributes: { exclude: ['password', 'createdAt'] },
+      })
+      return result.dataValues
+
+
+  }
 
   async handleGetMatchDetails(data) {
 
@@ -2312,6 +2324,37 @@ class UserService {
         },
       });
 
+      const myResult = await this.RequestModel.findOne({
+        where: {
+          [Op.and]: [
+            {
+              [Op.or]: [
+                { userId: userId },
+                { userId2: userId },
+              ],
+            },
+            { status: 'accepted' },
+          ],
+        },
+      });
+
+      let requestCountNeedsAction=0
+
+      if(myResult){
+          
+        const myResult2 = await this.DateModel.findOne({
+          where: {
+            requestId:myResult.dataValues.id
+          },
+        });
+
+
+        if(!myResult2){
+           requestCountNeedsAction=1
+  
+        }
+      }
+
       const requestDeclineCount = await this.RequestModel.count({
         where: {
           userId: userId,
@@ -2397,6 +2440,10 @@ class UserService {
       });
 
 
+     
+
+
+      requestCountNeedsAction=requestIncomingCount+requestCountNeedsAction
       const dateCountNeedsAction=dateDeclineCount+dateReservationStatusdDeclineCount+dateDeclineCount2
 
 
@@ -2412,6 +2459,7 @@ class UserService {
       count['dateDeclineCount']=dateDeclineCount
       count['dateAcceptCount']=dateAcceptCount
       count['dateCountNeedsAction']=dateCountNeedsAction
+      count['requestCountNeedsAction']=requestCountNeedsAction
       count['dateCompletedCount']=dateCompletedCount
 
 
