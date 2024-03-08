@@ -297,7 +297,7 @@ class UserService {
           preferedGender,
           relationshipGoal,
           notificationAllowed,
-          active,
+          active, 
           smoking,
           drinking
         },
