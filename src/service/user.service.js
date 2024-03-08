@@ -279,7 +279,49 @@ class UserService {
   }
 
 
+  async handleUpdateProfile2(data) {
+    let {      
+      userId,  
+      preferedGender,
+      relationshipGoal,
+      notificationAllowed,
+      active,
+      smoking,
+      drinking
+    } = await userUtil.verifyHandleUpdateProfile2.validateAsync(data);
 
+    try {
+      
+      await this.UserModel.update(
+        {
+          preferedGender,
+          relationshipGoal,
+          notificationAllowed,
+          active,
+          smoking,
+          drinking
+        },
+        {
+          where: {
+            id: userId
+          }
+        }
+      );
+      
+      let result =await this.UserModel.findByPk(userId)
+      
+
+      this.rematchUser()
+      return result.dataValues
+    } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name, error.parent)
+    }
+
+   
+    
+
+  }
 
   async handleUpdateProfile(data) {
     let {      

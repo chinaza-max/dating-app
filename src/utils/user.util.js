@@ -387,6 +387,17 @@ class UserUtil {
   });
 
 
+  verifyHandleUpdateProfile2= Joi.object({
+    userId: Joi.number().required(),
+    preferedGender: Joi.string().valid('Male', 'Female', 'Others').allow(null).optional(),
+    relationshipGoal: Joi.string().valid('Marriage', 'Dating', 'New friends', 'Networking').required(),
+    smoking: Joi.string().required(),
+    drinking: Joi.string().required(),
+    active: Joi.boolean().required(),
+    notificationAllowed: Joi.boolean().required(),    
+  });
+
+
   verifyHandleUpdateLocation= Joi.object({
     userId: Joi.number().required(),
     latitude: Joi.number().required(),
