@@ -309,6 +309,7 @@ class UserService {
       drinking,
       eyeColor,
       hairColor,
+      notificationAllowed,
       active
     } = await userUtil.verifyHandleUpdateProfile.validateAsync(data);
 
@@ -343,6 +344,7 @@ class UserService {
           drinking,
           eyeColor,
           hairColor,
+          notificationAllowed,
           active
         },
         {

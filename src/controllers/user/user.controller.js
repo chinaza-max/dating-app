@@ -311,10 +311,6 @@ export default class UserController {
             acc[key] = result[key];
             return acc;
           }, {});
-
-
-
-
     
         return res.status(200).json({
           status: 200,
