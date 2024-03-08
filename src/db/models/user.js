@@ -174,7 +174,7 @@ export function init(connection) {
         defaultValue:false
       },
       notificationAllowed: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:true
       },
