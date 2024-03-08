@@ -173,6 +173,11 @@ export function init(connection) {
         allowNull: false,
         defaultValue:false
       },
+      notificationAllowed: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue:true
+      },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
