@@ -164,7 +164,7 @@ export function init(connection) {
         allowNull: false,
       },
       active: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:true
       },
