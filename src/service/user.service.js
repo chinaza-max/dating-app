@@ -953,7 +953,7 @@ class UserService {
                 datePartner1Tel:result1.dataValues.tel,
                 datePartner2Tel:result2.dataValues.tel,
                 fullDate:date.date+' '+data.time,
-                businessSpotEmail:result3.dataValues.address
+                businessSpotEmail:result3.dataValues.emailAddress
           }
 
         this.sendEmailToBusinessSpot(obj)
