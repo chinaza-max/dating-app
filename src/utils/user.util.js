@@ -354,10 +354,7 @@ class UserUtil {
 
   });
 
-  verifyHandleUpdateTel= Joi.object({
-    userId: Joi.number().required(),
-    tel: Joi.number().required(),
-  });
+
 
   verifyHandleUpdateProfile= Joi.object({
     userId: Joi.number().required(),

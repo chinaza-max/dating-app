@@ -19,6 +19,7 @@ import {
   SystemError
 
 } from "../errors/index.js";
+import { object } from "joi";
 
 class UserService {
   UserModel = User;
@@ -325,31 +326,6 @@ class UserService {
 
 
 
-  async handleUpdateTel(data) {
-    let {      
-      userId,  
-      tel,
-    } = await userUtil.verifyHandleUpdateTel.validateAsync(data);
-
-
-    try {
-      
-      let result =await this.UserModel.findByPk(userId)
-      result.update(
-        {
-          tel:tel
-        }
-      );
-
-    } catch (error) {
-      console.log(error)
-      throw new SystemError(error.name, error.parent)
-    }
-
-   
-    
-
-  }
 
   async handleUpdateProfile(data) {
     let {      
@@ -959,6 +935,30 @@ class UserService {
           reservationStatus:'accepted',
           whoAcceptedReservationId:userId
         })
+      }
+    }
+
+
+    if(type=='acceptReservationStatus'){
+      if(dateDetails){
+          const result1=await this.UserModel.findByPk(dateDetails.dataValues.userId)
+          const result2=await this.UserModel.findByPk(dateDetails.dataValues.userId2)
+          const date=await this.formatDateAndTime(dateDetails.dataValues.fullDate)
+          const result3=await this.BusinessSpotsModel.findByPk(dateDetails.dataValues.businessIdSpotId)
+
+
+
+          const obj={
+                datePartner1FullName:result1.dataValues.lastName+' '+result1.dataValues.firstName,
+                datePartner2FullName:result2.dataValues.lastName+' '+result2.dataValues.firstName,
+                datePartner1Tel:result1.dataValues.tel,
+                datePartner2Tel:result2.dataValues.tel,
+                fullDate:date.date+' '+data.time,
+                businessSpotEmail:result3.dataValues.address
+          }
+
+        this.sendEmailToBusinessSpot(obj)
+
       }
     }
 
@@ -2086,7 +2086,8 @@ class UserService {
          
         }
       }
-   
+      
+     
 
 
     
@@ -3679,6 +3680,44 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
     console.log(error);
   }
 
+}
+
+
+
+async  sendEmailToBusinessSpot(obj) {
+
+  try {
+    
+          await mailService.sendMail({ 
+            to: emailAddress,
+            subject: "Scheduled date",
+            templateName: "dateDetails",
+            variables: {
+              ...obj,
+              resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/verifyEmail.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/PasswordReset.html?${params.toString()}`
+            },
+          });
+  
+      } catch (error) {
+          console.log(error)
+      }
+  
+  
+
+
+}
+
+async formatDateAndTime(fullDate) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const dateFormatted = new Date(fullDate).toLocaleDateString('en-US', options);
+
+  const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+  const timeFormatted = new Date(fullDate).toLocaleTimeString('en-US', timeOptions);
+
+  return {
+    date: dateFormatted,
+    time: timeFormatted,
+  };
 }
 
  async generateRandomPassword(length = 12) {

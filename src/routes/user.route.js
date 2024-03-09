@@ -31,7 +31,6 @@ class UserRoutes extends UserController {
     this.router.post("/reJectMatch",  this.reJectMatch);
 
 
-
     this.router.post("/createRequest", this.createRequest);
     this.router.get("/getRequest", this.getRequest);
     this.router.post("/requestAction", this.requestAction);
@@ -57,7 +56,6 @@ class UserRoutes extends UserController {
 
     this.router.post("/updateProfile", this.updateProfile);
     this.router.post("/updateProfile2", this.updateProfile2);
-    this.router.post("/updateTel", this.updateTel);
 
     this.router.post("/updateLocation", this.updateLocation);
     this.router.get("/countData", this.countData); 

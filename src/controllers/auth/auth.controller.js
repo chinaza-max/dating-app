@@ -131,6 +131,32 @@ export default class AuthenticationController {
   */
   
 
+  async updateTel(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+      
+        const my_bj = {
+          ...data,
+        }
+                          
+        await authService.handleUpdateTel(my_bj);
+
+        return res.status(200).json({
+          status: 200,
+          message: "updated sucessfully",
+        });
+      
+     
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
 
   async loginUser(req, res, next) {
 

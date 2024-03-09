@@ -65,6 +65,11 @@ class AdminUtil {
       ),
     });
 
+    verifyHandleUpdateTel= Joi.object({
+      userId: Joi.number().required(),
+      tel: Joi.number().required(),
+    });
+
 
     verifyHandleLoginUser= Joi.object({
       password: Joi.string().required(),
