@@ -3686,7 +3686,19 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
 async  sendEmailToBusinessSpot(obj) {
 
   try {
-    
+
+    console.log("obj obj obj obj")
+    console.log("obj obj obj obj")
+    console.log("obj obj obj obj")
+
+          console.log(obj.businessSpotEmail)
+          console.log(obj)
+          console.log("obj obj obj obj")
+          console.log("obj obj obj obj")
+          console.log("obj obj obj obj")
+          console.log("obj obj obj obj")
+
+
           await mailService.sendMail({ 
             to: obj.businessSpotEmail,
             subject: "Scheduled date",
