@@ -19,7 +19,6 @@ import {
   SystemError
 
 } from "../errors/index.js";
-import { object } from "joi";
 
 class UserService {
   UserModel = User;
