@@ -3688,7 +3688,7 @@ async  sendEmailToBusinessSpot(obj) {
   try {
     
           await mailService.sendMail({ 
-            to: emailAddress,
+            to: obj.businessSpotEmail,
             subject: "Scheduled date",
             templateName: "dateDetails",
             variables: {
