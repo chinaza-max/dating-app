@@ -3693,7 +3693,6 @@ async  sendEmailToBusinessSpot(obj) {
             templateName: "dateDetails",
             variables: {
               ...obj,
-              resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/verifyEmail.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/PasswordReset.html?${params.toString()}`
             },
           });
   
