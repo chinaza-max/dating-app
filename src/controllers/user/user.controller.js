@@ -316,6 +316,7 @@ export default class UserController {
         return res.status(200).json({
           status: 200,
           data: modifiedUser,
+          message: "updated sucessfully",
         });
       
      
