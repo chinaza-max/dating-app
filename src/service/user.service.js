@@ -323,6 +323,34 @@ class UserService {
 
   }
 
+
+
+  async handleUpdateTel(data) {
+    let {      
+      userId,  
+      tel,
+    } = await userUtil.verifyHandleUpdateTel.validateAsync(data);
+
+
+    try {
+      
+      let result =await this.UserModel.findByPk(userId)
+      result.update(
+        {
+          tel:tel
+        }
+      );
+
+    } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name, error.parent)
+    }
+
+   
+    
+
+  }
+
   async handleUpdateProfile(data) {
     let {      
       userId,  

@@ -286,6 +286,44 @@ export default class UserController {
 
   
   
+  async updateTel(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+      
+        const my_bj = {
+          ...data,
+          userId:req.user.id, 
+        }
+                          
+        const result=await userService.handleUpdateTel(my_bj);
+
+
+        const excludedProperties = ['isDeleted', 'password'];
+
+        const modifiedUser = Object.keys(result)
+          .filter(key => !excludedProperties.includes(key))
+          .reduce((acc, key) => {
+            acc[key] = result[key];
+            return acc;
+          }, {});
+    
+        return res.status(200).json({
+          status: 200,
+          data: modifiedUser,
+          message: "updated sucessfully",
+        });
+      
+     
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
 
   async updateProfile2(
     req,
