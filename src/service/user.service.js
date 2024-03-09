@@ -952,7 +952,7 @@ class UserService {
                 datePartner2FullName:result2.dataValues.lastName+' '+result2.dataValues.firstName,
                 datePartner1Tel:result1.dataValues.tel,
                 datePartner2Tel:result2.dataValues.tel,
-                fullDate:date.date+' '+data.time,
+                fullDate:date.date+' '+date.time,
                 businessSpotEmail:result3.dataValues.emailAddress
           }
 
@@ -3686,17 +3686,6 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
 async  sendEmailToBusinessSpot(obj) {
 
   try {
-
-    console.log("obj obj obj obj")
-    console.log("obj obj obj obj")
-    console.log("obj obj obj obj")
-
-          console.log(obj.businessSpotEmail)
-          console.log(obj)
-          console.log("obj obj obj obj")
-          console.log("obj obj obj obj")
-          console.log("obj obj obj obj")
-          console.log("obj obj obj obj")
 
 
           await mailService.sendMail({ 
