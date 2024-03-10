@@ -26,7 +26,7 @@ import {
       image: {
         type: DataTypes.STRING,
         allowNull: true,
-        defaultValue:serverConfig.NODE_ENV =="development"? `${serverConfig.DOMAIN}/fby-security-api/public/images/avatars/fbyDefaultIMG.png`:`${serverConfig.DOMAIN}/images/avatars/fbyDefaultIMG.png`
+        defaultValue:serverConfig.NODE_ENV =="development"? `${serverConfig.DOMAIN}/public/avatar/download.png`:`${serverConfig.DOMAIN}/images/avatars/download.png`
       },
       tel: {
         type: DataTypes.STRING,
