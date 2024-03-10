@@ -213,9 +213,15 @@ class UserService {
         })
       }
       else if(type=='delete'){
-        result1.update({
-          isDeleted:true
-        })
+
+        if(result1.dataValues.adminType==1){
+          throw new BadRequestError('Cant delete this admin')
+        }else{
+          result1.update({
+            isDeleted:true
+          })
+        }
+     
       }
     
     }
