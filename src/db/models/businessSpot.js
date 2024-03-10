@@ -43,6 +43,11 @@ export function init(connection) {
       allowNull: false,
       unique:false
     },
+    isEmailValid: {
+       type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:false
+    },
     contactPerson: {
       type: DataTypes.STRING,
       allowNull: false,

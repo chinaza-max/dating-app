@@ -13,6 +13,7 @@ class UserRoutes extends UserController {
     this.router.post("/updateUserPQ",  this.updateUserPersonalityQuestion);
     this.router.post("/registerAdmin", this.registerAdmin);
     this.router.post("/updateAdmin", this.updateAdmin);
+    this.router.post("/updateUserByAdmin", this.updateUserByAdmin);
 
     this.router.post("/sendVerificationCodeEmailOrTelAdmin", this.sendVerificationCodeEmailOrTelAdmin);
 
@@ -37,14 +38,11 @@ class UserRoutes extends UserController {
     this.router.get("/getRequest", this.getRequest);
     this.router.post("/requestAction", this.requestAction);
     
-
     this.router.post("/CUdate", this.CUdate);  
     this.router.get("/getDate", this.getDate);
     this.router.get("/getBusinessAndSpot", this.getBusinessAndSpot);
     this.router.get("/getAdmin", this.getAdmin);
     this.router.get("/getUser", this.getUser);
-
-
 
     this.router.post("/createSubscription", this.createSubscription);
     this.router.post("/createSubscriptionPlan", this.createSubscriptionPlan);

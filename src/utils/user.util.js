@@ -93,15 +93,42 @@ class UserUtil {
     createdBy: Joi.number().required(),
 
   });
+
+  verifyHandleUpdateUserByAdmin=Joi.object({
+    type:Joi.string().valid(
+      'disable',
+      'enable'
+      ).required(),
+  });
   
   verifyHandleRegisterAdmin=Joi.object({
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
-    tel: Joi.string().required(),
-    emailAddress: Joi.string().email().required(),
-    password: Joi.string().required(),
-    adminType: Joi.number().required(),
-    createdBy: Joi.number().required(),
+    type:Joi.string().valid(
+      'update',
+      'disable',
+      'delete',
+      'enable'
+      ).required(),
+    firstName: Joi.when('type', {
+      is: 'update',
+      then: Joi.string().required(),
+    }),
+    lastName:Joi.when('type', {
+      is: 'update',
+      then: Joi.string().required(),
+    }),
+    tel: Joi.when('type', {
+      is: 'update',
+      then: Joi.string().required(),
+    }),
+    emailAddress:Joi.when('type', {
+      is: 'update',
+      then: Joi.string().required(),
+    }),
+    password:Joi.when('type', {
+      is: 'update',
+      then: Joi.string().required(),
+    }),
+    userId:Joi.number().required(),
   });
 
   verifyHandleSendVerificationCodeEmailOrTelAdmin= Joi.object({

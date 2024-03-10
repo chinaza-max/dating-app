@@ -19,6 +19,7 @@ import EmailandTelValidation, { init as initEmailandTelValidation } from "./emai
 import EmailandTelValidationAdmin, { init as initEmailandTelValidationAdmin } from "./emailAndTelValidationAdmin.js";
 import Tag, { init as initTag } from "./tag.js";
 import EmailandTelValidationBusiness, { init as initEmailandTelValidationBusiness} from "./emailAndTelValidationBusiness.js";
+import EmailandTelValidationBusinessSpot, { init as initEmailandTelValidationBusinessSpot} from "./emailAndTelValidationBusinessSpot.js";
 
 
 
@@ -248,6 +249,7 @@ export {
   EmailandTelValidation,
   EmailandTelValidationAdmin,
   EmailandTelValidationBusiness,
+  EmailandTelValidationBusinessSpot,
   Tag,
   UserMatch
 }
@@ -273,6 +275,7 @@ export function init(connection) {
   initEmailandTelValidationAdmin(connection)
   initTag(connection)
   initEmailandTelValidationBusiness(connection)
+  initEmailandTelValidationBusinessSpot(connection)
   associate();
   authenticateConnection(connection)
 }

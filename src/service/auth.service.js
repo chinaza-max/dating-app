@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from'bcrypt';
-import { User,  EmailandTelValidation ,  Admin,  PasswordReset,  Business,  EmailandTelValidationAdmin,
+import { User,  EmailandTelValidationBusiness,  EmailandTelValidationBusinessSpot,  EmailandTelValidation ,  Admin,  PasswordReset,  Business,  EmailandTelValidationAdmin,
   UserAnswer } from "../db/models/index.js";
 import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
@@ -21,6 +21,8 @@ class AuthenticationService {
    AdminModel = Admin;
    EmailandTelValidationModel=EmailandTelValidation
    EmailandTelValidationAdminModel=EmailandTelValidationAdmin
+   EmailandTelValidationBusinessModel=EmailandTelValidationBusiness
+   EmailandTelValidationBusinessSpotModel=EmailandTelValidationBusinessSpot
    BusinessModel=Business
    PasswordResetModel=PasswordReset
    UserAnswerModel=UserAnswer
@@ -173,7 +175,7 @@ class AuthenticationService {
         matchedUser=await this.UserModel.findOne({
           where: {
         [Op.or]: [
-          { emailAddress:emailOrPhone },
+          { emailAddress:emailOrPhone},
           { tel: emailOrPhone }, 
         ],
         isEmailValid:true, 
@@ -489,17 +491,43 @@ class AuthenticationService {
     let { 
       userId,
       verificationCode,
+      who,
       type
     } = await authUtil.verifyHandleVerifyEmailorTelAdmin.validateAsync(data);
 
 
-    var relatedEmailoRTelValidationCode = await this.EmailandTelValidationAdminModel.findOne({
-      where: {
-        userId: userId,
-        verificationCode: verificationCode,
-        type
-      },
-    })
+
+    let relatedEmailoRTelValidationCode = ''
+
+
+    if(who=='business'){
+      relatedEmailoRTelValidationCode = await this.EmailandTelValidationBusinessModel.findOne({
+        where: {
+          userId: userId,
+          verificationCode: verificationCode,
+          type
+        },
+      })
+    }
+    else if(who=='admin'){
+      relatedEmailoRTelValidationCode = await this.EmailandTelValidationAdminModel.findOne({
+        where: {
+          userId: userId,
+          verificationCode: verificationCode,
+          type
+        },
+      })
+    }
+    else if(who=='businessSpot'){
+      relatedEmailoRTelValidationCode = await this.EmailandTelValidationBusinessSpotModel.findOne({
+        where: {
+          userId: userId,
+          verificationCode: verificationCode,
+          type
+        },
+      })
+    }    
+
 
     if (relatedEmailoRTelValidationCode == null){
       throw new NotFoundError("Invalid verification code");

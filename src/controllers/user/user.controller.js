@@ -1284,6 +1284,32 @@ export default class UserController {
 */
   
 
+
+async updateUserByAdmin(req, res, next) {
+
+  try {
+
+    const data = req.body;        
+    let my_bj = {
+      ...data,
+      createdBy:req.user.id
+    }
+    
+    await userService.handleUpdateUserByAdmin(my_bj);
+
+    return res.status(200).json({
+      status: 200,
+      message: "update successfull",
+    });
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+  
+}
+
+
+
   async updateAdmin(req, res, next) {
 
     try {

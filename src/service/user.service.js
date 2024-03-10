@@ -3,6 +3,7 @@ import { User,Admin ,
   EmailandTelValidationAdmin,
   BusinessSpot,Business,
   EmailandTelValidationBusiness,
+  EmailandTelValidationBusinessSpot,
   UserAnswer,UserMatch,Request,UserDate,SubscriptionPlan
   ,Subscription,WishList,Review  } from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
@@ -27,6 +28,7 @@ class UserService {
   EmailandTelValidationAdminModel=EmailandTelValidationAdmin
   //SearchSettingModel=SearchSetting
   BusinessModel=Business
+  EmailandTelValidationBusinessSpotModel=EmailandTelValidationBusinessSpot
   EmailandTelValidationBusinessModel=EmailandTelValidationBusiness
   BusinessSpotsModel=BusinessSpot
   UserAnswerModel=UserAnswer
@@ -117,6 +119,33 @@ class UserService {
    }
 
 
+  
+  
+  async handleUpdateUserByAdmin(data) {
+    let { 
+      type,
+      userId,
+    } = await userUtil.verifyHandleUpdateUserByAdmin.validateAsync(data);
+
+    const result1 = await this.UserModel.findByPk(userId);
+
+    if(result1){
+
+      if(type=='disable'){
+        result1.update({
+          disableAccount:true
+        })
+      }
+      else if(type=='enable'){
+        result1.update({
+          disableAccount:false
+        })
+      }
+    
+    }
+
+  }
+
   async handleUpdateAdmin(data) {
     let { 
       firstName,
@@ -126,7 +155,6 @@ class UserService {
       type,
       userId,
       password,
-
     } = await userUtil.verifyHandleRegisterAdmin.validateAsync(data);
 
 
@@ -181,7 +209,12 @@ class UserService {
       }
       else if(type=='enable'){
         result1.update({
-          disableAccount:true
+          disableAccount:false
+        })
+      }
+      else if(type=='delete'){
+        result1.update({
+          isDeleted:true
         })
       }
     
@@ -758,20 +791,40 @@ class UserService {
       });
 
       if (existingBusinessSpot) {
-        await existingBusinessSpot.update({
-          name,
-          address,
-          city,
-          openHours,
-          closeHours,
-          emailAddress,
-          contactPerson,
-          availabilty,
-          locationCoordinate,
-          tel
-        });
+
+        if(existingBusinessSpot.dataValues.isEmailValid){
+          await existingBusinessSpot.update({
+            name,
+            address,
+            city,
+            openHours,
+            closeHours,
+            contactPerson,
+            availabilty,
+            locationCoordinate,
+            tel
+          });
+        }else{
+          await existingBusinessSpot.update({
+            name,
+            address,
+            city,
+            openHours,
+            closeHours,
+            emailAddress,
+            contactPerson,
+            availabilty,
+            locationCoordinate,
+            tel
+          });
+
+          this.sendEmailVerificationCodeBusinessSpot(emailAddress,existingBusinessSpot.dataValues.id)
+
+        }
+
+       
       } else {
-        await BusinessSpot.create({
+        const result=await BusinessSpot.create({
             businessId,
             name,
             address,
@@ -782,8 +835,10 @@ class UserService {
             contactPerson,
             locationCoordinate,
             tel
-        });
-      }
+          });
+
+        this.sendEmailVerificationCodeBusinessSpot(emailAddress,result.id)
+    }
 
   } catch (error) {
     console.log(error);
@@ -1021,8 +1076,6 @@ class UserService {
           const result2=await this.UserModel.findByPk(dateDetails.dataValues.userId2)
           const date=await this.formatDateAndTime(dateDetails.dataValues.fullDate)
           const result3=await this.BusinessSpotsModel.findByPk(dateDetails.dataValues.businessIdSpotId)
-
-
 
           const obj={
                 datePartner1FullName:result1.dataValues.lastName+' '+result1.dataValues.firstName,
@@ -2439,11 +2492,14 @@ class UserService {
       const userCount = await this.UserModel.count({
         where: {
           isTelValid: true,
+          isDeleted: false,
           isEmailValid: true
         },
       });
 
-      const adminCount = await this.UserModel.count();
+      const adminCount = await this.UserModel.count({
+        where:{isDeleted:false}
+      });
       const businessSpotCount = await this.BusinessModel.count();
       const businessCount = await this.BusinessSpotsModel.count();
 
@@ -3813,6 +3869,8 @@ async  sendEmailVerificationCodeBusiness(emailAddress, userId ,password) {
               params.append('userId', userId);
               params.append('verificationCode',verificationCode);
               params.append('type', 'email');
+              params.append('who', 'business');
+
 
        
           await mailService.sendMail({ 
@@ -3839,6 +3897,106 @@ async  sendEmailVerificationCodeBusiness(emailAddress, userId ,password) {
 }
 
 async  sendEmailVerificationCodeAdmin(emailAddress, userId ,password) {
+
+  try {
+    
+      let keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
+      const verificationCode =Math.floor(Math.random() * 9000000) + 100000;
+  
+      await this.EmailandTelValidationAdminModel.upsert({
+        userId,
+        type: 'email',
+        verificationCode,
+        expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+      }, {
+        where: {
+          userId
+        }
+      });
+  
+      try {
+
+        const params = new URLSearchParams();
+              params.append('userId', userId);
+              params.append('verificationCode',verificationCode);
+              params.append('type', 'email');
+              params.append('who', 'admin');
+
+       
+          await mailService.sendMail({ 
+            to: emailAddress,
+            subject: "Account details and verification",
+            templateName: "adminWelcome",
+            variables: {
+              password,
+              email: emailAddress,
+              domain: serverConfig.DOMAIN,
+              resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/verifyEmail.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/PasswordReset.html?${params.toString()}`
+            },
+          });
+  
+      } catch (error) {
+          console.log(error)
+      }
+  
+  
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+
+async  sendEmailVerificationCodeBusinessSpot(emailAddress, userId ) {
+
+  try {
+    
+      let keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
+      const verificationCode =Math.floor(Math.random() * 9000000) + 100000;
+  
+      await this.EmailandTelValidationBusinessSpotModel.upsert({
+        userId,
+        type: 'email',
+        verificationCode,
+        expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+      }, {
+        where: {
+          userId
+        }
+      });
+  
+      try {
+
+        const params = new URLSearchParams();
+              params.append('userId', userId);
+              params.append('verificationCode',verificationCode);
+              params.append('type', 'email');
+              params.append('who', 'businessSpot');
+
+       
+          await mailService.sendMail({ 
+            to: emailAddress,
+            subject: "Verify email",
+            templateName: "businessSpotVerifyEmail",
+            variables: {
+              email: emailAddress,
+              domain: serverConfig.DOMAIN,
+              resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/verifyEmail.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/emailVerificationation.html?${params.toString()}`
+            },
+          });
+  
+      } catch (error) {
+          console.log(error)
+      }
+  
+  
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+async  sendEmailVerificationCode(emailAddress, userId ,password) {
 
   try {
     
@@ -3890,7 +4048,6 @@ async  sendEmailVerificationCodeAdmin(emailAddress, userId ,password) {
 async  sendEmailToBusinessSpot(obj) {
 
   try {
-
 
           await mailService.sendMail({ 
             to: obj.businessSpotEmail,

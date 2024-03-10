@@ -34,6 +34,7 @@ class AdminUtil {
     verifyHandleVerifyEmailorTelAdmin= Joi.object({
       userId: Joi.number().required(),
       verificationCode: Joi.number().required(),
+      who: Joi.number().required(),
       type: Joi.string().required()
     });
 

@@ -12,9 +12,6 @@ class AuthRoutes extends AuthController {
 
   routes() {
 
-
-    
-
     this.router.post("/registerUser", this.signupUser);
     this.router.post("/verifyEmailorTel", this.verifyEmailorTel);
     this.router.post("/verifyEmailorTelAdmin", this.verifyEmailorTelAdmin);

@@ -39,13 +39,20 @@ class UserService {
     options, 
   }=await questionUtil.verifyHandleCreateQuestion.validateAsync(data);
 
-  await this.PartnerPersonaltyQModel.create({
-    text,
-    PartnerPersonaltyQT,
-    createdBy,
-    options
-  });
 
+  const result =await this.PartnerPersonaltyQModel.count();
+
+  if(result.length <= 5){
+    await this.PartnerPersonaltyQModel.create({
+      text,
+      PartnerPersonaltyQT,
+      createdBy,
+      options
+    });
+  }else{
+    throw new BadRequestError('reach limit')
+  }
+    
  }
 
  async handleCreateTag(data) {
