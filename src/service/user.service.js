@@ -155,7 +155,7 @@ class UserService {
       type,
       userId,
       password,
-    } = await userUtil.verifyHandleRegisterAdmin.validateAsync(data);
+    } = await userUtil.verifyHandleUpdateAdmin.validateAsync(data);
 
 
     const result1 = await this.AdminModel.findByPk(userId);

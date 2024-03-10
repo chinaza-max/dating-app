@@ -102,6 +102,18 @@ class UserUtil {
   });
   
   verifyHandleRegisterAdmin=Joi.object({
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    emailAddress: Joi.string().email().required(),
+    tel: Joi.number().required(),
+    createdBy: Joi.number().required(),
+    password: Joi.string().required(),
+    adminType: Joi.number().required(),
+  })
+
+  
+  
+  verifyHandleUpdateAdmin=Joi.object({
     type:Joi.string().valid(
       'update',
       'disable',
