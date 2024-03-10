@@ -108,7 +108,7 @@ class UserUtil {
     tel: Joi.number().required(),
     createdBy: Joi.number().required(),
     password: Joi.string().required(),
-    adminType: Joi.number().required(),
+    adminType: Joi.number().required()
   })
 
   
