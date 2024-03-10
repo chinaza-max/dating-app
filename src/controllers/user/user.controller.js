@@ -1317,7 +1317,6 @@ async updateUserByAdmin(req, res, next) {
       const data = req.body;        
       let my_bj = {
         ...data,
-        createdBy:req.user.id
       }
       
       await userService.handleUpdateAdmin(my_bj);
