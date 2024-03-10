@@ -5,6 +5,7 @@ import { User,  EmailandTelValidation ,  Admin,  PasswordReset,  Business,  Emai
 import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
 import mailService from "../service/mail.service.js";
+import axios from'axios';
 
 import {
   ConflictError,
@@ -154,7 +155,7 @@ class AuthenticationService {
     if(type==='email'){
       await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id)
     }else{
-      await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id)
+      await this.sendTelVerificationCode(relatedUser.tel,relatedUser.id)
     }
   }
 
@@ -649,7 +650,6 @@ class AuthenticationService {
       var keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
       const verificationCode = Math.floor(Math.random() * 900000) + 100000;
 
-
       await this.EmailandTelValidationModel.upsert({
         userId,
         type: 'email',
@@ -665,8 +665,8 @@ class AuthenticationService {
             
           await mailService.sendMail({
             to: emailAddress,
-            subject: "Account Verification",
-            templateName: "emailVerificationCode",
+            subject:"Account Verification",
+            templateName:"emailVerificationCode",
             variables: {
               verificationCode:verificationCode,
               email: emailAddress,
@@ -687,6 +687,62 @@ class AuthenticationService {
 
 
   }
+
+  async  sendTelVerificationCode(tel, userId) {
+
+
+    try {
+      
+        var keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
+        const verificationCode = Math.floor(Math.random() * 900000) + 100000;
+  
+  
+        await this.EmailandTelValidationModel.upsert({
+          userId,
+          type: 'tel',
+          verificationCode,
+          expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+        }, {
+          where: {
+            userId
+          }
+        });
+    
+        try {
+              
+          const options = {
+            method: 'GET',
+            url: 'https://phonenumbervalidatefree.p.rapidapi.com/ts_PhoneNumberValidateTest.jsp',
+            params: {
+              number: '+2348184724615',
+            },
+            headers: {
+              'X-RapidAPI-Key': 'b03b577e45mshb62f4d5ecbfae57p108324jsna07cb1377bb8',
+              'X-RapidAPI-Host': 'phonenumbervalidatefree.p.rapidapi.com'
+            }
+          };
+          
+          try {
+            const response = await axios.request(options);
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+    
+        } catch (error) {
+            console.log(error)
+        }
+    
+    
+    } catch (error) {
+      console.log(error);
+    }
+  
+     
+  
+  
+  
+    }
 
 
   async  sendTextVerificationCode(emailAddress, userId) {

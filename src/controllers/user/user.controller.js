@@ -577,6 +577,60 @@ export default class UserController {
       next(error);
     }
   }
+
+  
+  
+  async getUser(
+    req,
+    res,
+    next
+  ){
+    
+    const {offset}=req.query
+    const {pageSize}=req.query
+
+
+    try {
+               
+        const result=await userService.handleGetUser(offset,pageSize);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+  async getAdmin(
+    req,
+    res,
+    next
+  ){
+    
+    const {offset}=req.query
+    const {pageSize}=req.query
+
+
+    try {
+               
+        const result=await userService.handleGetAdmin(offset,pageSize);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
   
   async getBusinessAndSpot(
     req,
@@ -879,6 +933,32 @@ export default class UserController {
 
   
 
+  
+  async countDataAdminPanel
+  (
+    req,
+    res,
+    next
+  ){
+
+    const my_bj={
+      userId:req.user.id
+    }
+    try {
+    
+     let  result=await userService.handleCountDataAdminPanel(my_bj);
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
   async countData
   (
     req,
@@ -1133,6 +1213,7 @@ export default class UserController {
     }
   }
 
+  /*
   async createOrUpBusinessImage(
     req,
     res,
@@ -1166,9 +1247,9 @@ export default class UserController {
       next(error);
     }
   }
-
+*/
   
-
+/*
   
   async addBusinessSpot(
     req,
@@ -1200,6 +1281,31 @@ export default class UserController {
     }
   }
 
+*/
+  
+
+  async updateAdmin(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+      let my_bj = {
+        ...data,
+        createdBy:req.user.id
+      }
+      
+      await userService.handleUpdateAdmin(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: "update successfull",
+      });
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
 
   async registerAdmin(req, res, next) {
 

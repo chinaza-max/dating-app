@@ -35,7 +35,7 @@ import {
       isTelValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue:false
+        defaultValue:true
       },
       emailAddress: {
         type: DataTypes.STRING,
@@ -48,7 +48,7 @@ import {
 
       },
       disableAccount: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:false
       },

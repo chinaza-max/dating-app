@@ -113,9 +113,86 @@ class UserService {
       console.log(error)
       throw new SystemError(error.name,error.parent)
     }
-   
-     
+       
    }
+
+
+  async handleUpdateAdmin(data) {
+    let { 
+      firstName,
+      lastName,
+      tel,
+      emailAddress,
+      type,
+      userId,
+      password,
+
+    } = await userUtil.verifyHandleRegisterAdmin.validateAsync(data);
+
+
+    const result1 = await this.AdminModel.findByPk(userId);
+
+    if(result1){
+
+      if(type=='update'){
+        if(result1.dataValues.isEmailValid==result1.dataValues.isTelValid){
+          result1.update({
+            firstName,
+            lastName
+          })
+  
+        }
+        else if(result1.dataValues.isEmailValid){
+          result1.update({
+            firstName,
+            tel,
+            lastName
+          })
+        }
+
+        else if(result1.dataValues.isTelValid){
+          
+          let hashedPassword;
+          try {
+            hashedPassword = await bcrypt.hash(
+              password,
+              Number(serverConfig.SALT_ROUNDS)
+            );
+          } catch (error) {
+            console.error(error)
+            throw new SystemError(error.name,error.parent);
+          }
+
+          result1.update({
+            firstName,
+            emailAddress,
+            lastName,
+            password:hashedPassword
+          })
+
+          await this.sendEmailVerificationCodeAdmin(emailAddress,userId,password)
+
+        }
+      }
+      else if(type=='disable'){
+        result1.update({
+          disableAccount:true
+        })
+      }
+      else if(type=='enable'){
+        result1.update({
+          disableAccount:true
+        })
+      }
+    
+    }
+
+  }
+
+
+
+
+
 
   async handleRegisterAdmin(data) {
     let { 
@@ -154,7 +231,7 @@ class UserService {
     createdBy
   });
 
-  await this.sendEmailVerificationCode(user.emailAddress,user.id,password)
+  await this.sendEmailVerificationCodeAdmin(user.emailAddress,user.id,password)
   
   return user;
 
@@ -2352,6 +2429,46 @@ class UserService {
 
 
   
+  
+  async handleCountDataAdminPanel(data) {
+
+
+    try {
+      let count={}
+
+      const userCount = await this.UserModel.count({
+        where: {
+          isTelValid: true,
+          isEmailValid: true
+        },
+      });
+
+      const adminCount = await this.UserModel.count();
+      const businessSpotCount = await this.BusinessModel.count();
+      const businessCount = await this.BusinessSpotsModel.count();
+
+
+      
+
+      count['businessCount']=businessCount
+      count['businessSpotCount']=businessSpotCount
+      count['adminCount']=adminCount
+      count['userCount']=userCount
+   
+
+      
+
+
+      return count
+
+    } catch (error) {
+        throw new SystemError(error.name,  error.parent)
+    }
+
+
+  }
+
+
   async handleCountData(data) {
     let { 
       userId        
@@ -2955,6 +3072,8 @@ class UserService {
     return age;
   }
 
+
+  /*
   async handleAddBusinessSpot(data) {
     let { 
       firstName,
@@ -2982,9 +3101,6 @@ class UserService {
 
   if (existingUser != null)throw new ConflictError(existingUser);
   
-
-
-
   const user = await this.AdminModel.create({
     firstName,
     lastName,
@@ -2999,8 +3115,8 @@ class UserService {
   
   return user;
 
-  }
-
+}
+*/
 
   
   async handleUpdateBusiness(data) {
@@ -3037,6 +3153,50 @@ class UserService {
 
   }
 
+
+  
+
+  async handleGetUser(offset,pageSize) {
+    
+    try {
+     const result1=await this.UserModel.findAll({
+         where:{
+           isDeleted:false
+         },
+         attributes: { exclude: ['isDeleted','preferedGender','relationshipGoal','password','tags'] },
+       })
+ 
+     return result1
+ 
+    } catch (error) {
+      console.error(error)
+      throw new SystemError(error.name,error.parent)
+    }
+ 
+ 
+   }
+
+  async handleGetAdmin(offset,pageSize) {
+    
+   try {
+    const result1=await this.AdminModel.findAll({
+        where:{
+          isDeleted:false
+        },
+        attributes: { exclude: ['isDeleted','createdBy'] },
+      })
+
+    return result1
+
+   } catch (error) {
+
+    console.log(error)
+    throw new SystemError(error.name,error.parent)
+
+   }
+
+
+  }
 
   
   async handleGetBusinessAndSpot(data,offset,pageSize) {
@@ -3171,7 +3331,7 @@ class UserService {
       createdBy
     });
 
-    await this.sendEmailVerificationCode(result.emailAddress,result.id,password)
+    await this.sendEmailVerificationCodeBusiness(result.emailAddress,result.id,password)
   
     return {id:result.dataValues.id};
   } catch (error) {
@@ -3185,7 +3345,7 @@ class UserService {
   }
 
   
-
+/*
   async handleCreateOrUpBusinessImage(data,files) {
     let { 
       firstName,
@@ -3250,12 +3410,9 @@ class UserService {
       console.log(error)  
       throw new SystemError('SystemError','An error occured while create business ');
   }
- 
-
- 
 
   }
-  
+  */
 
   async handCreateBusinessImage(data,files) {
     let { 
@@ -3466,12 +3623,12 @@ async handleSendVerificationCodeEmailOrTelAdmin(data) {
       throw new ServerError('SystemError',"Failed to update user password" );
     }
 
-    await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id, password)
+    await this.sendEmailVerificationCodeAdmin(relatedUser.emailAddress,relatedUser.id, password)
   }else{
 
 
 
-    //await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id)
+    //await this.sendEmailVerificationCodeAdmin(relatedUser.emailAddress,relatedUser.id)
   }
 }
 
@@ -3632,7 +3789,7 @@ async handleDDBusiness(data) {
  
 }
 
-async  sendEmailVerificationCode(emailAddress, userId ,password) {
+async  sendEmailVerificationCodeBusiness(emailAddress, userId ,password) {
 
   try {
     
@@ -3681,7 +3838,54 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
 
 }
 
+async  sendEmailVerificationCodeAdmin(emailAddress, userId ,password) {
 
+  try {
+    
+      let keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
+      const verificationCode =Math.floor(Math.random() * 9000000) + 100000;
+  
+      await this.EmailandTelValidationAdminModel.upsert({
+        userId,
+        type: 'email',
+        verificationCode,
+        expiresIn: new Date(keyExpirationMillisecondsFromEpoch),
+      }, {
+        where: {
+          userId
+        }
+      });
+  
+      try {
+
+        const params = new URLSearchParams();
+              params.append('userId', userId);
+              params.append('verificationCode',verificationCode);
+              params.append('type', 'email');
+
+       
+          await mailService.sendMail({ 
+            to: emailAddress,
+            subject: "Account details and verification",
+            templateName: "adminWelcome",
+            variables: {
+              password,
+              email: emailAddress,
+              domain: serverConfig.DOMAIN,
+              resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/verifyEmail.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/PasswordReset.html?${params.toString()}`
+            },
+          });
+  
+      } catch (error) {
+          console.log(error)
+      }
+  
+  
+  } catch (error) {
+    console.log(error);
+  }
+
+}
 
 async  sendEmailToBusinessSpot(obj) {
 

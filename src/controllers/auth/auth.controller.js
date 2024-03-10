@@ -289,7 +289,7 @@ export default class AuthenticationController {
         ...data,
       }
 
-      const obj = await authService.handleSendVerificationCodeEmailOrTel(my_bj);
+      await authService.handleSendVerificationCodeEmailOrTel(my_bj);
   
 
       if(data.type=='email'){
