@@ -3189,6 +3189,7 @@ class UserService {
       tel,
       emailAddress,
       businessId,
+      password
     } = await userUtil.verifyHandleUpdateBusiness.validateAsync(data);
 
  
@@ -3201,12 +3202,26 @@ class UserService {
 
     if (!user) throw new NotFoundError("Business not found.");
        try {
-         await user.update({    
-          firstName,
-          lastName,
-          tel,
-          emailAddress,
-         });
+
+
+        if(user.dataValues.isEmailValid){
+          await user.update({    
+            firstName,
+            lastName,
+            tel,
+           });
+        }else{
+          await user.update({    
+            firstName,
+            lastName,
+            tel,
+            emailAddress,
+            password
+           });
+
+           this.sendEmailVerificationCodeBusiness(emailAddress, user.dataValues.id ,password) 
+
+        }
  
          return user
        } catch (error) {

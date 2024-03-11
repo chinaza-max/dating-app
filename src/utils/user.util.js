@@ -183,6 +183,8 @@ class UserUtil {
     tel: Joi.number().required(),
     businessId: Joi.number().required(),
     createdBy: Joi.number().required(),
+    password: Joi.string().required(),
+
   });
 
   verifyHandleAddOrUpdatefilter= Joi.object({
