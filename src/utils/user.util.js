@@ -181,7 +181,7 @@ class UserUtil {
     lastName: Joi.string().required(),
     emailAddress: Joi.string().email().required(),
     tel: Joi.number().required(),
-    businessId: Joi.number().required(),
+    businessId: Joi.string().required(),
     createdBy: Joi.number().required(),
     password: Joi.string().required(),
 
