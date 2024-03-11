@@ -3189,13 +3189,14 @@ class UserService {
       tel,
       emailAddress,
       businessId,
+      Id,
       password
     } = await userUtil.verifyHandleUpdateBusiness.validateAsync(data);
 
  
     const user = await this.BusinessModel.findOne({
       where:{
-       id: businessId,
+       id: Id,
        isDeleted:false
       }
     });
@@ -3209,6 +3210,7 @@ class UserService {
             firstName,
             lastName,
             tel,
+            businessId,
            });
         }else{
           await user.update({    
@@ -3216,6 +3218,7 @@ class UserService {
             lastName,
             tel,
             emailAddress,
+            businessId,
             password
            });
 
