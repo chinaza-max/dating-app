@@ -99,7 +99,6 @@ class UserUtil {
       'disable',
       'enable'
       ).required(),
-
       createdBy:Joi.number().required(),
       userId:Joi.number().required(),
   });

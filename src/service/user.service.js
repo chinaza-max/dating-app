@@ -3291,7 +3291,8 @@ class UserService {
 
 
         result1.push({id:element.dataValues.id,
-                      fullName:element.dataValues.lastName+' '+element.dataValues.firstName,
+                      lastName:element.dataValues.lastName,
+                      firstName:element.dataValues.firstName,
                       emailAddress:element.dataValues.emailAddress,
                       isEmailValid:element.dataValues.isEmailValid,
                       tel:element.dataValues.tel,
