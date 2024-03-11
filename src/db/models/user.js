@@ -169,7 +169,7 @@ export function init(connection) {
         defaultValue:true
       },
       disableAccount: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:false
       },
