@@ -120,6 +120,10 @@ class UserUtil {
       'delete',
       'enable'
       ).required(),
+      adminType: Joi.when('type', {
+      is: 'update',
+      then: Joi.number().required(),
+    }),
     firstName: Joi.when('type', {
       is: 'update',
       then: Joi.string().required(),

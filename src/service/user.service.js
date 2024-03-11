@@ -155,6 +155,7 @@ class UserService {
       type,
       userId,
       password,
+      adminType,
     } = await userUtil.verifyHandleUpdateAdmin.validateAsync(data);
 
 
