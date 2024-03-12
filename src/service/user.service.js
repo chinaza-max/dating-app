@@ -821,8 +821,22 @@ class UserService {
         const existingBusinessSpot = await this.BusinessSpotsModel.findOne({
           where: {id:businessSpotId},
         });
-  
+
+        console.log("ooooooooooooooooooooooooo")
+        console.log("ooooooooooooooooooooooooo")
+        console.log("ooooooooooooooooooooooooo")
+        console.log("ooooooooooooooooooooooooo")
+        console.log("ooooooooooooooooooooooooo")
+        console.log("ooooooooooooooooooooooooo")
+        console.log("ooooooooooooooooooooooooo")
+
         if(existingBusinessSpot){
+
+
+          console.log("ccccccccccccccccccccccc")
+          console.log("cccccccccccccccccccccccc")
+          console.log("cccccccccccccccccccccccc")
+
           if(existingBusinessSpot.dataValues.isEmailValid){
             await existingBusinessSpot.update({
               name,
@@ -834,6 +848,15 @@ class UserService {
               locationCoordinate,
               tel
             });
+
+
+            console.log("ppppppppppppppppppppppppppp")
+            console.log("ppppppppppppppppppppppppppp")
+            console.log("ppppppppppppppppppppppppppp")
+            console.log("ppppppppppppppppppppppppppp")
+            console.log("ppppppppppppppppppppppppppp")
+            console.log("ppppppppppppppppppppppppppp")
+
           }else{
             await existingBusinessSpot.update({
               name,
