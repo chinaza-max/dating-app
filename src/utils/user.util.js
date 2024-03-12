@@ -78,10 +78,7 @@ class UserUtil {
   });
 
   verifyHandleCUBusinessSpot=Joi.object({
-    businessId: Joi.when('type2', {
-      is: 'create',
-      then: Joi.number().required(),
-    }),
+    businessId:  Joi.number().required(),
     businessSpotId: Joi.when('type2',{
       is: 'update',
       then: Joi.number().required(),
