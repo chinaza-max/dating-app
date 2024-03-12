@@ -855,11 +855,9 @@ class UserService {
             console.log(existingBusinessSpot)
             console.log(existingBusinessSpot.dataValues)
 
-
             console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
             console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
             console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
- 
 
             this.sendEmailVerificationCodeBusinessSpot(emailAddress,existingBusinessSpot.dataValues.id)
           }
