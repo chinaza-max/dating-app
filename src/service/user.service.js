@@ -765,6 +765,7 @@ class UserService {
   async handleCUBusinessSpot(data) {
     let { 
       businessId,
+      businessSpotId,
       name,
       address,
       city,
@@ -774,64 +775,32 @@ class UserService {
       contactPerson,
       availabilty,
       locationCoordinate,
+      type2,
       tel              
     } = await userUtil.verifyHandleCUBusinessSpot.validateAsync(data);
 
-    const businessObj=await this.BusinessModel.findOne({
-      where:{
-        id:businessId,
-        isDeleted:false
-      }
-    })
-
-    if (!businessObj) throw new NotFoundError("Business for business spot  not found.");
-
-
+   
     try {
 
-      const existingBusinessSpot = await this.BusinessSpotsModel.findOne({
-        where: {   
-          businessId,
-          name,
-          locationCoordinate,
-          isDeleted:false },
-      });
-
-      if (existingBusinessSpot) {
-
-        if(existingBusinessSpot.dataValues.isEmailValid){
-          await existingBusinessSpot.update({
-            name,
-            address,
-            city,
-            openHours,
-            closeHours,
-            contactPerson,
-            availabilty,
-            locationCoordinate,
-            tel
-          });
-        }else{
-          await existingBusinessSpot.update({
-            name,
-            address,
-            city,
-            openHours,
-            closeHours,
-            emailAddress,
-            contactPerson,
-            availabilty,
-            locationCoordinate,
-            tel
-          });
-
-          this.sendEmailVerificationCodeBusinessSpot(emailAddress,existingBusinessSpot.dataValues.id)
-
+      const businessObj=await this.BusinessModel.findOne({
+        where:{
+          id:businessId,
+          isDeleted:false
         }
-
-       
-      } else {
-        const result=await BusinessSpot.create({
+      })
+  
+      if (!businessObj) throw new NotFoundError("Business for business spot  not found.");
+  
+      if(type2=='create'){
+        const existingBusinessSpot = await this.BusinessSpotsModel.findOne({
+          where: {   
+            businessId,
+            locationCoordinate,
+            isDeleted:false },
+        });
+  
+        if(!existingBusinessSpot){
+          const result=await BusinessSpot.create({
             businessId,
             name,
             address,
@@ -843,9 +812,51 @@ class UserService {
             locationCoordinate,
             tel
           });
-
+  
         this.sendEmailVerificationCodeBusinessSpot(emailAddress,result.id)
-    }
+        }
+  
+      }else{
+  
+        const existingBusinessSpot = await this.BusinessSpotsModel.findOne({
+          where: {id:businessSpotId},
+        });
+  
+        if(existingBusinessSpot){
+          if(existingBusinessSpot.dataValues.isEmailValid){
+            await existingBusinessSpot.update({
+              name,
+              address,
+              city,
+              openHours,
+              closeHours,
+              contactPerson,
+              locationCoordinate,
+              tel
+            });
+          }else{
+            await existingBusinessSpot.update({
+              name,
+              address,
+              city,
+              openHours,
+              closeHours,
+              emailAddress,
+              contactPerson,
+              availabilty,
+              locationCoordinate,
+              tel
+            });
+            this.sendEmailVerificationCodeBusinessSpot(emailAddress,existingBusinessSpot.dataValues.id)
+          }
+        }else{
+  
+          throw new NotFoundError("Business Spot does not exist")  
+  
+        }
+  
+  
+      }
 
   } catch (error) {
     console.log(error);

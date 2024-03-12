@@ -78,7 +78,14 @@ class UserUtil {
   });
 
   verifyHandleCUBusinessSpot=Joi.object({
-    businessId: Joi.number().integer().required(),
+    businessId: Joi.when('type', {
+      is: 'create',
+      then: Joi.number().required(),
+    }),
+    businessSpotId: Joi.when('type', {
+      is: 'update',
+      then: Joi.number().required(),
+    }),
     name: Joi.string().required(),
     address: Joi.string().required(),
     city: Joi.string().required(),
@@ -91,8 +98,11 @@ class UserUtil {
     availabilty: Joi.boolean().optional(),
     type: Joi.string().required(),
     createdBy: Joi.number().required(),
-
-  });
+    type2:Joi.string().valid(
+      'create',
+      'update'
+      ).required(),
+    });
 
   verifyHandleUpdateUserByAdmin=Joi.object({
     type:Joi.string().valid(
@@ -172,6 +182,7 @@ class UserUtil {
       'disable',
       'enable'
     ).required(),
+    type2: Joi.boolean().optional(),
     createdBy: Joi.number().required()
   });
 
