@@ -847,6 +847,20 @@ class UserService {
               locationCoordinate,
               tel
             });
+
+            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
+            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
+            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
+
+            console.log(existingBusinessSpot)
+            console.log(existingBusinessSpot.dataValues)
+
+
+            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
+            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
+            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
+
+
             this.sendEmailVerificationCodeBusinessSpot(emailAddress,existingBusinessSpot.dataValues.id)
           }
         }else{
@@ -3354,7 +3368,6 @@ class UserService {
       for (let index = 0; index < result2.length; index++) {
         const element = result2[index];
 
-
         result1.push({id:element.dataValues.id,
                       name:element.dataValues.name ,
                       city:element.dataValues.city,
@@ -3368,7 +3381,6 @@ class UserService {
                       address:element.dataValues.address,
                       coordinate:JSON.parse(element.dataValues.locationCoordinate),
                     })
-        
       }
 
       const result4={

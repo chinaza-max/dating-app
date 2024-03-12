@@ -652,8 +652,6 @@ export default class UserController {
                
         const result=await userService.handleGetBusinessAndSpot(obj,offset,pageSize);
   
-
-
       return res.status(200).json({
         status: 200,
         data:result,
