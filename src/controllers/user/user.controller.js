@@ -151,6 +151,8 @@ export default class UserController {
  
     try {
     
+
+      console.log(data)
       if(data.type=='CreateOrUpdate'){
    
         const my_bj = {
