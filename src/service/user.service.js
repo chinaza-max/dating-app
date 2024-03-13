@@ -779,11 +779,6 @@ class UserService {
       tel              
     } = await userUtil.verifyHandleCUBusinessSpot.validateAsync(data);
 
-   
-    console.log("wwwwwwwwwwwwwwwwwwwwww")
-    console.log("wwwwwwwwwwwwwwwwwwwwww")
-    console.log("wwwwwwwwwwwwwwwwwwwwww")
-    console.log("wwwwwwwwwwwwwwwwwwwwww")
 
     try {
 
@@ -827,20 +822,8 @@ class UserService {
           where: {id:businessSpotId},
         });
 
-        console.log("ooooooooooooooooooooooooo")
-        console.log("ooooooooooooooooooooooooo")
-        console.log("ooooooooooooooooooooooooo")
-        console.log("ooooooooooooooooooooooooo")
-        console.log("ooooooooooooooooooooooooo")
-        console.log("ooooooooooooooooooooooooo")
-        console.log("ooooooooooooooooooooooooo")
-
+  
         if(existingBusinessSpot){
-
-
-          console.log("ccccccccccccccccccccccc")
-          console.log("cccccccccccccccccccccccc")
-          console.log("cccccccccccccccccccccccc")
 
           if(existingBusinessSpot.dataValues.isEmailValid){
             await existingBusinessSpot.update({
@@ -854,13 +837,6 @@ class UserService {
               tel
             });
 
-
-            console.log("ppppppppppppppppppppppppppp")
-            console.log("ppppppppppppppppppppppppppp")
-            console.log("ppppppppppppppppppppppppppp")
-            console.log("ppppppppppppppppppppppppppp")
-            console.log("ppppppppppppppppppppppppppp")
-            console.log("ppppppppppppppppppppppppppp")
 
           }else{
             await existingBusinessSpot.update({
@@ -876,17 +852,7 @@ class UserService {
               tel
             });
 
-            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
-            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
-            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
-
-            console.log(existingBusinessSpot)
-            console.log(existingBusinessSpot.dataValues)
-
-            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
-            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
-            console.log("existingBusinessSpot existingBusinessSpot existingBusinessSpot existingBusinessSpot")
-
+           
             this.sendEmailVerificationCodeBusinessSpot(emailAddress,existingBusinessSpot.dataValues.id)
           }
         }else{
