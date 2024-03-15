@@ -532,6 +532,35 @@ class UserService {
   }
 
   
+
+
+  
+  async handleUpdatefcmToken(data) {
+    let {      
+      userId,  
+      fcmToken,
+    } = await userUtil.verifyHandleUpdatefcmToken.validateAsync(data);
+
+
+    try {
+  
+      await this.UserModel.update(
+        {
+          fcmToken
+        },
+        {
+          where: {
+            id: userId
+          }
+        }
+      );
+      
+    } catch (error) {
+      throw new SystemError(error.name, error.parent)
+    }
+
+  }
+
   async handleUpdateLocation(data) {
     let {      
       userId,  

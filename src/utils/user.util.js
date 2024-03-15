@@ -455,6 +455,11 @@ class UserUtil {
   });
 
 
+  verifyHandleUpdatefcmToken= Joi.object({
+    userId: Joi.number().required(),
+    fcmToken: Joi.string().required()
+  });
+
   verifyHandleUpdateLocation= Joi.object({
     userId: Joi.number().required(),
     latitude: Joi.number().required(),

@@ -367,6 +367,35 @@ export default class UserController {
   }
   
 
+  
+
+  async updatefcmToken(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+      
+        const my_bj = {
+          ...data,
+          userId:req.user.id, 
+        }
+                          
+        await userService.handleUpdatefcmToken(my_bj);
+
+        return res.status(200).json({
+          status: 200,
+          message: "success",
+        });
+      
+     
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
 
   async updateLocation(
     req,

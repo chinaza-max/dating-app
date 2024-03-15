@@ -228,6 +228,12 @@ export default class AuthenticationController {
           message: "Invalid login credentials",
         });
       }
+      else if(user == "disabled"){
+        return res.status(400).json({
+          status: 400,
+          message: "Your account has been disabled",
+        });
+      }
       
       const token = await authService.generateToken(user.dataValues);
 

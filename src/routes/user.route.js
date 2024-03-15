@@ -61,6 +61,8 @@ class UserRoutes extends UserController {
     this.router.post("/updateProfile2", this.updateProfile2);
 
     this.router.post("/updateLocation", this.updateLocation);
+    this.router.post("/updatefcmToken", this.updatefcmToken);
+
     this.router.get("/countData", this.countData); 
     this.router.get("/countDataAdminPanel", this.countDataAdminPanel); 
     this.router.get("/dateSelectionData", this.dateSelectionData);

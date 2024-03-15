@@ -168,6 +168,10 @@ export function init(connection) {
         allowNull: false,
         defaultValue:true
       },
+      fcmToken: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       disableAccount: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

@@ -403,7 +403,9 @@ class AuthenticationService {
     if (!user) throw new NotFoundError("User not found.");
 
     if (!(await bcrypt.compare(password, user.password))) return null;
-   
+    
+    if(user.disableAccount) return 'disabled'
+
     return user;
   }
 
