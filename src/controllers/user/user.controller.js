@@ -502,9 +502,8 @@ export default class UserController {
 
     try {
                
-        const result=await userService.handleGetProfileDetail(obj);
+      const result=await userService.handleGetProfileDetail(obj);
   
-
       return res.status(200).json({
         status: 200,
         data:result,
