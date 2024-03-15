@@ -466,6 +466,8 @@ class AuthenticationService {
 
     if (!(await bcrypt.compare(password, user.password))) return null;
    
+    if(user.disableAccount) return 'disabled'
+    
     return user;
   }
 

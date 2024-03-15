@@ -2536,9 +2536,7 @@ class UserService {
       count['userCount']=userCount
    
 
-      
-
-
+    
       return count
 
     } catch (error) {
