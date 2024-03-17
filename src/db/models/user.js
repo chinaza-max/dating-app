@@ -169,7 +169,7 @@ export function init(connection) {
         defaultValue:true
       },
       fcmToken: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
       },
       disableAccount: {
