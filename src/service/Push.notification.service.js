@@ -1,8 +1,5 @@
 
-import serverConfig from "../config/server.js";
 import admin from "firebase-admin";
-//import {getMessaging} from "firebase-admin/messaging";
-import serviceAccount from "./choice-mi-firebase-adminsdk-kjsq9-f4376d4cf8.json";
 
 
 
@@ -48,8 +45,12 @@ class PushNotificationService {
     });
     */
 
+    const serviceAccount = await import('./choice-mi-firebase-adminsdk-kjsq9-f4376d4cf8.json', { assert: { type: 'json' } });
+
+
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
+
+      credential: admin.credential.cert(serviceAccount.default)
     });
 
 
