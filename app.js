@@ -31,7 +31,7 @@ class Server {
     async initializeDbAndFirebase(){
         await DB.connectDB()
         await PushNotification.init()
-
+           
         setTimeout(() => {
           PushNotification.sendMail()
         }, 5000);
