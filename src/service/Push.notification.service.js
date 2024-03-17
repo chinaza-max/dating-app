@@ -65,6 +65,11 @@ class PushNotificationService {
       token:allUser.dataValues.fcmToken
     };
 
+    console.log(allUser.dataValues.fcmToken)
+    console.log(allUser.dataValues.fcmToken)
+    console.log(allUser.dataValues.fcmToken)
+
+
       getMessaging().send(message)
       .then((response) => {
         // Response is a message ID string.
