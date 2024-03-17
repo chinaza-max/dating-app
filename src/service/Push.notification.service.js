@@ -2,6 +2,7 @@
 import serverConfig from "../config/server.js";
 import admin from "firebase-admin";
 import {getMessaging} from "firebase-admin/messaging";
+import serviceAccount from "./choice-mi-firebase-adminsdk-kjsq9-f4376d4cf8.json";
 
 
 
@@ -14,6 +15,7 @@ class PushNotificationService {
 
   async init() {
    
+    /*
       console.log({"type": serverConfig.FIREBASE_TYPE,
       "project_id": serverConfig.FIREBASE_PROJECT_ID,
       "private_key_id": serverConfig.FIREBASE_PRIVATE_KEY_ID,
@@ -25,6 +27,9 @@ class PushNotificationService {
       "auth_provider_x509_cert_url": serverConfig.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
       "client_x509_cert_url": serverConfig.FIREBASE_CLIENT_X509_CERT_URL,
       "universe_domain": serverConfig.FIREBASE_UNIVERSAL_DOMAIN})
+
+    */
+/*
     admin.initializeApp({
       credential: admin.credential.cert({
         "type": serverConfig.FIREBASE_TYPE,
@@ -41,11 +46,27 @@ class PushNotificationService {
       }),
       projectId:'choice-mi'
     });
+    */
+
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      projectId:'choice-mi'
+    });
 
 
-    
+
+    setTimeout(() => {
+      admin.messaging.send({
+        token: `e1C0f4lC5X44xt3aTnRWCE:APA91bGH07f2UjjBlob1qHOPTkZG0JdDO8-yy5552vbhuritYGScO9vnq0Z9aUdWsAAg79vMYtvTig82ZXRe9PLIMOimZYNRyRLi1Wkvn9KX7un-XlR7yQn3O82SSUJcZS9GMubrm7fq`,
+        notification:{
+          title:'test test test',
+          body:'this is i body'
+        }
+      })
+    }, 5000);
   }
 
+  /*
   async sendMessage() {
     const message = {
       data: {
@@ -66,6 +87,8 @@ class PushNotificationService {
 
     
   }
+
+  */
 }
 
 export default new PushNotificationService();

@@ -32,10 +32,7 @@ class Server {
         await DB.connectDB()
         await PushNotificationService.init()
 
-        setTimeout(async() => {
-          await PushNotificationService.sendMessage()
-
-        }, 5000);
+       
 
 
         async function checkIfSubscriptionHasExpired(){
