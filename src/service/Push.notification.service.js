@@ -73,13 +73,29 @@ class PushNotificationService {
         title: '$FooCorp up 1.43% on the day',
         body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
       },
-      token: `e1C0f4lC5X44xt3aTnRWCE:APA91bFrk-H876GZwAwS_iSdQaxem6gUdved-WbVNcLLHP-kmoBvp1_v-_ZcvkLHdGDr3i7ill_ssWcRj1y6Zwejk9qNEG8jehfiIPLohLpE0ksLICyKYQJuGZ6HqYNr-8XfU1UPsT0p`
+      token: `dodCgsXF5h6q8pu7jcKTSE:APA91bHqZ9m8Cp25M-JjSkJ4TwkZvm4q6XYMjPU2i88vcLN8Q9QYYKyizzH5lj--g2VQSwtlrrSJTw0Q9aYPvdk2xKpfNGTFODU4Q1sWIxQ9gGBJyMHPHzdCNdKFPNkqxpN2Uw0DYBps`
     };
 
+    
+    const message2 = {
+      notification: {
+        title: '$FooCorp up 1.43% on the day',
+        body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
+      },
+      token: `dodCgsXF5h6q8pu7jcKTSE:APA91bHqZ9m8Cp25M-JjSkJ4TwkZvm4q6XYMjPU2i88vcLN8Q9QYYKyizzH5lj--g2VQSwtlrrSJTw0Q9aYPvdk2xKpfNGTFODU4Q1sWIxQ9gGBJyMHPHzdCNdKFPNkqxpN2Uw0DYBps`
+    };
+ 
+    const array=[message, message2]
+    let k=1
     setInterval(() => {
   
-
-      getMessaging().send(message)
+      if(k==1){
+        k=0
+      }
+      else{
+        k=1
+      }
+      getMessaging().send(array[k])
       .then((response) => {
         // Response is a message ID string.
         console.log('Successfully sent message:', response);
