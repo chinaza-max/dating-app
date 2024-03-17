@@ -57,7 +57,7 @@ class UserService {
       } catch (error) {
         throw new ServerError('SystemError',"Failed to update user image" );
       }
-  }
+  }   
 
 
   
