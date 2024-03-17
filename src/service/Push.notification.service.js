@@ -50,6 +50,12 @@ class PushNotificationService {
 
 
     
+    
+ 
+    
+    setInterval(async() => {
+
+      
     const allUser=await User.findByPk(1)
     const message = {
       notification: {
@@ -58,10 +64,6 @@ class PushNotificationService {
       },
       token:allUser.dataValues.fcmToken
     };
-    
- 
-    
-    setInterval(() => {
 
       getMessaging().send(message)
       .then((response) => {
@@ -75,7 +77,7 @@ class PushNotificationService {
 
 
 
-    }, 7000);
+    }, 10000);
   }
 
   /*
