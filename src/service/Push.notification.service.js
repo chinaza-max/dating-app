@@ -62,7 +62,7 @@ class PushNotificationService {
         title: 'choice mi date app',
         body: 'test choice push notification '
       },
-      token:allUser.dataValues.fcmToken
+      token:'dodCgsXF5h6q8pu7jcKTSE:APA91bFYZDNlu3zpicsw3ylGVQVff2CAt_LxPMQ7CcIjpOgNYr8QWaISs1MwTuR3wwFEBsXaGuupf49ZUvgxFvxpTHly7qvjOe2bQL2lIIgzvM3yfIn672LSox2f5vWaotqhuVAmRGva'
     };
 
     console.log(allUser.dataValues.fcmToken)
