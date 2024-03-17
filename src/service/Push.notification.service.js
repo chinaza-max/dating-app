@@ -54,14 +54,13 @@ class PushNotificationService {
     const message = {
       notification: {
         title: 'choice mi date app',
-        body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
+        body: 'test choice push notification '
       },
       token:allUser.dataValues.fcmToken
     };
     
  
     
-    let k=1
     setInterval(() => {
 
       getMessaging().send(message)
