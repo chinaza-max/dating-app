@@ -73,10 +73,10 @@ class PushNotificationService {
         title: '$FooCorp up 1.43% on the day',
         body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
       },
-      token: `e1C0f4lC5X44xt3aTnRWCE:APA91bGH07f2UjjBlob1qHOPTkZG0JdDO8-yy5552vbhuritYGScO9vnq0Z9aUdWsAAg79vMYtvTig82ZXRe9PLIMOimZYNRyRLi1Wkvn9KX7un-XlR7yQn3O82SSUJcZS9GMubrm7fq`
+      token: `e1C0f4lC5X44xt3aTnRWCE:APA91bFrk-H876GZwAwS_iSdQaxem6gUdved-WbVNcLLHP-kmoBvp1_v-_ZcvkLHdGDr3i7ill_ssWcRj1y6Zwejk9qNEG8jehfiIPLohLpE0ksLICyKYQJuGZ6HqYNr-8XfU1UPsT0p`
     };
 
-    setTimeout(() => {
+    setInterval(() => {
   
 
       getMessaging().send(message)
