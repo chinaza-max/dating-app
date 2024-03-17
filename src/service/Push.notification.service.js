@@ -1,5 +1,6 @@
 
 import admin from "firebase-admin";
+import {getMessaging} from "firebase-admin/messaging";
 
 
 
@@ -56,13 +57,17 @@ class PushNotificationService {
 
 
     setTimeout(() => {
-      admin.messaging.send({
-        token: `e1C0f4lC5X44xt3aTnRWCE:APA91bGH07f2UjjBlob1qHOPTkZG0JdDO8-yy5552vbhuritYGScO9vnq0Z9aUdWsAAg79vMYtvTig82ZXRe9PLIMOimZYNRyRLi1Wkvn9KX7un-XlR7yQn3O82SSUJcZS9GMubrm7fq`,
-        notification:{
-          title:'test test test',
-          body:'this is i body'
-        }
+      
+      getMessaging().send(message)
+      .then((response) => {
+        // Response is a message ID string.
+        console.log('Successfully sent message:', response);
       })
+      .catch((error) => {
+        console.log('Error sending message:', error);
+      });
+    
+
     }, 5000);
   }
 
