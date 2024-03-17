@@ -1,7 +1,7 @@
 
 import admin from "firebase-admin";
 import {getMessaging} from "firebase-admin/messaging";
-
+import serverConfig from "../config/server.js"
 
 
 
