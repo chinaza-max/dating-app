@@ -62,7 +62,7 @@ class PushNotificationService {
         title: 'choice mi date app',
         body: 'test choice push notification '
       },
-      token:'dodCgsXF5h6q8pu7jcKTSE:APA91bEKQuwn7GJAtvENS39T1xOSO4ATDtcj25J8Mn-ZmUbiSUzd8JGOKw0hVYT19YobVJKMZex_SQZjSd3LeSVT1cT8DgKRgnTKR8lZ2iv9SoGFiIX9r6LQ8D2dfgzi_XF5nRmB28pX'
+      token:'dodCgsXF5h6q8pu7jcKTSE:APA91bFXAOlZ9wELerHRKm87Ffhoby7K-WTtQi5NC6F27_YuQLXPbV-4Iu5dpwU-s5fIVy9e5yltyjoEtCIANQkw_QRDio3gf6tihhkYXyMwXcnq6UmFFwl4rv4AL5L6wBa2gcfOorMb'
     };
 
     console.log(allUser.dataValues.fcmToken)
