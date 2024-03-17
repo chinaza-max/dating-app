@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import routes from'./src/routes/index.route.js';
 import DB from "./src/db/index.js";
+import PushNotificationService from "./src/service/Push.notification.service.js";
+
 import serverConfig from "./src/config/server.js";
 import systemMiddleware from "./src/middlewares/system.middleware.js";
 import path from 'path';
@@ -28,6 +30,13 @@ class Server {
   
     async initializeDbAndFirebase(){
         await DB.connectDB()
+        await PushNotificationService.init()
+
+        setTimeout(async() => {
+          await PushNotificationService.sendMessage()
+
+        }, 5000);
+
 
         async function checkIfSubscriptionHasExpired(){
           try {

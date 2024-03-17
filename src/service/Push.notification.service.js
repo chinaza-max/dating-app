@@ -1,6 +1,8 @@
 
 import serverConfig from "../config/server.js";
-import admin,{messaging} from "firebase-admin";
+import admin from "firebase-admin";
+import {getMessaging} from "firebase-admin/messaging";
+
 
 
 
@@ -37,16 +39,16 @@ class PushNotificationService {
     
   }
 
-  async sendMail() {
+  async sendMessage() {
     const message = {
       data: {
-        score: 'am ',
+        score: 'am testing the push notification',
         time: '2:45'
       },
       token: `e1C0f4lC5X44xt3aTnRWCE:APA91bGH07f2UjjBlob1qHOPTkZG0JdDO8-yy5552vbhuritYGScO9vnq0Z9aUdWsAAg79vMYtvTig82ZXRe9PLIMOimZYNRyRLi1Wkvn9KX7un-XlR7yQn3O82SSUJcZS9GMubrm7fq`
     };
 
-  messaging().send(message)
+  getMessaging().send(message)
   .then((response) => {
     // Response is a message ID string.
     console.log('Successfully sent message:', response);
