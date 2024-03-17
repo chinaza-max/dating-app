@@ -79,7 +79,7 @@ class PushNotificationService {
     
     const message2 = {
       notification: {
-        title: '$FooCorp up 1.43% on the day',
+        title: 'choice mi date app',
         body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
       },
       token: `e1C0f4lC5X44xt3aTnRWCE:APA91bFAlvM-1C70d59KNiM7qWNIRijy854fsqYub2o8wVbcMhRbzDURkBCM8INMWOuw_upM8WrjulV9ovv4qoegzyhvt3TZ5tQjyqnG3EWlSsCVGxbpJKmxItQe4k2G8QvLBD_UV2gI`
@@ -107,7 +107,7 @@ class PushNotificationService {
 
 
 
-    }, 5000);
+    }, 7000);
   }
 
   /*
