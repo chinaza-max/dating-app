@@ -29,7 +29,7 @@ class PushNotificationService {
         "client_x509_cert_url": serverConfig.FIREBASE_CLIENT_X509_CERT_URL,
         "universe_domain": serverConfig.FIREBASE_UNIVERSAL_DOMAIN
       }),
-      projectId:'choice-mi'
+      project_id:'choice-mi'
     });
 
 
