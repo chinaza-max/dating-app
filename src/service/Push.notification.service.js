@@ -51,14 +51,27 @@ class PushNotificationService {
 
     admin.initializeApp({
 
-      credential: admin.credential.cert(serviceAccount.default)
+      credential: admin.credential.cert({
+        "type": "service_account",
+        "project_id": "choice-mi",
+        "private_key_id": "f4376d4cf894b3afa98fc86898d279ac28f643ac",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDEpoWgHVtMOGSh\nERmHk8LkyHuBHCpN+p53XAvo1srdGklV4LWdToKyPLehPY8I3oAT1TJoMc0nPO24\niTioqsmIVSVVzRgQTsYhkYHjkhMxRXaittC4rwj6Apf+rwkqcU9+6p4JzJ9XfOxW\n4GF8Rn67W9ZHDJQ/WMyJFJ+h7fHkKq/LU2VIuDegKWBISKySJoCopw7lqOYFeCaV\nXLQBTTGx3iSCiVtOoa9DeXesgG0M0A9vsE9jRbxFYPZPN/RvhOaJzAfHqiAnC5VJ\nZ2M/GA+N+nTPjjOXQwzhG6nIKxXBbwpKumoH6DHS+uCIXwESZBCDA/VpCTQM60EO\nWcPIMgbPAgMBAAECggEAAxmA17I+wyfMZkGHvnxUwRhr4fAYtpvxrX307hmcnvmQ\nGFtvYWhgZQDSACehPomLSUS+A6htTGYIdTUsgHQYsx5sdTrDW1ZyhwrtGjIuPUOU\nCCKLja2snYw26xvFMDcTArQeA5eHF3DvpLrqrnPKAZgD+6C2IX1709lQXtQKUQdY\nG56AE7Gab4i4LmtvsgD6zL/5Ea6osuh5MRR8w/4dhrKTcz3Ydyc6fvC/NmPgiTle\nRtfI+QMoVcu9Ed0w53yWJMND8hSTAvP+y50b7Lr/vBayChrwA+P3v19Ip8inTJa7\nNkxlCDav/tTSvR/5QaSOCB5fbMcnZiHQy6M0WHc7YQKBgQD4wfrJYvoWH+WIwGuO\nABgv/eMsfMswRrt2DEPAPNO4ov271YPubYLwjOIpkdrPPEvtO2kTtFp8AzpanTGa\nDfKuTnmyaojRHIeTkAhEyMTiLrNtkKF1Em91Evxz3pCqUCvpyOsmTwKTJVjmjhJL\nUf2kNMeFtgojOpmtY7cKvU0hnwKBgQDKYC5Oh2bdkFXBcKnKspnjMmFL0cMZOpr2\nCU0Idy7/bIcoCiEBkqLrxmQ3RUAHHR3oKVvZGbKpWK8w+5AzDq1S6PGB4tM42q8w\nqMqKTfLoNUn4bQZ843+ry2Na0js8S9VkJ7Mtw1/99gqp8bJ4YwSdNRsX7tNnvHUI\nhrOUMuXs0QKBgQDrrIv3BCi/kVSbrQG5NOm1fioeWdT/VeQAwTnnBTnpcbJGpNEr\nsOEfGbqje6X8NLoSdfjlTDd1ynEcrFT0CUbkUUEHAdvBke/4o7rRwAyX5Xrk0OPG\n0MJ7/pLjC/evA+m2wj3Wu4BK/FUviWZXqcROMBrf2UndeoViOliOei57LQKBgFYD\nFutNZQzaIXh7t85spjcH3I5q8q6wV9gmD9V/QjxRFgiQdYLDnfbzdPiAuDvNxj48\nBct5vpN3G86HvLvWixfn5W08yGUrnLXjp2Gsy4ahz3SEcfN2hXawlOOu4no4CNPu\ng5r5pLy9a77a+O1tuDJQtdkwKi22zU74YS6li09hAoGBAKkh7NxdZizKwQLpxQ5z\nXcd2MtaZF0L4oo0G6a8Tw0UGfvBRQcLe1lYmTA9FdYCAscW4c8/CWfvXGdIFvc5K\nEYLgt2Zk4rIQJtIOu3Nq0iyQA6qxf6tCE3+1ksQLOBWPHuOCZydFSylXQ0FwgBqY\nFIy7yqnfcsjj+wjGebfWbSKF\n-----END PRIVATE KEY-----\n",
+        "client_email": "firebase-adminsdk-kjsq9@choice-mi.iam.gserviceaccount.com",
+        "client_id": "116528868087073568233",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-kjsq9%40choice-mi.iam.gserviceaccount.com",
+        "universe_domain": "googleapis.com"
+      }
+      )
     });
 
 
     const message = {
-      data: {
-        score: 'am testing the push notification',
-        time: '2:45'
+      notification: {
+        title: '$FooCorp up 1.43% on the day',
+        body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
       },
       token: `e1C0f4lC5X44xt3aTnRWCE:APA91bGH07f2UjjBlob1qHOPTkZG0JdDO8-yy5552vbhuritYGScO9vnq0Z9aUdWsAAg79vMYtvTig82ZXRe9PLIMOimZYNRyRLi1Wkvn9KX7un-XlR7yQn3O82SSUJcZS9GMubrm7fq`
     };
