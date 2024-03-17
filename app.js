@@ -34,7 +34,7 @@ class Server {
            
         setTimeout(() => {
           PushNotification.sendMail()
-        }, 5000);
+        }, 5000); 
 
         async function checkIfSubscriptionHasExpired(){
           try {
