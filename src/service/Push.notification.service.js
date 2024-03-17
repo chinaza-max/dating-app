@@ -1,7 +1,7 @@
 
 import serverConfig from "../config/server.js";
 import admin from "firebase-admin";
-import {getMessaging} from "firebase-admin/messaging";
+//import {getMessaging} from "firebase-admin/messaging";
 import serviceAccount from "./choice-mi-firebase-adminsdk-kjsq9-f4376d4cf8.json";
 
 
@@ -49,8 +49,7 @@ class PushNotificationService {
     */
 
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-      projectId:'choice-mi'
+      credential: admin.credential.cert(serviceAccount)
     });
 
 
