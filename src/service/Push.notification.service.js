@@ -82,7 +82,7 @@ class PushNotificationService {
         title: '$FooCorp up 1.43% on the day',
         body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
       },
-      token: `dodCgsXF5h6q8pu7jcKTSE:APA91bHqZ9m8Cp25M-JjSkJ4TwkZvm4q6XYMjPU2i88vcLN8Q9QYYKyizzH5lj--g2VQSwtlrrSJTw0Q9aYPvdk2xKpfNGTFODU4Q1sWIxQ9gGBJyMHPHzdCNdKFPNkqxpN2Uw0DYBps`
+      token: `e1C0f4lC5X44xt3aTnRWCE:APA91bFAlvM-1C70d59KNiM7qWNIRijy854fsqYub2o8wVbcMhRbzDURkBCM8INMWOuw_upM8WrjulV9ovv4qoegzyhvt3TZ5tQjyqnG3EWlSsCVGxbpJKmxItQe4k2G8QvLBD_UV2gI`
     };
  
     const array=[message, message2]
