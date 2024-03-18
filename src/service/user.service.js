@@ -1523,7 +1523,7 @@ class UserService {
                   {
                    userId2:userId
                   }
-                ],
+                ], 
                 usersStatus:'accepted',
                 dateStatus:{[Sequelize.Op.not]: 'completed'},
                 isDeleted:false
