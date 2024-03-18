@@ -52,7 +52,7 @@ class PushNotificationService {
     
     
  
-    /*
+    
     setInterval(async() => {
 
 
@@ -70,19 +70,7 @@ class PushNotificationService {
       token
     };
 
-    console.log("with string string string")
-
-
-    console.log(`'${token}'`)
-    console.log(`'${token}'`)
-
-    console.log("with string string string")
-
-
-    console.log(token)
-    console.log(token)
-
-
+  
       getMessaging().send(message)
       .then((response) => {
         // Response is a message ID string.
@@ -97,7 +85,7 @@ class PushNotificationService {
 
     }, 10000);
 
-    */
+    
   }
 
   /*
