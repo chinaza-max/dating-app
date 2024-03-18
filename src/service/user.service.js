@@ -564,21 +564,39 @@ class UserService {
     let {      
       userId,  
       fcmToken,
+      type
     } = await userUtil.verifyHandleUpdatefcmToken.validateAsync(data);
 
 
     try {
   
-      await this.UserModel.update(
-        {
-          fcmToken
-        },
-        {
-          where: {
-            id: userId
+      if(type="user"){
+        await this.UserModel.update(
+          {
+            fcmToken
+          },
+          {
+            where: {
+              id: userId
+            }
           }
-        }
-      );
+        );
+      }
+      else{
+        
+        await this.AdminModel.update(
+          {
+            fcmToken
+          },
+          {
+            where: {
+              id: userId
+            }
+          }
+        );
+      } 
+
+    
       
     } catch (error) {
       throw new SystemError(error.name, error.parent)

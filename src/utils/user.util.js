@@ -457,6 +457,7 @@ class UserUtil {
 
   verifyHandleUpdatefcmToken= Joi.object({
     userId: Joi.number().required(),
+    type: Joi.string().valid('user', 'admin').required(),
     fcmToken: Joi.string().required()
   });
 
