@@ -4415,13 +4415,16 @@ async calculateAverage(data) {
 }
 
 
-sendPushNotification(title, body,token,action) {
+sendPushNotification(title, message,token,action) {
 
   const message = {
     notification: {
       title,
-      body,
-      action
+      body:{
+        domain,
+        action,
+        message
+      },
     },
     token
   };

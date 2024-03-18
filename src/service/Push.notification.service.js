@@ -45,16 +45,21 @@ class PushNotificationService {
     const message = {
       notification: {
         title: 'choice mi date app',
-        body:{
-          domain:"ssss.com",
-          type:"move to request",
-          message:"my notification",
-        },
-        
+        body:"my notification"
+        ,
+      },
+      data: {
+        customKey1: 'customValue1',
+        customKey2: 'customValue2',
       },
       token
     };
 
+    /**body:{
+          domain:"ssss.com",
+          type:"move to request",
+          message:"my notification",
+        }, */
   
       getMessaging().send(message)
       .then((response) => {
