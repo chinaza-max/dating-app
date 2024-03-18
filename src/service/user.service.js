@@ -1562,6 +1562,7 @@ class UserService {
                   { userId2: userId },
                 ],
                 usersStatus: 'decline',
+                dateStatus:{[Sequelize.Op.not]: 'completed'},
                 isDeleted: false,
               },
               include: [
