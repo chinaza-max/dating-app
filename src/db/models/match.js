@@ -35,6 +35,11 @@ import {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:false
+      },
+      isNotificationsent: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:false
       }, 
       isDeleted: {
         type: DataTypes.BOOLEAN,
