@@ -2,7 +2,7 @@
 import admin from "firebase-admin";
 import {getMessaging} from "firebase-admin/messaging";
 import serverConfig from "../config/server.js"
-import { User } from "../db/models/index.js";
+import { UserMatch,User } from "../db/models/index.js";
 
 
 
@@ -32,34 +32,93 @@ class PushNotificationService {
       )
     });
  
+
     
-    setInterval(async() => {
+  }
+
+  sendPushNotificationForMatch() {
+    
+   const result= UserMatch.findAll({
+      where:{
+        isNotificationsent:false
+      }
+    })
 
 
-      
-    const allUser=await User.findByPk(1)
+    result.forEach(element => {
+
+        const result2=User.findOne({
+          where:{
+            isDeleted:false,
+            disableAccount:false,
+            notificationAllowed:true,
+            id:element.userId
+          }
+        })
+
+        const result3=User.findOne({
+          where:{
+            isDeleted:false,
+            disableAccount:false,
+            notificationAllowed:true,
+            id:element.userId2
+          }
+        })
 
 
-    const token=allUser.dataValues.fcmToken
+        if(result2.dataValues.fcmToken){
+          this.sendPushNotification("Choice mi", 'you have new match',result2.dataValues.fcmToken,"Move to move","https://choicemi.netlify.app/home.html")
+
+        }
+        
+
+        if(result3.dataValues.fcmToken){
+          this.sendPushNotification("Choice mi", 'you have new match',result2.dataValues.fcmToken,"Move to move","https://choicemi.netlify.app/home.html")
+        }
+
+
+
+    UserMatch.findByPk(element.id)
+    .then((instance) => {
+        if (instance) {
+            // If the instance is found, update its attributes
+            return instance.update({
+              isNotificationsent:true
+            });
+        } else {
+            // Handle the case when no instance is found
+            console.log('Instance not found.');
+            return null;
+        }
+    })
+    .then((updatedInstance) => {
+        if (updatedInstance) {
+            // Handle the case when the instance is successfully updated
+            console.log('Instance updated successfully:', updatedInstance);
+        }
+    })
+    .catch((error) => {
+        // Handle any errors that occur during the process
+        console.error('Error:', error);
+    });
+
+    });
+  
+  }
+  sendPushNotification(title, body,token,action,path) {
 
     const message = {
-      notification: {
-        title: 'choice mi date app',
-        body:"my notification"
-        ,
+      notification:{
+        title,
+        body,
       },
       data: {
-        customKey1: 'customValue1',
-        customKey2: 'customValue2',
+        customKey1:action,
+        customKey2:path,
       },
       token
     };
-
-    /**body:{
-          domain:"ssss.com",
-          type:"move to request",
-          message:"my notification",
-        }, */
+  
   
       getMessaging().send(message)
       .then((response) => {
@@ -70,37 +129,10 @@ class PushNotificationService {
         console.log('Error sending message:', error);
       });
     
-
-
-
-    }, 10000);
-
-    
   }
 
-  /*
-  async sendMessage() {
-    const message = {
-      data: {
-        score: 'am testing the push notification',
-        time: '2:45'
-      },
-      token: `e1C0f4lC5X44xt3aTnRWCE:APA91bGH07f2UjjBlob1qHOPTkZG0JdDO8-yy5552vbhuritYGScO9vnq0Z9aUdWsAAg79vMYtvTig82ZXRe9PLIMOimZYNRyRLi1Wkvn9KX7un-XlR7yQn3O82SSUJcZS9GMubrm7fq`
-    };
 
-  getMessaging().send(message)
-  .then((response) => {
-    // Response is a message ID string.
-    console.log('Successfully sent message:', response);
-  })
-  .catch((error) => {
-    console.log('Error sending message:', error);
-  });
-
-    
-  }
-
-  */
+  
 }
 
 export default new PushNotificationService();

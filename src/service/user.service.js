@@ -389,6 +389,25 @@ class UserService {
       matchId,
       userId2
     });
+
+    const result=await this.UserModel.findOne({
+      where:{
+        isDeleted:false,
+        disableAccount:false,
+        notificationAllowed:true,
+        id:userId2
+      }
+    })
+
+
+
+
+
+    if(result?.dataValues?.fcmToken){
+      this.sendPushNotification('Choice mi', 'You have date request',token,'move to request','https://choicemi.netlify.app/request')
+    }
+    
+
   } catch (error) {
       console.log(error)
       throw new SystemError(error.name, error.parent)
@@ -520,6 +539,12 @@ class UserService {
       let result =await this.UserModel.findByPk(userId)
       
 
+
+      const adminResult=await this.AdminModel.findByPk(1)
+      if(adminResult){
+        this.sendPushNotification("Choice mi", "New users sign up",adminResult.dataValues.fcmToken,'no action','') 
+
+      }
 
 
       this.rematchUser()
@@ -1094,6 +1119,22 @@ class UserService {
           usersStatus:'pending'
         })
       }
+
+
+      const result=await this.UserModel.findOne({
+        where:{
+          isDeleted:false,
+          disableAccount:false,
+          notificationAllowed:true,
+          id:element.userId2
+        }
+      })
+
+      if(result?.dataValues?.fcmToken){
+        this.sendPushNotification("Choice mi", 'Accept date propose',result.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
+
+      }
+      
     }
     else if(type=='decline'){
       if (dateDetails){
@@ -1122,6 +1163,36 @@ class UserService {
           reservationStatus:'accepted',
           whoAcceptedReservationId:userId
         })
+
+
+        const result1=await this.UserModel.findOne({
+          where:{
+            isDeleted:false,
+            disableAccount:false,
+            notificationAllowed:true,
+            id:userId
+          }
+        })
+
+        const result2=await this.UserModel.findOne({
+          where:{
+            isDeleted:false,
+            disableAccount:false,
+            notificationAllowed:true,
+            id:userId2
+          }
+        })
+
+
+        if(result1?.dataValues?.fcmToken){
+          this.sendPushNotification("Choice mi", 'Your reservation have been approve',result1.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
+        }
+        
+
+        if(result2?.dataValues?.fcmToken){
+          this.sendPushNotification("Choice mi", 'Your reservation have been approve',result2.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
+        }
+
       }
     }
 
@@ -4214,7 +4285,12 @@ async formatDateAndTime(fullDate) {
         }
         const combinedArray = [...tags,...answerAndquestionIdArray];
   
-        UserInfo.push({userId:userArray.dataValues.id,userData:combinedArray,preferedGender:userArray.dataValues.preferedGender,gender:userArray.dataValues.gender})
+        UserInfo.push({userId:userArray.dataValues.id,
+                userData:combinedArray,
+                preferedGender:userArray.dataValues.preferedGender,
+                gender:userArray.dataValues.gender
+                ,notificationAllowed:userArray.dataValues.notificationAllowed
+                ,fcmToken:userArray.dataValues.fcmToken})
   
       }
   
@@ -4239,6 +4315,8 @@ async formatDateAndTime(fullDate) {
               const matchingPercentage = calculateMatchingPercentage(user1.userData, user2.userData);
     
               if (matchingPercentage >= threshold) {
+
+
                 const matchingData = user1.userData.filter(value => user2.userData.includes(value));
                 matchingUsers.push({
                   userId1: user1.userId,
@@ -4246,6 +4324,8 @@ async formatDateAndTime(fullDate) {
                   matchingPercentage,
                   matchingData,
                 });
+
+
               }
             }else{
               continue
@@ -4415,12 +4495,16 @@ async calculateAverage(data) {
 }
 
 
-sendPushNotification(title, message2,token,action) {
+sendPushNotification(title, body,token,action,path) {
 
   const message = {
-    notification: {
+    notification:{
       title,
-      body:'',
+      body,
+    },
+    data: {
+      customKey1:action,
+      customKey2:path,
     },
     token
   };

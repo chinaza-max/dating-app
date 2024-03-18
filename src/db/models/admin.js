@@ -47,6 +47,10 @@ import {
         defaultValue:false
 
       },
+      fcmToken: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
       disableAccount: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

@@ -70,7 +70,6 @@ class Server {
         }
 
 
-
         //'0 0 * * *'
         //'*/10 * * * * *'
   
@@ -79,6 +78,11 @@ class Server {
           checkIfDateAreCompleted();
 
         });
+
+        cron.schedule('0 12 * * *', () => {
+          PushNotificationService.sendPushNotificationForMatch()
+        });
+        
 
     }
      
