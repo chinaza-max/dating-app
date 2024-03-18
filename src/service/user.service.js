@@ -400,9 +400,6 @@ class UserService {
     })
 
 
-
-
-
     if(result?.dataValues?.fcmToken){
       this.sendPushNotification('Choice mi', 'You have date request',token,'move to request','https://choicemi.netlify.app/request')
     }
@@ -1528,6 +1525,7 @@ class UserService {
                   }
                 ],
                 usersStatus:'accepted',
+                dateStatus:{[Sequelize.Op.not]: 'completed'},
                 isDeleted:false
               },
               include: [
