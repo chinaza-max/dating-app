@@ -56,9 +56,12 @@ class PushNotificationService {
     setInterval(async() => {
 
 
-    const token=allUser.dataValues.fcmToken
       
     const allUser=await User.findByPk(1)
+
+
+    const token=allUser.dataValues.fcmToken
+
     const message = {
       notification: {
         title: 'choice mi date app',
@@ -67,9 +70,17 @@ class PushNotificationService {
       token
     };
 
-    console.log(allUser.dataValues.fcmToken)
-    console.log(allUser.dataValues.fcmToken)
-    console.log(allUser.dataValues.fcmToken)
+    console.log("with string string string")
+
+
+    console.log(`'${token}'`)
+    console.log(`'${token}'`)
+
+    console.log("with string string string")
+
+
+    console.log(token)
+    console.log(token)
 
 
       getMessaging().send(message)
