@@ -60,7 +60,7 @@ class PushNotificationService {
     const message = {
       notification: {
         title: 'choice mi date app',
-        body: 'test choice push notification '
+        body: 'test test test test'
       },
       token:'dodCgsXF5h6q8pu7jcKTSE:APA91bFXAOlZ9wELerHRKm87Ffhoby7K-WTtQi5NC6F27_YuQLXPbV-4Iu5dpwU-s5fIVy9e5yltyjoEtCIANQkw_QRDio3gf6tihhkYXyMwXcnq6UmFFwl4rv4AL5L6wBa2gcfOorMb'
     };
