@@ -1139,6 +1139,22 @@ class UserService {
           usersStatus:'decline'
         })
       }
+
+      const result=await this.UserModel.findOne({
+        where:{
+          isDeleted:false,
+          disableAccount:false,
+          notificationAllowed:true,
+          id:dateDetails.dataValues.userId
+        }
+      })
+
+      if(result?.dataValues?.fcmToken){
+        this.sendPushNotification("Choice mi", 'Date decline, propose a new date',result.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
+
+      }
+
+
     }
     else if(type=='accept'){
       if (dateDetails){
@@ -2750,6 +2766,7 @@ class UserService {
             {userId: userId},
           ],
           usersStatus:'pending'
+
         },
       });
 
@@ -2781,9 +2798,8 @@ class UserService {
             {userId: userId},
           ],
           usersStatus:'accepted',
-          usersStatus:{
-            [Sequelize.Op.not]: 'completed',
-          }
+          dateStatus:{[Sequelize.Op.not]: 'completed',
+        }
 
         },
       });
