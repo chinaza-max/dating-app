@@ -65,7 +65,7 @@ class PushNotificationService {
     const message = {
       notification: {
         title: 'choice mi date app',
-        body: 'ogbonna ogbonna ogbonna ogbonna ogbonna'
+        body: 'you have a notification'
       },
       token
     };
