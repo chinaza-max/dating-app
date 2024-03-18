@@ -52,7 +52,7 @@ class PushNotificationService {
     
     
  
-    
+    /*
     setInterval(async() => {
 
 
@@ -96,6 +96,8 @@ class PushNotificationService {
 
 
     }, 10000);
+
+    */
   }
 
   /*
