@@ -55,14 +55,16 @@ class PushNotificationService {
     
     setInterval(async() => {
 
+
+      const token='dodCgsXF5h6q8pu7jcKTSE:APA91bFXAOlZ9wELerHRKm87Ffhoby7K-WTtQi5NC6F27_YuQLXPbV-4Iu5dpwU-s5fIVy9e5yltyjoEtCIANQkw_QRDio3gf6tihhkYXyMwXcnq6UmFFwl4rv4AL5L6wBa2gcfOorMb'
       
     const allUser=await User.findByPk(1)
     const message = {
       notification: {
         title: 'choice mi date app',
-        body: 'test test test test'
+        body: 'chinaza chinaza chinaza'
       },
-      token:'dodCgsXF5h6q8pu7jcKTSE:APA91bFXAOlZ9wELerHRKm87Ffhoby7K-WTtQi5NC6F27_YuQLXPbV-4Iu5dpwU-s5fIVy9e5yltyjoEtCIANQkw_QRDio3gf6tihhkYXyMwXcnq6UmFFwl4rv4AL5L6wBa2gcfOorMb'
+      token
     };
 
     console.log(allUser.dataValues.fcmToken)
