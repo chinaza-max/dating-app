@@ -86,8 +86,6 @@ export default class AuthenticationController {
 
       let result=await authService.handleUserCreation(my_bj);
 
-    
-
       return res.status(200).json({
         status: 200,
         message: "user registered successfully",

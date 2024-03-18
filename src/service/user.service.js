@@ -11,6 +11,7 @@ import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
 import {  Op, Sequelize } from "sequelize";
 import mailService from "../service/mail.service.js";
+import {getMessaging} from "firebase-admin/messaging";
 
 
 import {
@@ -518,6 +519,8 @@ class UserService {
       
       let result =await this.UserModel.findByPk(userId)
       
+
+
 
       this.rematchUser()
       return result.dataValues
@@ -4410,6 +4413,33 @@ async calculateAverage(data) {
 
   return averageRating;
 }
+
+
+sendPushNotification(title, body,token,action) {
+
+  const message = {
+    notification: {
+      title,
+      body,
+      action
+    },
+    token
+  };
+
+
+    getMessaging().send(message)
+    .then((response) => {
+      // Response is a message ID string.
+      console.log('Successfully sent message:', response);
+    })
+    .catch((error) => {
+      console.log('Error sending message:', error);
+    });
+  
+}
+
+
+
 
 /*
 async calculateAverage(arr) {
