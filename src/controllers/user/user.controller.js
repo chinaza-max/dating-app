@@ -607,6 +607,34 @@ export default class UserController {
     }
   }
 
+
+
+  
+  async getMarketingData(
+    req,
+    res,
+    next
+  ){
+    
+    const {offset}=req.query
+    const {pageSize}=req.query
+
+
+    try {
+               
+        const result=await userService.handleGetMarketingData(offset,pageSize);
+  
+
+
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
   
   
   async getUser(

@@ -755,7 +755,7 @@ class AuthenticationService {
       
     
         try {
-              
+            
             await mailService.sendMail({
               to: emailAddress,
               subject:"Marketing data",

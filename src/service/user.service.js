@@ -5,7 +5,7 @@ import { User,Admin ,
   EmailandTelValidationBusiness,
   EmailandTelValidationBusinessSpot,
   UserAnswer,UserMatch,Request,UserDate,SubscriptionPlan
-  ,Subscription,WishList,Review  } from "../db/models/index.js";
+  ,Subscription,WishList,MarketingData,Review  } from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -40,6 +40,10 @@ class UserService {
   SubscriptionModel=Subscription
   WishListModel=WishList
   ReviewModel=Review
+  MarketingDataModel=MarketingData
+
+
+  
 
 
  async updateUserPersonalityQuestion(data) {
@@ -3387,6 +3391,25 @@ class UserService {
 
 
   
+  
+  async handleGetMarketingData(offset,pageSize) {
+    
+    try {
+     const result1=await this.MarketingDataModel.findAll({
+         where:{
+           isDeleted:false
+         },
+       })
+ 
+     return result1
+ 
+    } catch (error) {
+      console.error(error)
+      throw new SystemError(error.name,error.parent)
+    }
+ 
+ 
+   }
 
   async handleGetUser(offset,pageSize) {
     
