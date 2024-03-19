@@ -20,7 +20,7 @@ import EmailandTelValidationAdmin, { init as initEmailandTelValidationAdmin } fr
 import Tag, { init as initTag } from "./tag.js";
 import EmailandTelValidationBusiness, { init as initEmailandTelValidationBusiness} from "./emailAndTelValidationBusiness.js";
 import EmailandTelValidationBusinessSpot, { init as initEmailandTelValidationBusinessSpot} from "./emailAndTelValidationBusinessSpot.js";
-import MarketingData, { init as initMarketingData} from "./emailAndTelValidationBusinessSpot.js";
+import MarketingData, { init as initMarketingData} from "./marketingData.js";
 
 
 
