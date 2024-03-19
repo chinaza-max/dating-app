@@ -20,6 +20,7 @@ import EmailandTelValidationAdmin, { init as initEmailandTelValidationAdmin } fr
 import Tag, { init as initTag } from "./tag.js";
 import EmailandTelValidationBusiness, { init as initEmailandTelValidationBusiness} from "./emailAndTelValidationBusiness.js";
 import EmailandTelValidationBusinessSpot, { init as initEmailandTelValidationBusinessSpot} from "./emailAndTelValidationBusinessSpot.js";
+import MarketingData, { init as initMarketingData} from "./emailAndTelValidationBusinessSpot.js";
 
 
 
@@ -251,6 +252,7 @@ export {
   EmailandTelValidationBusiness,
   EmailandTelValidationBusinessSpot,
   Tag,
+  MarketingData,
   UserMatch
 }
 
@@ -276,6 +278,7 @@ export function init(connection) {
   initTag(connection)
   initEmailandTelValidationBusiness(connection)
   initEmailandTelValidationBusinessSpot(connection)
+  initMarketingData(connection)
   associate();
   authenticateConnection(connection)
 }

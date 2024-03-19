@@ -74,6 +74,31 @@ export default class AuthenticationController {
     
   }
  
+  
+  async handlemarketingData(req, res, next) {
+
+    try {
+
+      const data = req.body;        
+
+      let my_bj = {
+        ...data,
+      }
+
+      await authService.handlemarketingData(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: "request sent successfully",
+      });
+      
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
+
   async signupUser(req, res, next) {
 
     try {
@@ -128,6 +153,35 @@ export default class AuthenticationController {
   }
   */
   
+
+  
+  
+  async googleCallback(
+    req,
+    res,
+    next
+  ){
+    const data=req.body
+ 
+    try {
+      
+        const my_bj = {
+          ...data,
+        }
+                          
+        await authService.handleGoogleCallback(my_bj);
+
+        return res.status(200).json({
+          status: 200,
+          message: "updated sucessfully",
+        });
+      
+     
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
 
   async updateTel(
     req,

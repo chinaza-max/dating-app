@@ -3,6 +3,13 @@ import Joi from "joi";
 class AdminUtil {
 
 
+  verifyHandlemarketingData= Joi.object({
+    name: Joi.string().required(),
+    tel: Joi.string().required(),
+    emailAddress: Joi.string().email().required(),
+    location: Joi.string().required()
+  });
+
     verifyUserCreationData= Joi.object({
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),

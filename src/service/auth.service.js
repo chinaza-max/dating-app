@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from'bcrypt';
-import { User,  EmailandTelValidationBusiness,  EmailandTelValidationBusinessSpot,  EmailandTelValidation ,  Admin,  PasswordReset,  Business,  EmailandTelValidationAdmin,
+import { User,MarketingData,  EmailandTelValidationBusiness,  EmailandTelValidationBusinessSpot,  EmailandTelValidation ,  Admin,  PasswordReset,  Business,  EmailandTelValidationAdmin,
   UserAnswer } from "../db/models/index.js";
 import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
@@ -26,6 +26,10 @@ class AuthenticationService {
    BusinessModel=Business
    PasswordResetModel=PasswordReset
    UserAnswerModel=UserAnswer
+   MarketingDataModel=MarketingData
+
+
+   
 
 
   verifyToken(token) {
@@ -46,6 +50,54 @@ class AuthenticationService {
     }
   }
 
+
+  
+  async handlemarketingData(data) {
+
+
+    let { 
+      name,
+      tel,
+      location,
+      emailAddress,
+      
+    } = await authUtil.verifyHandlemarketingData.validateAsync(data);
+
+
+    MarketingDataModel
+
+    const existingMarketingData=await this.MarketingDataModel.findOne({
+      where:{
+        emailAddress
+      }
+    })
+
+  if (existingMarketingData)return
+
+  try {
+    await this.MarketingDataModel.create({
+      name,
+      tel,
+      location,
+      emailAddress,
+  });
+
+
+  await this.sendEmailMarketingdata( name,
+    tel,
+    location,
+    emailAddress)
+  
+
+  } catch (error) {
+    console.log(error)
+    throw new SystemError(error.name,error.parent)
+  }
+
+
+
+
+}
 
 
   async handleUserCreation(data) {
@@ -410,6 +462,24 @@ class AuthenticationService {
   }
 
 
+
+  
+  async handleGoogleCallback(data) {
+   
+    try {
+      
+     console.log(data)
+
+    } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name, error.parent)
+    }
+
+   
+    
+
+  }
+
   async handleUpdateTel(data) {
     let {      
       userId,  
@@ -674,8 +744,47 @@ class AuthenticationService {
 
 
 
-  async  sendEmailVerificationCode(emailAddress, userId) {
+  
 
+  async  sendEmailMarketingdata( name,
+    tel,
+    location,
+    emailAddress) {
+
+    try {
+      
+    
+        try {
+              
+            await mailService.sendMail({
+              to: emailAddress,
+              subject:"Marketing data",
+              templateName:"marketingdata",
+              variables: {
+                name,
+                tel,
+                location,
+                email:emailAddress
+              },
+            });
+    
+        } catch (error) {
+            console.log(error)
+        }
+    
+    
+    } catch (error) {
+      console.log(error);
+    }
+  
+     
+  
+  
+  
+    }
+
+
+  async  sendEmailVerificationCode(emailAddress, userId) {
 
   try {
     
