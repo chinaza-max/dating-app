@@ -3220,6 +3220,8 @@ class UserService {
             console.log("sssssssssssssssssssssssssssssssssssssssssssss")
             console.log(element.dataValues.userId)
             console.log(element.dataValues.userId2)
+            console.log(havePendingDate)
+
             console.log("sssssssssssssssssssssssssssssssssssssssssssss")
             console.log("sssssssssssssssssssssssssssssssssssssssssssss")
             console.log("sssssssssssssssssssssssssssssssssssssssssssss")
