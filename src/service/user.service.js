@@ -3221,12 +3221,8 @@ class UserService {
             
             if(havePendingDate){
              
-              console.log(havePendingDate)
-              console.log(havePendingDate.dateStatus==null)
-
-
             
-              //if(havePendingDate.dateStatus==null||havePendingDate.dateStatus=='active') continue;   
+              if(havePendingDate.dateStatus==null||havePendingDate.dateStatus=='active') continue;   
 
             }
 
