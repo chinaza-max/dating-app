@@ -3220,16 +3220,16 @@ class UserService {
               console.log("ffffffffffffffffffffffffffffffffffffffff")
               console.log("ffffffffffffffffffffffffffffffffffffffff")
 
-              console.log(havePendingDate.dataValues)
-            console.log(havePendingDate.dataValues.dateStatus)
-            console.log(havePendingDate.dataValues.dateStatus)
+              console.log(havePendingDate)
+           // console.log(havePendingDate.dataValues.dateStatus)
+           // console.log(havePendingDate.dataValues.dateStatus)
 
             console.log("ffffffffffffffffffffffffffffffffffffffff")
             console.log("ffffffffffffffffffffffffffffffffffffffff")
             console.log("ffffffffffffffffffffffffffffffffffffffff")
             console.log("ffffffffffffffffffffffffffffffffffffffff")
 
-              if(havePendingDate.dataValues.dateStatus==null||havePendingDate.dataValues.dateStatus=='active') continue;   
+             // if(havePendingDate.dataValues.dateStatus==null||havePendingDate.dataValues.dateStatus=='active') continue;   
 
             }
 
