@@ -3198,40 +3198,23 @@ class UserService {
                     [Op.and]: [
                       { userId:element.dataValues.userId },
                       { userId2:element.dataValues.userId2},
-                      { dateStatus: { [Op.or]: [null, 'active'] } }
                     ],
                   },
                   {
                     [Op.and]: [
                       { userId:element.dataValues.userId2 },
                       { userId2:element.dataValues.userId },
-                      { dateStatus: { [Op.or]: [null, 'active'] } }
                     ],
                   },
                 ],
+                
                 isDeleted:false,
               },
             })
 
-
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log(element.dataValues.userId)
-            console.log(element.dataValues.userId2)
-            console.log(havePendingDate)
-
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-            console.log("sssssssssssssssssssssssssssssssssssssssssssss")
-
-            if(havePendingDate) continue;   
-
+           
+            
+            if(havePendingDate.dateStatus==null||havePendingDate.dateStatus=='active') continue;   
 
 
             if(Number(ageRangeMin)||Number(ageRangeMax)){
