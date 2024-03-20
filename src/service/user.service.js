@@ -544,7 +544,6 @@ class UserService {
       const adminResult=await this.AdminModel.findByPk(1)
       if(adminResult){
         this.sendPushNotification("Choice mi", "New users sign up",adminResult.dataValues.fcmToken,'no action','') 
-
       }
 
 
@@ -1631,6 +1630,22 @@ class UserService {
               ]
             });
     
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+
+            console.log(details)
+            console.log(userId)
+
+
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+
           }
           else if(type=='pending'){
             details=await this.DateModel.findAll({
