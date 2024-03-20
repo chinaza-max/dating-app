@@ -64,7 +64,6 @@ class AuthenticationService {
     } = await authUtil.verifyHandlemarketingData.validateAsync(data);
 
 
-    MarketingDataModel
 
     const existingMarketingData=await this.MarketingDataModel.findOne({
       where:{
