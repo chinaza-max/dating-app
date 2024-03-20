@@ -64,6 +64,14 @@ class AuthenticationService {
     } = await authUtil.verifyHandlemarketingData.validateAsync(data);
 
 
+    const adminResult=await this.AdminModel.findByPk(1)
+
+
+
+    await this.sendEmailMarketingdata(name,
+      tel,
+      location,
+      adminResult.dataValues.emailAddress)
 
     const existingMarketingData=await this.MarketingDataModel.findOne({
       where:{
@@ -82,10 +90,15 @@ class AuthenticationService {
   });
 
 
-  await this.sendEmailMarketingdata( name,
+  /*
+  const adminResult=await this.AdminModel.findByPk(1)
+
+
+
+  await this.sendEmailMarketingdata(name,
     tel,
     location,
-    emailAddress)
+    adminResult.dataValues.emailAddress)*/
   
 
   } catch (error) {
