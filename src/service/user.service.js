@@ -3220,24 +3220,13 @@ class UserService {
 
             
             if(havePendingDate){
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-
+             
               console.log(havePendingDate)
               console.log(havePendingDate.dateStatus==null)
 
 
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-              console.log("cccccccccccccccccccccccccccccccccccccccc")
-
-              if(havePendingDate.dateStatus==null||havePendingDate.dateStatus=='active') continue;   
+            
+              //if(havePendingDate.dateStatus==null||havePendingDate.dateStatus=='active') continue;   
 
             }
 
