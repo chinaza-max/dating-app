@@ -1155,7 +1155,6 @@ class UserService {
 
       if(result?.dataValues?.fcmToken){
         this.sendPushNotification("Choice mi", 'Accept date propose',result.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
-
       }
       
     }
@@ -3183,10 +3182,40 @@ class UserService {
               },
             })
 
+           
+
 
             if(!myMatchUser) continue;
+            
             //if(!myMatchUser) continue;                  
-            if(havePendingRequest) continue;                  
+            if(havePendingRequest) continue;   
+            
+            
+            let havePendingDate=await this.DateModel.findOne({
+              where: {
+                [Op.or]: [
+                  {
+                    [Op.and]: [
+                      { userId:element.dataValues.userId },
+                      { userId2:element.dataValues.userId2},
+                      { dateStatus: { [Op.ne]: 'completed' } }
+                    ],
+                  },
+                  {
+                    [Op.and]: [
+                      { userId:element.dataValues.userId2 },
+                      { userId2:element.dataValues.userId },
+                      { dateStatus: { [Op.ne]: 'completed' } }
+                    ],
+                  },
+                ],
+                isDeleted:false,
+              },
+            })
+
+
+
+
 
             if(Number(ageRangeMin)||Number(ageRangeMax)){
 
