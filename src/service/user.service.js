@@ -3210,6 +3210,13 @@ class UserService {
                 
                 isDeleted:false,
               },
+              
+              attributes: [
+                
+                'dateStatus',
+                'usersStatus',
+                
+              ],
             })
 
 
