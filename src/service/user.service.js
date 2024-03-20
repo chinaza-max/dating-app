@@ -3191,7 +3191,7 @@ class UserService {
             if(havePendingRequest) continue;   
             
             
-            let havePendingDate=await this.DateModel.findOne({
+            const havePendingDate=await this.DateModel.findOne({
               where: {
                 [Op.or]: [
                   {
@@ -3212,11 +3212,9 @@ class UserService {
               },
               
               attributes: [
-                
-                'dateStatus',
-                'usersStatus',
-                
+                'dateStatus',                
               ],
+              raw: true,
             })
 
 
@@ -3228,8 +3226,6 @@ class UserService {
               console.log("ffffffffffffffffffffffffffffffffffffffff")
 
               console.log(havePendingDate)
-           // console.log(havePendingDate.dataValues.dateStatus)
-           // console.log(havePendingDate.dataValues.dateStatus)
 
             console.log("ffffffffffffffffffffffffffffffffffffffff")
             console.log("ffffffffffffffffffffffffffffffffffffffff")
