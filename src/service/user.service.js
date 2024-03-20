@@ -3212,9 +3212,12 @@ class UserService {
               },
             })
 
-           
+
+            console.log(havePendingDate.dataValues)
+            console.log(havePendingDate.dataValues.dateStatus)
             
-            if(havePendingDate.dateStatus==null||havePendingDate.dateStatus=='active') continue;   
+            if(havePendingDate.dataValues.dateStatus==null||havePendingDate.dataValues.dateStatus=='active') continue;   
+
 
 
             if(Number(ageRangeMin)||Number(ageRangeMax)){
