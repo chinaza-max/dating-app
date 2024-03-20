@@ -3232,7 +3232,7 @@ class UserService {
             console.log("ffffffffffffffffffffffffffffffffffffffff")
             console.log("ffffffffffffffffffffffffffffffffffffffff")
 
-             // if(havePendingDate.dataValues.dateStatus==null||havePendingDate.dataValues.dateStatus=='active') continue;   
+              if(havePendingDate.dateStatus==null||havePendingDate.dateStatus=='active') continue;   
 
             }
 
