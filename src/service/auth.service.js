@@ -72,7 +72,7 @@ class AuthenticationService {
       }
     })
 
-  if (existingMarketingData)return
+  if (existingMarketingData) return
 
   try {
     await this.MarketingDataModel.create({
