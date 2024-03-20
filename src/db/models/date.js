@@ -100,8 +100,12 @@ export function init(connection) {
 
     if (this.fullDate > twentyFourHoursLater) {
       // If subscription has expired
-      this.dateStatus = "completed";
-      await this.save();
+
+      if( this.usersStatus=='accepted'  ){
+        this.dateStatus = "completed";
+        await this.save();
+      }
+    
     }
   };
 
