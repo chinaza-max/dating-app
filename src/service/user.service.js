@@ -1630,22 +1630,7 @@ class UserService {
               ]
             });
     
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-
-            console.log(details)
-            console.log(userId)
-
-
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-            console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-
+           
           }
           else if(type=='pending'){
             details=await this.DateModel.findAll({
@@ -3213,14 +3198,14 @@ class UserService {
                     [Op.and]: [
                       { userId:element.dataValues.userId },
                       { userId2:element.dataValues.userId2},
-                      { dateStatus: { [Op.ne]: 'completed' } }
+                      { dateStatus: { [Op.or]: [null, 'active'] } }
                     ],
                   },
                   {
                     [Op.and]: [
                       { userId:element.dataValues.userId2 },
                       { userId2:element.dataValues.userId },
-                      { dateStatus: { [Op.ne]: 'completed' } }
+                      { dateStatus: { [Op.or]: [null, 'active'] } }
                     ],
                   },
                 ],
