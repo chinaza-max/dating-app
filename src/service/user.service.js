@@ -3214,6 +3214,7 @@ class UserService {
             })
 
 
+            if(havePendingDate) continue;   
 
 
 
