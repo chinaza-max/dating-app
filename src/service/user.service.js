@@ -574,7 +574,7 @@ class UserService {
 
     try {
   
-      if(type="user"){
+      if(type=="user"){
         await this.UserModel.update(
           {
             fcmToken
@@ -588,6 +588,9 @@ class UserService {
       }
       else{
         
+       
+
+
         await this.AdminModel.update(
           {
             fcmToken

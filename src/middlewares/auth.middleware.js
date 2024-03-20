@@ -24,6 +24,7 @@ class AuthenticationMiddlewares {
       if (expired) throw new UnAuthorizedError("Invalid token.");
 
       req.user = payload;
+      
       return next();
     } catch (error) { 
       console.log(error)
