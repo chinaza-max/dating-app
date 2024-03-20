@@ -1142,13 +1142,14 @@ class UserService {
         })
       }
 
+   
 
       const result=await this.UserModel.findOne({
         where:{
           isDeleted:false,
           disableAccount:false,
           notificationAllowed:true,
-          id:element.userId2
+          id:userId2
         }
       })
 
@@ -4489,7 +4490,7 @@ async getCommonBioDetail(userId1,userId2){
         result.push('Relationship Goal')
     }
     if(user1Details.maritalStatus==user2Details.maritalStatus){
-      result.push('marital Status')
+      result.push('Marital Status')
     }
     if(user1Details.numberOfChildren==user2Details.numberOfChildren){
       result.push('Number of Children')

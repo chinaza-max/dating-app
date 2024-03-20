@@ -93,7 +93,6 @@ class AuthenticationService {
     location,
     adminResult.dataValues.emailAddress)
   
-
   } catch (error) {
     console.log(error)
     throw new SystemError(error.name,error.parent)
