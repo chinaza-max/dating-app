@@ -56,12 +56,11 @@ export function init(connection) {
       tel: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue:true
       },
       isTelValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue:false
+        defaultValue:true
       },
       emailAddress: {
         type: DataTypes.STRING,
