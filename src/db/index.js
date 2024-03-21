@@ -2,6 +2,8 @@ import { Sequelize } from "sequelize";
 import serverConfig from "../config/server.js";
 import { init as initModels } from "./models/index.js";
 
+import fs from "fs";
+
 
 
 
@@ -13,6 +15,14 @@ class DB {
 
   async connectDB() {
 
+    let caCertBuffer;
+    try {
+      caCertBuffer = fs.readFileSync('ca-cert.pem');
+    } catch (error) {
+      console.error('Error reading ca-cert.pem:', error);
+      process.exit(1);
+    }
+
     const options= {
       logging: console.log,
       dialect: "mysql",
@@ -21,7 +31,15 @@ class DB {
       password: serverConfig.DB_PASSWORD,
       port: Number(serverConfig.DB_PORT),
       database: serverConfig.DB_NAME,
-      logQueryParameters: true
+      logQueryParameters: true,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          ca: fs.readFileSync('ca-cert.pem')
+        }
+      },
+      ssl: true,
+
     };
     
     this.sequelize = new Sequelize(
