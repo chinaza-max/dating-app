@@ -56,6 +56,7 @@ export function init(connection) {
       tel: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue:true
       },
       isTelValid: {
         type: DataTypes.BOOLEAN,
