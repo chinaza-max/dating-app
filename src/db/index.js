@@ -17,7 +17,7 @@ class DB {
 
     let caCertBuffer;
     try {
-      caCertBuffer = fs.readFileSync('./ca-cert.pem');
+      caCertBuffer = fs.readFileSync('./ca-cert.pem').toString();
     } catch (error) {
       console.error('Error reading ca-cert.pem:', error);
       process.exit(1);
