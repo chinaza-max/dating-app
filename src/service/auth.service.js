@@ -58,13 +58,14 @@ class AuthenticationService {
     let { 
       name,
       tel,
-      location,
+      country,
+      state,
       emailAddress,
       
     } = await authUtil.verifyHandlemarketingData.validateAsync(data);
 
 
-  
+  /*
 
     const existingMarketingData=await this.MarketingDataModel.findOne({
       where:{
@@ -73,15 +74,18 @@ class AuthenticationService {
     })
 
   if (existingMarketingData) return
-
+*/
   try {
+
+    /*
     await this.MarketingDataModel.create({
       name,
       tel,
-      location,
+      country,
+      state,
       emailAddress,
   });
-
+*/
 
   
   const adminResult=await this.AdminModel.findByPk(1)
@@ -91,6 +95,9 @@ class AuthenticationService {
   await this.sendEmailMarketingdata(name,
     tel,
     location,
+    country,
+    state,
+    emailAddress,
     adminResult.dataValues.emailAddress)
   
   } catch (error) {
@@ -750,10 +757,13 @@ class AuthenticationService {
 
   
 
-  async  sendEmailMarketingdata( name,
+  async  sendEmailMarketingdata(name,
     tel,
     location,
-    emailAddress) {
+    country,
+    state,
+    emailAddress,
+    emailAddress2) {
 
     try {
       
@@ -761,13 +771,16 @@ class AuthenticationService {
         try {
             
             await mailService.sendMail({
-              to: emailAddress,
+              to: emailAddress2,
               subject:"Marketing data",
               templateName:"marketingdata",
               variables: {
                 name,
                 tel,
                 location,
+                country,
+                state,
+                emailAddress,
                 email:emailAddress
               },
             });

@@ -7,7 +7,8 @@ class AdminUtil {
     name: Joi.string().required(),
     tel: Joi.string().required(),
     emailAddress: Joi.string().email().required(),
-    location: Joi.string().required()
+    country: Joi.string().required(),
+    state: Joi.string().required()
   });
 
     verifyUserCreationData= Joi.object({
