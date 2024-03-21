@@ -23,7 +23,7 @@ class DB {
       process.exit(1);
     }
 
-    const options= {
+    const options= { 
       logging: console.log,
       dialect: "mysql",
       host: serverConfig.DB_HOST,
