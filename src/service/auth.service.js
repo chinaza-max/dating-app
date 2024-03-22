@@ -149,7 +149,7 @@ class AuthenticationService {
         password,
         Number(serverConfig.SALT_ROUNDS)
       );
-    } catch (error) {
+    } catch (error) { 
       console.log(error)
       throw new SystemError('SystemError','An error occured while processing your request(handleUserCreation) while hashing password ');
     }
