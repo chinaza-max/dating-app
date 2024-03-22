@@ -739,6 +739,19 @@ class AuthenticationService {
       });
 
       if (existingUser) {
+
+        console.log("ssssssssssssssssssssssssss")
+        console.log("ssssssssssssssssssssssssss")
+        console.log("ssssssssssssssssssssssssss")
+
+        console.log(existingUser)
+        console.log("ssssssssssssssssssssssssss")
+        console.log("ssssssssssssssssssssssssss")
+        console.log("ssssssssssssssssssssssssss")
+        console.log("ssssssssssssssssssssssssss")
+
+
+
         if (existingUser.emailAddress == emailAddress&&existingUser.isEmailValid == true) {
           return 'User with this email already exists.';
         } else if (existingUser.tel == tel) {
