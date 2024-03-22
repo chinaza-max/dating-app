@@ -94,7 +94,6 @@ class AuthenticationService {
 
   await this.sendEmailMarketingdata(name,
     tel,
-    location,
     country,
     state,
     emailAddress,
@@ -740,23 +739,7 @@ class AuthenticationService {
 
       if (existingUser) {
 
-        console.log("ssssssssssssssssssssssssss")
-        console.log("ssssssssssssssssssssssssss")
-        console.log("ssssssssssssssssssssssssss")
-
-        console.log(existingUser)
-        console.log(existingUser.emailAddress)
-        console.log(existingUser.dataValues.emailAddress)
-        console.log(existingUser.dataValues.tel)
-        console.log(existingUser.tel)
-
-
-        console.log("ssssssssssssssssssssssssss")
-        console.log("ssssssssssssssssssssssssss")
-        console.log("ssssssssssssssssssssssssss")
-        console.log("ssssssssssssssssssssssssss")
-
-
+      
 
         if (existingUser.emailAddress == emailAddress&&existingUser.isEmailValid == true) {
           return 'User with this email already exists.';
@@ -778,7 +761,6 @@ class AuthenticationService {
 
   async  sendEmailMarketingdata(name,
     tel,
-    location,
     country,
     state,
     emailAddress,
@@ -796,7 +778,6 @@ class AuthenticationService {
               variables: {
                 name,
                 tel,
-                location,
                 country,
                 state,
                 emailAddress,
