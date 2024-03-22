@@ -10,8 +10,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cron from "node-cron"
-import {Subscription,  UserDate} from "./src/db/models/index.js";
+import {Subscription,  UserDate,  User} from "./src/db/models/index.js";
 import {  Op } from "sequelize";
+import { func } from 'joi';
 
 
 
@@ -35,7 +36,7 @@ class Server {
        
 
 
-        async function checkIfSubscriptionHasExpired(){
+      async function checkIfSubscriptionHasExpired(){
           try {
             // Find all subscriptions
             const subscriptions = await Subscription.findAll({
@@ -70,13 +71,51 @@ class Server {
         }
 
 
+        async function checkAndDeleteUnverifiedRecords() {
+          try {
+            const twoWeeksAgo = new Date();
+            twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14); // Subtract 14 days
+            
+            const unverifiedRecords = await User.findAll({
+              where: {
+                [Op.or]: [
+                  {
+                    isEmailValid: false,
+                    createdAt: { [Op.lt]: twoWeeksAgo }
+                  },
+                  {
+                    isTelValid: false,
+                    createdAt: { [Op.lt]: twoWeeksAgo }
+                  }
+                ]
+              }
+            });
+      
+            if (unverifiedRecords.length > 0) {
+              await Promise.all(unverifiedRecords.map(record => record.destroy()));
+              console.log('Unverified records older than two weeks have been deleted.');
+            } else {
+              console.log('No unverified records older than two weeks found.');
+            }
+          } catch (error) {
+            console.error('Error checking and deleting unverified records:', error);
+          }
+        }
+       
+
+
         //'0 0 * * *'
         //'*/10 * * * * *'
   
+        //The cron expression 0 0 * * * runs every day at midnight (12:00 AM).
         cron.schedule('0 0 * * *', () => {
           checkIfSubscriptionHasExpired();
           checkIfDateAreCompleted();
-
+        });
+        //To set up a cron job that runs every two weeks at 4 AM
+        cron.schedule('0 4 */14 * *', () => {
+          checkAndDeleteUnverifiedRecords()
+          
         });
 
         cron.schedule('0 12 * * *', () => {
