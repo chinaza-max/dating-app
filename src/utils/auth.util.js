@@ -14,6 +14,7 @@ class AdminUtil {
     verifyUserCreationData= Joi.object({
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
+      countryCodeTel: Joi.string().required(),
       tel: Joi.string().required(),
       emailAddress: Joi.string().email().required(),
       password: Joi.string().required(),

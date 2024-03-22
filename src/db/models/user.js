@@ -57,6 +57,10 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      countryCodeTel: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       isTelValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -66,6 +70,7 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,        
       }, 
+      
       isEmailValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

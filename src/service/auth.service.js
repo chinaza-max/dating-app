@@ -138,6 +138,7 @@ class AuthenticationService {
         drinking,
         hairColor,
         gender,
+        countryCodeTel,
         bodyType
       } = await authUtil.verifyUserCreationData.validateAsync(data);
   
@@ -186,6 +187,7 @@ class AuthenticationService {
         drinking,
         hairColor,
         gender,
+        countryCodeTel,
         bodyType
     });
     await this.sendEmailVerificationCode(user.emailAddress,user.id)
