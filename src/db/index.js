@@ -32,14 +32,14 @@ class DB {
       port: Number(serverConfig.DB_PORT),
       database: serverConfig.DB_NAME,
       logQueryParameters: true,
-      dialectOptions: {
+    /*  dialectOptions: {
         ssl: {
           require: true,
           ca: caCertBuffer
         }
       },
       ssl: true,
-
+*/
     };
     
     this.sequelize = new Sequelize(
