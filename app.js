@@ -12,7 +12,6 @@ import { dirname } from 'path';
 import cron from "node-cron"
 import {Subscription,  UserDate,  User} from "./src/db/models/index.js";
 import {  Op } from "sequelize";
-import { func } from 'joi';
 
 
 
@@ -36,7 +35,7 @@ class Server {
        
 
 
-      async function checkIfSubscriptionHasExpired(){
+        async function checkIfSubscriptionHasExpired(){
           try {
             // Find all subscriptions
             const subscriptions = await Subscription.findAll({
@@ -102,7 +101,7 @@ class Server {
           }
         }
        
-
+        
 
         //'0 0 * * *'
         //'*/10 * * * * *'
@@ -115,7 +114,7 @@ class Server {
         //To set up a cron job that runs every two weeks at 4 AM
         cron.schedule('0 4 */14 * *', () => {
           checkAndDeleteUnverifiedRecords()
-          
+
         });
 
         cron.schedule('0 12 * * *', () => {
