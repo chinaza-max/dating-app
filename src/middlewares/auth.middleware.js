@@ -12,9 +12,6 @@ class AuthenticationMiddlewares {
     try {
 
 
-
-
-      console.log(req)
       const { authorization } = req.headers;
 
       if (!authorization) throw new BadRequestError("No token provided.");
