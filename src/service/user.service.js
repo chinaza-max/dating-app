@@ -1311,12 +1311,13 @@ class UserService {
         where:{city:city, availabilty:true},
         attributes:['id','city','name',
         'address', 'openHours', 'closeHours',
-        'locationCoordinate' ],
-          include:[
-            {
-              model: this.BusinessModel,
-            }
-          ] 
+        'locationCoordinate' 
+      ],
+      include:[
+        {
+          model: this.BusinessModel,
+        }
+      ] 
       })
 
 

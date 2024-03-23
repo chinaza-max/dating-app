@@ -523,8 +523,6 @@ export default class UserController {
   ){
 
     const {userId}=req.query
-
-
     const obj={
       userId:userId,
     }
