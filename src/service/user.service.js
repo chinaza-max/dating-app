@@ -1316,6 +1316,9 @@ class UserService {
       include:[
         {
           model: this.BusinessModel,
+          attributes:['businessPicture'
+          ],
+          where:{availabilty:true},
         }
       ] 
       })
