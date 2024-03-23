@@ -3543,7 +3543,9 @@ class UserService {
                       isTelValid:element.dataValues.isTelValid,
                       businessId:element.dataValues.businessId,
                       numberOfBusinessSpot:element.dataValues?.BusinessSpots?.length||0,
-                      availabilty:element.dataValues.availabilty
+                      availabilty:element.dataValues.availabilty,
+                      businessPicture:element.dataValues.businessPicture
+
                     })
         
       }
