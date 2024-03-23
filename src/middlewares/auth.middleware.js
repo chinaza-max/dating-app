@@ -11,6 +11,10 @@ class AuthenticationMiddlewares {
   async validateUserToken( req,res,next){
     try {
 
+
+
+
+      console.log(req)
       const { authorization } = req.headers;
 
       if (!authorization) throw new BadRequestError("No token provided.");
