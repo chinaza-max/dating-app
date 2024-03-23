@@ -1304,15 +1304,19 @@ class UserService {
           group: ['city'],
         })
 
-
         return result||[]
     }
     else{
       const result =await this.BusinessSpotsModel.findAll({
-        where:{city:city, availabilty:true}
-        ,
+        where:{city:city, availabilty:true},
         attributes:['id','city','name',
-        'address', 'openHours', 'closeHours','locationCoordinate' ]
+        'address', 'openHours', 'closeHours',
+        'locationCoordinate' ],
+          include:[
+            {
+              model: this.BusinessModel,
+            }
+          ] 
       })
 
 
