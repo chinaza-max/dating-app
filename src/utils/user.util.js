@@ -81,6 +81,7 @@ class UserUtil {
   verifyHandleRemoveBusinessImage=Joi.object({
     createdBy: Joi.number().integer().required(),
     businessId: Joi.number().required(),
+    type: Joi.string().required(),
     url: Joi.string().required()
   });
 
