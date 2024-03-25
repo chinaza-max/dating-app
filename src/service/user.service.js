@@ -4321,6 +4321,7 @@ async  sendEmailToBusinessSpot(obj) {
             templateName: "dateDetails",
             variables: {
               ...obj,
+              domain:serverConfig.DOMAIN,
             },
           });
   
@@ -4496,12 +4497,7 @@ async formatDateAndTime(fullDate) {
   
           if (existingMatch1) {
   
-            console.log("updating updating")
-  
-            console.log(element)
-  
-            console.log("updating updating")
-  
+           
   
             await existingMatch1.update({
               matchInformation:JSON.stringify(element.matchingData),

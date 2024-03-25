@@ -780,6 +780,7 @@ class AuthenticationService {
               variables: {
                 name,
                 tel,
+                domain:serverConfig.DOMAIN,
                 country,
                 state,
                 emailAddress,
