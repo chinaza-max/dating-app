@@ -3420,13 +3420,26 @@ class UserService {
             businessId,
            });
         }else{
+
+          let hashedPassword;
+          try {
+            hashedPassword = await bcrypt.hash(
+              password,
+              Number(serverConfig.SALT_ROUNDS)
+            );
+      
+          } catch (error) {
+            console.error(error)
+            throw new SystemError('SystemError','An error occured while processing your request(handleBusinessCreation) while hashing password ');
+          }
+
           await user.update({    
             firstName,
             lastName,
             tel,
             emailAddress,
             businessId,
-            password
+            password:hashedPassword
            });
 
            this.sendEmailVerificationCodeBusiness(emailAddress, user.dataValues.id ,password) 

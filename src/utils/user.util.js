@@ -64,6 +64,7 @@ class UserUtil {
     userId: Joi.number().required()
   });
 
+  /*
   verifyHandleRemoveBusinessImage=Joi.object({
     businessId: Joi.number().integer().required(),
     name: Joi.string().required(),
@@ -75,6 +76,12 @@ class UserUtil {
     emailAddress: Joi.string().email().required(),
     contactPerson: Joi.string().required(),
     availabilty: Joi.string().required(),
+  });*/
+
+  verifyHandleRemoveBusinessImage=Joi.object({
+    createdBy: Joi.number().integer().required(),
+    businessId: Joi.number().required(),
+    url: Joi.string().required()
   });
 
   verifyHandleCUBusinessSpot=Joi.object({
