@@ -4287,7 +4287,7 @@ async  sendEmailVerificationCode(emailAddress, userId ,password) {
               params.append('verificationCode',verificationCode);
               params.append('type', 'email');
 
-       
+          
           await mailService.sendMail({ 
             to: emailAddress,
             subject: "Account details and verification",
