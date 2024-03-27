@@ -425,7 +425,8 @@ class UserService {
       notificationAllowed,
       active,
       smoking,
-      drinking
+      drinking,
+      personalityQuestionsAnswer
     } = await userUtil.verifyHandleUpdateProfile2.validateAsync(data);
 
     try {

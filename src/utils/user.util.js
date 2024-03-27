@@ -459,7 +459,8 @@ class UserUtil {
     smoking: Joi.string().required(),
     drinking: Joi.string().required(),
     active: Joi.boolean().required(),
-    notificationAllowed: Joi.boolean().required(),    
+    notificationAllowed: Joi.boolean().required(),  
+    personalityQuestionsAnswer: Joi.string().required()
   });
 
 
