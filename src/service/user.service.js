@@ -3152,15 +3152,15 @@ class UserService {
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.UserDates.DateReviews)
            }else if(myMatchUser.dataValues?.User2Dates){
 
-            const myTotalReviewArray=[]
-            myMatchUser.dataValues.User2Dates.forEach(element => {
+              const myTotalReviewArray=[]
+              myMatchUser.dataValues.User2Dates.forEach(element => {
 
-                element.dataValues.DateReviews.forEach(element => {
-                  myTotalReviewArray.push(element)
-                });
-            });
+                  element.dataValues.DateReviews.forEach(element => {
+                    myTotalReviewArray.push(element)
+                  });
+              });
 
-            ratingAverage=await this.calculateAverage(myTotalReviewArray)
+              ratingAverage=await this.calculateAverage(myTotalReviewArray)
            }
          
   
@@ -3228,8 +3228,7 @@ class UserService {
 
             
             if(havePendingDate){
-             
-            
+                      
               if(havePendingDate.dateStatus==null||havePendingDate.dateStatus=='active') continue;   
 
             }
@@ -3307,7 +3306,7 @@ class UserService {
               matchId:element.dataValues.id,
               userId:element.dataValues.userId,
               userId2:element.dataValues.userId2,
-              personalityQuestionsAnswer:element.dataValues.personalityQuestionsAnswer,
+              personalityQuestionsAnswer:myMatchUser.dataValues.personalityQuestionsAnswer,
               isMatchRejected:element.dataValues.isMatchRejected,
               matchInformation:JSON.parse(element.dataValues.matchInformation),
               matchPercentage:element.dataValues.matchPercentage,
