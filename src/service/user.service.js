@@ -438,7 +438,8 @@ class UserService {
           notificationAllowed,
           active, 
           smoking,
-          drinking
+          drinking,
+          personalityQuestionsAnswer
         },
         {
           where: {
