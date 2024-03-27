@@ -3043,7 +3043,7 @@ class UserService {
     const {ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor}=query
 
 
-    console.log(ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor)
+    //console.log(ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor)
 
     try {
       const conditions = {
@@ -3309,6 +3309,8 @@ class UserService {
               matchId:element.dataValues.id,
               userId:element.dataValues.userId,
               userId2:element.dataValues.userId2,
+              userId2:element.dataValues.userId2,
+              personalityQuestionsAnswer:element.dataValues.personalityQuestionsAnswer,
               isMatchRejected:element.dataValues.isMatchRejected,
               matchInformation:JSON.parse(element.dataValues.matchInformation),
               matchPercentage:element.dataValues.matchPercentage,
