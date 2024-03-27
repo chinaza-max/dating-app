@@ -3163,9 +3163,7 @@ class UserService {
             ratingAverage=await this.calculateAverage(myTotalReviewArray)
            }
          
-   
-           console.log(ratingAverage)
-
+  
 
               
             if(me.dataValues.preferedGender!==myMatchUser.dataValues.gender) continue
@@ -3308,7 +3306,6 @@ class UserService {
             result.push({
               matchId:element.dataValues.id,
               userId:element.dataValues.userId,
-              userId2:element.dataValues.userId2,
               userId2:element.dataValues.userId2,
               personalityQuestionsAnswer:element.dataValues.personalityQuestionsAnswer,
               isMatchRejected:element.dataValues.isMatchRejected,
