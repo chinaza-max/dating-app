@@ -2776,8 +2776,8 @@ class UserService {
         console.log("myResult2")
 
 
-        if(!myResult2){
-           requestCountNeedsAction=1
+        if(!myResult2){}
+        else{requestCountNeedsAction=1
         }
       }
 
