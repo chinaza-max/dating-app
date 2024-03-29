@@ -2768,10 +2768,16 @@ class UserService {
           },
         });
 
+        console.log("myResult2")
+        console.log("myResult2")
+
+        console.log(myResult2)
+        console.log("myResult2")
+        console.log("myResult2")
+
 
         if(!myResult2){
            requestCountNeedsAction=1
-  
         }
       }
 
