@@ -766,6 +766,7 @@ class UserService {
                   }
                 ] ,
               attributes:['userId','userId2','status','id','createdAt'],
+              order: [['createdAt', 'ASC']]
             })
          
           }
@@ -2767,13 +2768,6 @@ class UserService {
             requestId:myResult.dataValues.id
           },
         });
-
-        console.log("myResult2")
-        console.log("myResult2")
-
-        console.log(myResult2)
-        console.log("myResult2")
-        console.log("myResult2")
 
 
         if(!myResult2){}
