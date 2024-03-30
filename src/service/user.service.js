@@ -677,9 +677,10 @@ class UserService {
                 status:'decline',
                 isDeleted:false
               },
-             distinct: true, 
+             //distinct: true, 
               attributes:['userId','userId2',
               'status','id','createdAt', 
+
               [Sequelize.fn('DISTINCT', Sequelize.col('matchId')), 'matchId'],
 
               ] ,
