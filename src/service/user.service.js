@@ -680,7 +680,6 @@ class UserService {
              distinct: true, 
               attributes:['userId','userId2',
               'status','id','createdAt', 
-
               [Sequelize.fn('DISTINCT', Sequelize.col('matchId')), 'matchId'],
 
               ] ,
