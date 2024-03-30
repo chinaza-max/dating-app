@@ -111,10 +111,11 @@ class Server {
           checkIfSubscriptionHasExpired();
           checkIfDateAreCompleted();
         });
-        //To set up a cron job that runs every two weeks at 4 AM
-        cron.schedule('0 4 */14 * *', () => {
-          checkAndDeleteUnverifiedRecords()
 
+
+        //To set up a cron job that runs every two weeks at 4 AM
+        cron.schedule('*/10 * * * * *', () => {
+          checkAndDeleteUnverifiedRecords()
         });
 
         cron.schedule('0 12 * * *', () => {
