@@ -679,7 +679,10 @@ class UserService {
               },
              distinct: true, 
               attributes:['userId','userId2',
-              'status','id','createdAt', 'matchId'
+              'status','id','createdAt', 
+
+              [Sequelize.fn('DISTINCT', Sequelize.col('matchId')), 'matchId'],
+
               ] ,
     
               order: [['createdAt', 'DESC']]
@@ -1608,7 +1611,8 @@ class UserService {
                     }
                   ]
                 }
-              ]
+              ],
+              order: [['createdAt', 'DESC']]
             })
           }
           else if(type=='decline'){
@@ -1645,7 +1649,8 @@ class UserService {
                     }
                   ]
                 }
-              ]
+              ],
+              order: [['createdAt', 'DESC']]
             });
     
            
@@ -1685,7 +1690,8 @@ class UserService {
                     }
                   ]
                 }
-              ]
+              ],
+              order: [['createdAt', 'DESC']]
             })
           }
           else if(type=='completed'){
@@ -1732,7 +1738,8 @@ class UserService {
                   required:false
                 }
 
-              ]
+              ],
+              order: [['createdAt', 'DESC']]
             })
           }
           else if(type=='active'){
@@ -1771,7 +1778,8 @@ class UserService {
                   ]
                 }
 
-              ]
+              ],
+              order: [['createdAt', 'DESC']]
             })
           }
       
