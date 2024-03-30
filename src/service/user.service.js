@@ -677,7 +677,7 @@ class UserService {
                 status:'decline',
                 isDeleted:false
               },
-              distinct: true, 
+             // distinct: true, 
               attributes:['userId','userId2',
               'status','id','createdAt', 'matchId'
               ] ,
