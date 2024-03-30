@@ -73,7 +73,7 @@ class Server {
         async function checkAndDeleteUnverifiedRecords() {
           try {
             const twoWeeksAgo = new Date();
-            twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14); // Subtract 14 days
+            twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 8); // Subtract 14 days
             
             const unverifiedRecords = await User.findAll({
               where: {
