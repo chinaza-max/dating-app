@@ -767,7 +767,7 @@ class UserService {
                   }
                 ] ,
               attributes:['userId','userId2','status','id','createdAt'],
-              order: [['createdAt', 'ASC']]
+              order: [['createdAt', 'DESC']]
             })
          
           }
