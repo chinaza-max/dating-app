@@ -100,6 +100,28 @@ class Server {
             console.error('Error checking and deleting unverified records:', error);
           }
         }
+
+
+        async function checkAndUpdateRejectedStatus() {
+          try {
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1); // Subtract 1 month
+        
+            await UserMatch.update(
+              { isMatchRejected: false },
+              {
+                where: {
+                  isMatchRejected: true,
+                  createdAt: { [Op.lt]: oneMonthAgo }
+                }
+              }
+            );
+        
+            console.log('Match rejection status updated successfully.');
+          } catch (error) {
+            console.error('Error updating match rejection status:', error);
+          }
+        }
        
         
 
@@ -113,9 +135,13 @@ class Server {
         });
 
 
+
+
         //To set up a cron job that runs every two weeks at 4 AM
-        cron.schedule('*/10 * * * * *', () => {
+        cron.schedule('0 4 */14 * *', () => {
           checkAndDeleteUnverifiedRecords()
+          checkAndUpdateRejectedStatus()
+
         });
 
         cron.schedule('0 12 * * *', () => {
