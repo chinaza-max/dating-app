@@ -681,10 +681,10 @@ class UserService {
               attributes:['userId','userId2',
               'status','id','createdAt', 
 
-              [Sequelize.fn('DISTINCT', Sequelize.col('matchId')), 'matchId'],
+              [Sequelize.fn('MAX', Sequelize.col('matchId')), 'matchId']
 
               ] ,
-    
+              group: ['matchId', 'userId', 'userId2', 'status', 'id', 'createdAt'],
               order: [['createdAt', 'DESC']]
             })
           }
