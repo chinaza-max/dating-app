@@ -4,7 +4,6 @@ import {
 
   } from "sequelize";
 
-  import serverConfig from "../../config/server.js";
 
   class UserMatch extends Model {}
 

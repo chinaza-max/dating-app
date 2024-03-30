@@ -4,7 +4,6 @@ import {
     Model
   } from "sequelize";
 
-import serverConfig from "../../config/server.js";
 
 // userId is the person who made the first request
 // userId2 is the person who accepted the request 
