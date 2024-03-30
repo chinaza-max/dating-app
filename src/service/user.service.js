@@ -677,14 +677,11 @@ class UserService {
                 status:'decline',
                 isDeleted:false
               },
-             //distinct: true, 
               attributes:['userId','userId2',
-              'status','id','createdAt', 
-
-              [Sequelize.fn('DISTINCT', Sequelize.col('matchId')), 'matchId']
+              'status','id','createdAt', 'matchId'
 
               ] ,
-              group: ['matchId', 'userId', 'userId2', 'status', 'id', 'createdAt'],
+    
               order: [['createdAt', 'DESC']]
             })
           }
