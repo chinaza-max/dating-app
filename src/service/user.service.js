@@ -677,9 +677,12 @@ class UserService {
                 status:'decline',
                 isDeleted:false
               },
+              distinct: true, 
               attributes:['userId','userId2',
-              'status','id','createdAt', [Sequelize.fn('DISTINCT', Sequelize.col('matchId')), 'matchId']
-            ],
+              'status','id','createdAt', 'matchId'
+              ] ,
+    
+              order: [['createdAt', 'DESC']]
             })
           }
   
@@ -704,6 +707,7 @@ class UserService {
                 isDeleted:false
               },
               attributes:['userId','userId2','status','id','createdAt'],
+              order: [['createdAt', 'DESC']]
             })
   
             console.log(details)
@@ -730,6 +734,7 @@ class UserService {
                 isDeleted:false
               },
               attributes:['userId','userId2','status','id','createdAt'],
+              order: [['createdAt', 'DESC']]
             })
           }
         }
