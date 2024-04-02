@@ -44,6 +44,7 @@ height: 50px;
 
 .content {
 padding: 20px;
+background: url('https://resumegenius.com/wp-content/uploads/letter-of-interest-500x333.png');
 }
 
 .data {
@@ -55,14 +56,14 @@ text-align: center;
 }
 .center img{
     height: 50px;
-    width: 20px;
+    width: 30px;
 }
 </style>
 </head>
 <body>
 
   <p class="center">
-    <img src="{{domain}}/images/choiceMILogo.png" alt="Centered Image">
+    <img src="{{domain}}/images/choiceMILogo.png" alt="Choice Mi">
   </p>
 <table class="container">
 <tr>
@@ -71,11 +72,11 @@ text-align: center;
 </tr>
 <tr>
 <td class="content">
-<p class="data">Name:{{ name }}</p>
-<p class="data">Phone:{{ tel }}</p>
-<p class="data">Email:{{ email }}</p>
-<p class="data">State: {{ state }}</p>
-<p class="data">Country: {{ country }}</p>
+<p class="data">Name : {{ name }}</p>
+<p class="data">Phone : {{ tel }}</p>
+<p class="data">Email : {{ email }}</p>
+<p class="data">State : {{ state }}</p>
+<p class="data">Country : {{ country }}</p>
 </td>
 </tr>
 </table>
