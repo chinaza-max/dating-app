@@ -1759,7 +1759,8 @@ class UserService {
                 },
                 {
                   model: this.UserModel,
-                  attributes: ['personalityQuestionsAnswer'],
+                  as: "UserDates",
+                  otherKey: "userId"
                 }
               ],
               order: [['createdAt', 'DESC']]
@@ -2345,7 +2346,7 @@ class UserService {
       }
     
       console.log(details)
-      
+
       if(type=='completed'){
 
         for (let index = 0; index < details.length; index++) {
