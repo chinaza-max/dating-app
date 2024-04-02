@@ -807,6 +807,9 @@ class UserService {
   
       for (let index = 0; index < details.length; index++) {
         const element = details[index];
+
+
+
         let matchDetail=await this.UserMatchModel.findOne({
           where: {
             [Op.or]: [
@@ -825,7 +828,13 @@ class UserService {
             ],
           },
         })
-  
+
+
+        let partner=await this.UserModel.findOne({
+          where: {
+              id:userId==element.dataValues.userId? element.dataValues.userId2:element.dataValues.userId
+          },
+        })
         
         result.push({
           userId: element.dataValues.userId,
@@ -835,6 +844,7 @@ class UserService {
           requestId:element.dataValues.id,
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
+          personalityQuestionsAnswer:partner.dataValues.personalityQuestionsAnswer,
           hasDate:element.dataValues.RequestDates == null ? false : true
         })  
       }
