@@ -1593,7 +1593,7 @@ class UserService {
                   }
                 ], 
                 usersStatus:'accepted',
-                dateStatus:{[Sequelize.Op.not]: 'completed'},
+               // dateStatus:{[Sequelize.Op.not]: 'completed'},
                 isDeleted:false
               },
               include: [
