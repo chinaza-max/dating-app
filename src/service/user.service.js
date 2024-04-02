@@ -1604,6 +1604,7 @@ class UserService {
                     isDeleted: false,
                   },
                 },
+
                 {
                   model: this.RequestModel,
                   where: {
@@ -1617,6 +1618,10 @@ class UserService {
                       },
                     }
                   ]
+                },
+                {
+                  model: this.UserModel,
+                  attributes: ['personalityQuestionsAnswer'],
                 }
               ],
               order: [['createdAt', 'DESC']]
@@ -1655,6 +1660,10 @@ class UserService {
                       },
                     }
                   ]
+                },
+                {
+                  model: this.UserModel,
+                  attributes: ['personalityQuestionsAnswer'],
                 }
               ],
               order: [['createdAt', 'DESC']]
@@ -1696,6 +1705,10 @@ class UserService {
                       },
                     }
                   ]
+                },
+                {
+                  model: this.UserModel,
+                  attributes: ['personalityQuestionsAnswer'],
                 }
               ],
               order: [['createdAt', 'DESC']]
@@ -1743,6 +1756,10 @@ class UserService {
                     isDeleted: false,
                   },
                   required:false
+                },
+                {
+                  model: this.UserModel,
+                  attributes: ['personalityQuestionsAnswer'],
                 }
 
               ],
@@ -1783,6 +1800,10 @@ class UserService {
                       }
                     }
                   ]
+                },
+                {
+                  model: this.UserModel,
+                  attributes: ['personalityQuestionsAnswer'],
                 }
 
               ],
@@ -2385,6 +2406,7 @@ class UserService {
               userId2: element.dataValues.userId2,
               usersStatus: element.dataValues.usersStatus,
               dateStatus: element.dataValues.dateStatus,
+              personalityQuestionsAnswer:element.dataValues.User.personalityQuestionsAnswer,
               reservationStatus: element.dataValues.reservationStatus,
               whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
               fullDate:element.dataValues.fullDate,
@@ -2453,6 +2475,12 @@ class UserService {
                   where: {
                     isDeleted: false,
                   },
+                },
+                {
+                  model: this.UserModel,
+                  where: {
+                    isDeleted: false,
+                  },
                 }
               ]
             })
@@ -2468,6 +2496,12 @@ class UserService {
                   where: {
                     isDeleted: false,
                   },
+                },
+                {
+                  model: this.UserModel,
+                  where: {
+                    isDeleted: false,
+                  },
                 }
               ]
             })
@@ -2478,8 +2512,9 @@ class UserService {
 
 
         result.push({
-            wishListId:element.dataValues.id,
+              wishListId:element.dataValues.id,
               matchId:element.dataValues.UserMatch.id,
+              personalityQuestionsAnswer:element.dataValues.User.personalityQuestionsAnswer,
               userId:element.dataValues.UserMatch.userId,
               userId2:element.dataValues.UserMatch.userId2,
               matchInformation:JSON.parse(element.dataValues.UserMatch.matchInformation),
