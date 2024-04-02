@@ -2345,7 +2345,7 @@ class UserService {
        
       }
     
-      console.log(details)
+     
 
       if(type=='completed'){
 
@@ -2353,6 +2353,12 @@ class UserService {
           const element = details[index];
           let  formattedReviews=[]
 
+          console.log('details')
+          console.log(element.dataValues)
+          console.log(element.dataValues.User)
+
+    
+          console.log('details')
           if(element.dataValues?.DateReviews){
             formattedReviews= element.dataValues.DateReviews.map((review) => ({
               star: review.dataValues.star,
