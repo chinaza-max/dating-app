@@ -1756,11 +1756,6 @@ class UserService {
                     isDeleted: false,
                   },
                   required:false
-                },
-                {
-                  model: this.UserModel,
-                  as: "UserDates",
-                  otherKey: "userId"
                 }
               ],
               order: [['createdAt', 'DESC']]
@@ -2353,12 +2348,7 @@ class UserService {
           const element = details[index];
           let  formattedReviews=[]
 
-          console.log('details')
-          console.log(element.dataValues)
-          console.log(element.dataValues.User)
-
-    
-          console.log('details')
+          
           if(element.dataValues?.DateReviews){
             formattedReviews= element.dataValues.DateReviews.map((review) => ({
               star: review.dataValues.star,
@@ -2375,7 +2365,7 @@ class UserService {
               userId2: element.dataValues.userId2,
               usersStatus: element.dataValues.usersStatus,
               dateStatus: element.dataValues.dateStatus,
-              personalityQuestionsAnswer:element.dataValues.User.personalityQuestionsAnswer,
+              //personalityQuestionsAnswer:element.dataValues.User.personalityQuestionsAnswer,
               reservationStatus: element.dataValues.reservationStatus,
               whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
               fullDate:element.dataValues.fullDate,
