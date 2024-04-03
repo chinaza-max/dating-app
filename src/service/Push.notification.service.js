@@ -36,7 +36,7 @@ class PushNotificationService {
     setInterval(async () => {
       const UserResult=await User.findByPk(1)
       //this.sendPushNotification()
-      this.sendPushNotification("Choice mi", "New users sign up",UserResult.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html") 
+      //this.sendPushNotification("Choice mi", "New users sign up",UserResult.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html") 
       
     }, 6000);
   }
