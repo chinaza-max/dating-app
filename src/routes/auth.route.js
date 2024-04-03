@@ -20,7 +20,7 @@ class AuthRoutes extends AuthController {
     this.router.post("/loginAdmin", this.loginAdmin);
     this.router.post("/loginUser", this.loginUser);
     this.router.post("/updateTel", this.updateTel);
-    this.router.post("/googleCallback", this.signupUser);
+    //this.router.post("/googleCallback", this.signupUser);
     this.router.post("/handlemarketingData", this.handlemarketingData);
 
 

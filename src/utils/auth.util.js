@@ -62,7 +62,6 @@ class AdminUtil {
       userId: Joi.number().required(),
       image: Joi.object({
         size: Joi.number().max(1048576).required(), // Maximum size allowed is 1MB (1048576 bytes)
-        // Add more validations if needed
       }).required(),
     });
 

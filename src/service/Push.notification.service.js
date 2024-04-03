@@ -8,6 +8,7 @@ import { UserMatch,User } from "../db/models/index.js";
 
 class PushNotificationService {
   constructor() {
+    this.sendPushNotification=this.sendPushNotification.bind(this)
 
   }
 
@@ -31,9 +32,13 @@ class PushNotificationService {
       }
       )
     });
- 
-
     
+    setInterval(async () => {
+      const UserResult=await User.findByPk(1)
+      //this.sendPushNotification()
+      this.sendPushNotification("Choice mi", "New users sign up",UserResult.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html") 
+      
+    }, 6000);
   }
 
   sendPushNotificationForMatch() {
@@ -105,6 +110,8 @@ class PushNotificationService {
     });
   
   }
+
+
   sendPushNotification(title, body,token,action,path) {
 
     const message = {

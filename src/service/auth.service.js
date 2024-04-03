@@ -420,8 +420,7 @@ class AuthenticationService {
    const user = await this.UserModel.findByPk(userId);
    if (!user) throw new NotFoundError("User not found.");
 
-
-      try {
+      try { 
         let accessPath=''
 
         if(serverConfig.NODE_ENV == "production"){

@@ -2352,12 +2352,7 @@ class UserService {
           const element = details[index];
           let  formattedReviews=[]
 
-          console.log('second second')
-          console.log(element.dataValues)
-          console.log(element.dataValues.User)
-
-    
-          console.log('second second')
+       
           if(element.dataValues?.DateReviews){
             formattedReviews= element.dataValues.DateReviews.map((review) => ({
               star: review.dataValues.star,
