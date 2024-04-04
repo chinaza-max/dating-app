@@ -1756,10 +1756,6 @@ class UserService {
                     isDeleted: false,
                   },
                   required:false
-                },
-                {
-                  model: this.UserModel,
-                  otherKey: "userId"
                 }
               ],
               order: [['createdAt', 'DESC']]
@@ -2369,7 +2365,6 @@ class UserService {
               userId2: element.dataValues.userId2,
               usersStatus: element.dataValues.usersStatus,
               dateStatus: element.dataValues.dateStatus,
-              //personalityQuestionsAnswer:element.dataValues.User.personalityQuestionsAnswer,
               reservationStatus: element.dataValues.reservationStatus,
               whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
               fullDate:element.dataValues.fullDate,
