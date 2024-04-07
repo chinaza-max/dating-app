@@ -2388,7 +2388,6 @@ class UserService {
                 matchPercentage: element.dataValues.Request.dataValues.UserMatch.dataValues.matchPercentage,
               },
               dateReview:[]
-  
           })
          
         }
