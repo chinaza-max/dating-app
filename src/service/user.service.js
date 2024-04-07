@@ -2387,7 +2387,7 @@ class UserService {
                 matchInformation:JSON.parse( element.dataValues.Request.dataValues.UserMatch.dataValues.matchInformation),
                 matchPercentage: element.dataValues.Request.dataValues.UserMatch.dataValues.matchPercentage,
               },
-              dateReview:[formattedReviews]
+              dateReview:[]
   
           })
          
