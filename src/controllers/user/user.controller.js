@@ -485,6 +485,33 @@ export default class UserController {
   }
 
 
+  
+  async getTransaction(
+    req,
+    res,
+    next
+  ){
+ 
+    try {
+    
+
+        const my_bj = {
+          ...req.query
+        }
+                          
+        const data=await userService.handleGetTransaction(my_bj);
+  
+
+      return res.status(200).json({
+        status: 200,
+        data,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
   async UDsubscriptionPlan(
     req,
     res,

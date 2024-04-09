@@ -169,6 +169,30 @@ class UserUtil {
     type: Joi.string().required()
   });
   
+  verifyHandleGetTransaction = Joi.object({
+    type: Joi.string().valid('all', 'one', 'allForUser').required(),
+    userId: Joi.when('type', {
+        is: 'allForUser',
+        then: Joi.number().required(),
+        otherwise: Joi.forbidden() 
+    }),
+    transactionId: Joi.when('type', {
+        is: 'one',
+        then: Joi.number().required(),
+        otherwise: Joi.forbidden() 
+    }),
+    pageSize: Joi.when('type', {
+        is: 'allForUser',
+        then: Joi.number().required(),
+        otherwise: Joi.forbidden() 
+    }),
+    offset: Joi.when('type', {
+        is: 'allForUser',
+        then: Joi.number().required(),
+        otherwise: Joi.forbidden() 
+    })
+
+});
 
   verifyHandleDDBusiness= Joi.object({
     businessId: Joi.number().required(),

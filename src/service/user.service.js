@@ -5,7 +5,7 @@ import { User,Admin ,
   EmailandTelValidationBusiness,
   EmailandTelValidationBusinessSpot,
   UserAnswer,UserMatch,Request,UserDate,SubscriptionPlan
-  ,Subscription,WishList,MarketingData,Review  } from "../db/models/index.js";
+  ,Subscription,WishList,MarketingData,Review ,Transaction } from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -41,7 +41,9 @@ class UserService {
   WishListModel=WishList
   ReviewModel=Review
   MarketingDataModel=MarketingData
+  TransactionModel=Transaction
 
+  
 
   
 
@@ -1067,6 +1069,51 @@ class UserService {
   }
 
   }
+
+
+  
+
+  async handleGetTransaction(data) {
+    let { 
+      userId,
+      transactionId,
+      type
+    } = await userUtil.verifyHandleGetTransaction.validateAsync(data);
+
+    try{
+
+      let result=[]
+
+
+      if(type=='all'){
+        result = await this.TransactionModel.findAll();
+      }
+      else if(type=='one'){
+        result = await this.TransactionModel.findByPk(transactionId);
+
+      }
+      else if(type=='allForUser'){
+        result = await this.TransactionModel.findAll({
+          where:{
+            userId
+          },
+          limit: Number(pageSize),
+          offset: Number(offset),
+        });
+      } 
+
+      return result
+  
+
+  } catch (error) {
+    console.log(error);
+    throw new SystemError(error.name,error.parent)
+  }
+
+  }
+
+
+
 
   async handleUDsubscriptionPlan(data) {
     let { 

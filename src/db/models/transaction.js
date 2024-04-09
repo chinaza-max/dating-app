@@ -17,10 +17,9 @@ export function init(connection) {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-      transactionDate: {
-        type: DataTypes.DATE,
+      userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
       transactionRefId: {
         type: DataTypes.DATE,
