@@ -12,6 +12,7 @@ import serverConfig from "../config/server.js";
 import {  Op, Sequelize } from "sequelize";
 import mailService from "../service/mail.service.js";
 import {getMessaging} from "firebase-admin/messaging";
+import crypto from 'crypto';
 
 
 import {
@@ -1330,6 +1331,36 @@ class UserService {
   }
 
 
+
+  
+  async handleGetprocessTransactionAction(data) {
+
+    const {type,merchantReference,userId} =await userUtil.verifyHandleGetprocessTransactionAction.validateAsync(data);
+
+    if(type=='create'){
+      const  result = await this.TransactionModel.create({
+        userId:userId
+      })
+      return result
+
+    }
+    else if(type=='delete'){
+
+      const result=await this.TransactionModel.findByPk(merchantReference)
+      result.destroy()
+    
+    }
+
+  }
+  
+  async handleGetCryptodata(data) {
+
+    const establishData =await userUtil.verifyHandleGetCryptodata.validateAsync(data);
+
+  
+
+    return  this.generateSignature(establishData,serverConfig.TRUSTLY_ACCESS_KEY)
+  }
   
   async handleGetProfileDetail(data) {
 
@@ -4789,7 +4820,44 @@ async calculateAverage(arr) {
     return true
   }
 
-}
+  }
+
+  generateSignature(establishData, accessKey){
+    let query = '';
+    query += `accessId=${establishData.accessId}`;
+    query += `&merchantId=${establishData.merchantId}`;
+    query += `&description=${establishData.description}`;
+    query += `&currency=${establishData.currency}`;
+    query += `&amount=${establishData.amount}`;
+    
+    if (establishData.displayAmount) query += `&displayAmount=${establishData.displayAmount}`;
+    if (establishData.minimumBalance) query += `&minimumBalance=${establishData.minimumBalance}`;
+    
+    query += `&merchantReference=${establishData.merchantReference}`;
+    query += `&paymentType=${establishData.paymentType}`;
+    
+    if (establishData.timeZone) query += `&timeZone=${establishData.timeZone}`;
+  
+    if (establishData.verification) {
+      if (establishData.verification.status) query += `&verification.status=${establishData.verification.status}`;
+      if (establishData.verification.verifyCustomer) query += `&verification.verifyCustomer=${establishData.verification.verifyCustomer}`;
+    }
+  
+    if (establishData.customer) {
+      if (establishData.customer.name) query += `&customer.name=${establishData.customer.name}`;
+      if (establishData.customer.email) query += `&customer.email=${establishData.customer.email}`;
+      if (establishData.customer.phone) query += `&customer.phone=${establishData.customer.phone}`;
+      if (establishData.customer.customerId) query += `&customer.customerId=${establishData.customer.customerId}`;
+    }
+  
+
+    if (establishData.transactionId) query += `&transactionId=${establishData.transactionId}`;
+  
+    const requestSignature = crypto.createHmac('sha1', accessKey).update(query).digest('base64');
+    return requestSignature;
+  }
+
+
 
 
 }

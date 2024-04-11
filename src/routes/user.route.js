@@ -71,6 +71,8 @@ class UserRoutes extends UserController {
     this.router.get("/dateSelectionData", this.dateSelectionData);
     this.router.get("/getMatchDetails", this.getMatchDetails);
     this.router.get("/getProfileDetail", this.getProfileDetail);
+    this.router.get("/getCryptodata", this.getCryptodata);
+    this.router.get("/processTransactionAction", this.processTransactionAction);
 
   } 
 

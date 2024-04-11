@@ -540,6 +540,68 @@ export default class UserController {
     }
   }
 
+  
+  async  processTransactionAction
+  (
+    req,
+    res,
+    next
+  ){
+
+    const obj={
+      ...req.query,
+      userId:req.user.id,
+    }
+
+    try {
+               
+      const result=await userService.handleGetprocessTransactionAction(obj);
+
+      if(result){
+        return res.status(200).json({
+          status: 200,
+          data:result,
+        });
+      }
+      else{
+        return res.status(200).json({
+          status: 200,
+          message:"Transaction canceled",
+        });
+      }
+    
+
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
+
+  
+  async  getCryptodata
+  (
+    req,
+    res,
+    next
+  ){
+
+    const obj={
+      ...req.query
+    }
+
+    try {
+               
+      const result=await userService.handleGetCryptodata(obj);
+  
+      return res.status(200).json({
+        status: 200,
+        data:result,
+      });
+    } catch (error) {
+      console.log(error)
+      next(error);
+    }
+  }
 
 
   async  getProfileDetail

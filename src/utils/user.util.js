@@ -552,11 +552,46 @@ class UserUtil {
       }),
   });
 
+  verifyHandleGetprocessTransactionAction= Joi.object({
+    type: Joi.string().valid(
+      'create',
+      'delete'
+      ).required(),
+    merchantReference: Joi.when('type', {
+      is: 'delete',
+      then: Joi.string().required(),
+    }),
+    userId: Joi.number().required(),
+
+  });
+
 
   verifyHandleGetProfileDetail= Joi.object({
         userId: Joi.number().required(),
   });
 
+
+  verifyHandleGetCryptodata= Joi.object({
+    accessId: Joi.string().required(),
+    merchantId: Joi.object().required(), 
+    description: Joi.string().required(),
+    currency: Joi.string().valid('USD', 'CAD').required(),
+    amount: Joi.number().required(), 
+    merchantReference: Joi.number().integer().required(),
+    paymentType: Joi.string().valid('Deferred').required(),
+    verification: Joi.object({
+        verifyCustomer: Joi.boolean().required(),
+    }).required(),
+    customer: Joi.object({
+        name: Joi.string().required(),
+        email: Joi.string().email().required(),
+        phone: Joi.number().integer().required(),
+        customerId: Joi.number().integer().required(),
+    }).required(),
+    returnUrl: Joi.string().uri().required(),
+    cancelUrl: Joi.string().uri().required(),
+    notificationUrl: Joi.string().uri().required(),
+});
 
 }
 

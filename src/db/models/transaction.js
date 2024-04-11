@@ -14,8 +14,8 @@ export function init(connection) {
         autoIncrement: true,
       },
       amount: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -23,12 +23,13 @@ export function init(connection) {
       },
       transactionRefId: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         defaultValue: DataTypes.NOW,
       },
       status: {
-        type: DataTypes.ENUM('success', 'failed'),
+        type: DataTypes.ENUM('PENDING', 'ERROR', 'INITIATED'),
         allowNull: false,
+        defaultValue: 'INITIATED',
       }, 
       isDeleted: {
         type: DataTypes.BOOLEAN,
