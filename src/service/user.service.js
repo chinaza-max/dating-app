@@ -474,6 +474,7 @@ class UserService {
       userId,  
       firstName,
       lastName,
+      gender,
       preferedGender,
       relationshipGoal,
       dateOfBirth,
@@ -509,6 +510,7 @@ class UserService {
         {
           firstName,
           lastName,
+          gender,
           preferedGender,
           relationshipGoal,
           dateOfBirth,
@@ -4761,14 +4763,17 @@ sendPushNotification(title, body,token,action,path) {
   };
 
 
-    getMessaging().send(message)
-    .then((response) => {
-      // Response is a message ID string.
-      console.log('Successfully sent message:', response);
-    })
-    .catch((error) => {
-      console.log('Error sending message:', error);
-    });
+    if(token){
+      getMessaging().send(message)
+      .then((response) => {
+        // Response is a message ID string.
+        console.log('Successfully sent message:', response);
+      })
+      .catch((error) => {
+        console.log('Error sending message:', error);
+      });
+    }
+    
   
 }
 

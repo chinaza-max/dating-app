@@ -11,6 +11,17 @@ class AdminUtil {
     state: Joi.string().required()
   });
 
+  verifyUserCreationData= Joi.object({
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    signUpWith:Joi.string().required(),
+    countryCodeTel: Joi.string().required(),
+    tel: Joi.string().required(),
+    emailAddress: Joi.string().email().required(),
+    password: Joi.string().required(),
+  });
+  
+  /*
     verifyUserCreationData= Joi.object({
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
@@ -39,6 +50,7 @@ class AdminUtil {
       gender: Joi.string().required(),
       weight: Joi.number().required()
     });
+    */
 
     verifyHandleVerifyEmailorTelAdmin= Joi.object({
       userId: Joi.number().required(),

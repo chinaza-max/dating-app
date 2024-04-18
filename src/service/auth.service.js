@@ -111,6 +111,57 @@ class AuthenticationService {
 
 
   async handleUserCreation(data) {
+      let { 
+        firstName,
+        lastName,
+        tel,
+        emailAddress,
+        password,
+        countryCodeTel,
+        signUpWith,
+      } = await authUtil.verifyUserCreationData.validateAsync(data);
+  
+
+    let hashedPassword;
+    try {
+      hashedPassword = await bcrypt.hash(
+        password,
+        Number(serverConfig.SALT_ROUNDS)
+      );
+    } catch (error) { 
+      console.log(error)
+      throw new SystemError('SystemError','An error occured while processing your request(handleUserCreation) while hashing password ');
+    }
+
+
+    var existingUser = await this.isUserExisting(emailAddress,tel);
+ 
+    if (existingUser != null)throw new ConflictError(existingUser);
+
+    try {
+      const user = await this.UserModel.create({
+        firstName,
+        lastName,
+        tel,
+        emailAddress,
+        password:hashedPassword,
+        signUpWith,
+        countryCodeTel
+    });
+    await this.sendEmailVerificationCode(user.emailAddress,user.id)
+    
+    return user;
+
+    } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name,error.parent)
+    }
+  }
+
+
+  /*
+
+    async handleUserCreation(data) {
 
 
       let { 
@@ -203,6 +254,7 @@ class AuthenticationService {
 
   
   }
+   */
 
 
 
@@ -415,9 +467,11 @@ class AuthenticationService {
 
   async handleUploadPicture(data,file) {
     
-   const{ userId }=await authUtil.verifyHandleUploadPicture.validateAsync(data);
 
+   const{ userId }=await authUtil.verifyHandleUploadPicture.validateAsync(data);
+ 
    const user = await this.UserModel.findByPk(userId);
+
    if (!user) throw new NotFoundError("User not found.");
 
       try { 
@@ -460,8 +514,6 @@ class AuthenticationService {
         ],       
       },
     });   
-
-
 
     if (!user) throw new NotFoundError("User not found.");
 
@@ -543,6 +595,17 @@ class AuthenticationService {
       ]    
     });   
 
+
+    console.log("sssssssssss")
+    console.log("sssssssssss")
+    console.log("sssssssssss")
+
+
+    console.log(user)
+
+    console.log("sssssssssss")
+    console.log("sssssssssss")
+    console.log("sssssssssss")
 
 
     if (!user) throw new NotFoundError("User not found.");

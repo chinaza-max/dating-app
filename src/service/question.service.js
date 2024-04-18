@@ -123,11 +123,12 @@ async handleGetQuestion() {
       },
       attributes:['id','text','PartnerPersonaltyQT','options']
     })
-    
+
+    console.log(result)
+
     result=result.map((data)=>{
       return{id:data.id,text:data.text,PartnerPersonaltyQT:data.PartnerPersonaltyQT,options:JSON.parse(data.options)}
     })
-    console.log(result)
   } catch (error) {
       console.log(error)
       throw new SystemError(error.name, error.parent)

@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import serverConfig from "../../config/server.js";
+
 
 class User extends Model {}
 
@@ -19,6 +19,10 @@ export function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,
       }, 
+      signUpWith: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }, 
       image: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -34,7 +38,7 @@ export function init(connection) {
           'Female',
           'Others',
         ),
-        allowNull: false,
+        allowNull: true,
       },
       preferedGender: {
         type: DataTypes.ENUM(
@@ -82,59 +86,59 @@ export function init(connection) {
       },
       dateOfBirth: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       countryOfResidence: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       maritalStatus: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       numberOfChildren: {
         type: DataTypes.INTEGER, 
-        allowNull: false, 
+        allowNull: true, 
       },
       language: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       ethnicity: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       religion: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       bodyType: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       education: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       courseOfStudy: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       occupation: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       recreationalActivity: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       height: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       weight: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       }, 
       personalityQuestionsAnswer: {
         type: DataTypes.TEXT,
@@ -150,23 +154,23 @@ export function init(connection) {
       },
       haveChildren: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       smoking: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       drinking: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       eyeColor: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       hairColor: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       active: {
         type: DataTypes.BOOLEAN,
