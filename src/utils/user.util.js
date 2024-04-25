@@ -473,6 +473,7 @@ class UserUtil {
     eyeColor: Joi.string().required(),
     hairColor: Joi.string().required(),
     active: Joi.boolean().required(),
+    profileCompleted: Joi.boolean().required(),
     notificationAllowed: Joi.boolean().required(),    
   });
 

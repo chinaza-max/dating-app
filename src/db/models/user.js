@@ -191,6 +191,11 @@ export function init(connection) {
         allowNull: false,
         defaultValue:true
       },
+      profileCompleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:true
+      },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
