@@ -1141,6 +1141,17 @@ export default class UserController {
     let  result=await userService.handleCheckActiveSubscription(my_bj);
 
 
+    console.log("result")
+    console.log("result")
+    console.log("result")
+    console.log("result")
+
+      console.log(result)
+      console.log("result")
+      console.log("result")
+      console.log("result")
+      console.log("result")
+
       return res.status(200).json({
         status: 200,
         data:result

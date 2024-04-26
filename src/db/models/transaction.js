@@ -39,10 +39,9 @@ export function init(connection) {
     },
     {
       tableName: 'Transaction',
-        sequelize: connection,
-        timestamps: true,
-        underscored:false
-        
+      sequelize: connection,
+      timestamps: true,
+      underscored:false
     }
   );
 

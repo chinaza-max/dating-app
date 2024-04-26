@@ -190,7 +190,7 @@ export function init(connection) {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:true
-      },
+      },   
       profileCompleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

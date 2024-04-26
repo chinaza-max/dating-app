@@ -218,8 +218,7 @@ function associate() {
   Transaction.belongsTo(Subscription, {
     foreignKey: 'transactionId', 
   })
-
-
+  
 }
 
 async function authenticateConnection(connection) {

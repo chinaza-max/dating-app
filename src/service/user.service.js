@@ -1025,15 +1025,26 @@ class UserService {
       const result=await this.SubscriptionModel.findOne({
         where:{
           userId,
-          active:true
-        }
+        },
+        order: [['createdAt', 'DESC']],
+        include: [
+                {
+                  model: this.TransactionModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                },
+                {
+                  model: this.SubscriptionPlanModel,
+                  where: {
+                    isDeleted: false,
+                  },
+                }
+        ] 
       })
 
-      if(result){
-        return true
-      }else{
-        return false
-      }
+      
+      return result
 
   }
   async handleCreateSubscriptionPlan(data) {
