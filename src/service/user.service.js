@@ -1461,7 +1461,7 @@ class UserService {
             country:country
           },
           attributes:['city'],
-          group: ['country'],
+          group: ['city'],
         })
 
         return result||[]
