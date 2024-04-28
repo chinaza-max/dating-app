@@ -668,14 +668,8 @@ export default class UserController {
     next
   ){
 
-    const {type}=req.query
-    const {city}=req.query
-
-
-
     const obj={
-      type:type,
-      city:city,
+      ...req.query
     }
 
     try {
@@ -1140,17 +1134,6 @@ export default class UserController {
     
     let  result=await userService.handleCheckActiveSubscription(my_bj);
 
-
-    console.log("result")
-    console.log("result")
-    console.log("result")
-    console.log("result")
-
-      console.log(result)
-      console.log("result")
-      console.log("result")
-      console.log("result")
-      console.log("result")
 
       return res.status(200).json({
         status: 200,

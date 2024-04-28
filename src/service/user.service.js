@@ -1021,7 +1021,6 @@ class UserService {
       userId
     } = await userUtil.verifyHandleCheckActiveSubscription.validateAsync(data);
 
-
       const result=await this.SubscriptionModel.findOne({
         where:{
           userId,
@@ -1030,6 +1029,7 @@ class UserService {
         include: [
                 {
                   model: this.TransactionModel,
+                  as: "Transactions",
                   where: {
                     isDeleted: false,
                   },
@@ -1093,7 +1093,9 @@ class UserService {
     let { 
       userId,
       transactionId,
-      type
+      type,
+      fromDate,
+      toDate
     } = await userUtil.verifyHandleGetTransaction.validateAsync(data);
 
     try{
@@ -1109,13 +1111,48 @@ class UserService {
 
       }
       else if(type=='allForUser'){
-        result = await this.TransactionModel.findAll({
-          where:{
-            userId
-          },
-          limit: Number(pageSize),
-          offset: Number(offset),
-        });
+
+
+
+        if (fromDate && toDate) {
+          result = await this.TransactionModel.findAll({
+              where: {
+                  userId,
+                  createdAt: {
+                      [Op.between]: [fromDate, toDate]
+                  }
+              }
+              ,
+              include:[
+                {
+                  model: this.SubscriptionModel,
+                  include:[
+                    {
+                      model: this.SubscriptionPlanModel,
+                    }
+                  ]
+                }
+              ] 
+          });
+          } else {
+              result = await this.TransactionModel.findAll({
+                  limit: 20,
+                  order: [['createdAt', 'DESC']],
+                  where:{
+                    userId
+                  },
+                  include:[
+                  {
+                    model: this.SubscriptionModel,
+                    include:[
+                      {
+                        model: this.SubscriptionPlanModel,
+                      }
+                    ]
+                  }
+                ] 
+              });
+          }
       } 
 
       return result
@@ -1407,18 +1444,29 @@ class UserService {
 
   async handleDateSelectionData(data) {
 
-    const {city, type}=await userUtil.verifyHandleDateSelectionData.validateAsync(data);
+    const {city, type,  country}=await userUtil.verifyHandleDateSelectionData.validateAsync(data);
 
-
-    if(type=='city'){
+    if(type=='country'){
+      const result =await this.BusinessSpotsModel.findAll({
+        where:{availabilty:true},
+        attributes:['country'],
+        group: ['country'],
+      })
+      return result||[]
+    }
+    else if(type=='city'){
         const result =await this.BusinessSpotsModel.findAll({
-          where:{availabilty:true},
+          where:{
+            availabilty:true,
+            country:country
+          },
           attributes:['city'],
-          group: ['city'],
+          group: ['country'],
         })
 
         return result||[]
     }
+   
     else{
       const result =await this.BusinessSpotsModel.findAll({
         where:{city:city, availabilty:true},
@@ -3156,7 +3204,6 @@ class UserService {
        
       } catch (error) {
 
-          console.log(error)
           throw new SystemError(error.name,  error.parent)
       }
 

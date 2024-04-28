@@ -176,21 +176,22 @@ class UserUtil {
         then: Joi.number().required(),
         otherwise: Joi.forbidden() 
     }),
+    toDate: Joi.when('type', {
+      is: 'allForUser',
+      then: Joi.date().optional(),
+      otherwise: Joi.forbidden() 
+    }),
+    fromDate: Joi.when('type', {
+      is: 'allForUser',
+      then: Joi.date().optional(),
+      otherwise: Joi.forbidden() 
+    }),
     transactionId: Joi.when('type', {
         is: 'one',
         then: Joi.number().required(),
         otherwise: Joi.forbidden() 
     }),
-    pageSize: Joi.when('type', {
-        is: 'allForUser',
-        then: Joi.number().required(),
-        otherwise: Joi.forbidden() 
-    }),
-    offset: Joi.when('type', {
-        is: 'allForUser',
-        then: Joi.number().required(),
-        otherwise: Joi.forbidden() 
-    })
+    
 
 });
 
@@ -546,10 +547,15 @@ class UserUtil {
   verifyHandleDateSelectionData= Joi.object({
     type: Joi.string().valid(
       'city',
+      'country',
       'spot'
       ).required(),
       city: Joi.when('type', {
         is: 'spot',
+        then: Joi.string().required(),
+      }),
+      country: Joi.when('type', {
+        is: 'city',
         then: Joi.string().required(),
       }),
   });

@@ -45,7 +45,6 @@ class UserRoutes extends UserController {
     this.router.get("/getUser", this.getUser);
     this.router.get("/getMarketingData", this.getMarketingData);
 
-
     this.router.post("/createSubscription", this.createSubscription);
     this.router.post("/createSubscriptionPlan", this.createSubscriptionPlan);
     this.router.post("/UDsubscriptionPlan", this.UDsubscriptionPlan);

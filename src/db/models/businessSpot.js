@@ -26,6 +26,11 @@ export function init(connection) {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue:'Nigeria'
+    },
     openHours: {
       type: DataTypes.TIME,
       allowNull: false,
