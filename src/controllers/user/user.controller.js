@@ -158,10 +158,12 @@ export default class UserController {
           ...data,
           createdBy:req.user.id,
         }          
-        await userService.handleCUBusinessSpot(my_bj);
+        const result=await userService.handleCUBusinessSpot(my_bj);
         return res.status(200).json({
           status: 200,
           message: "successfull.",
+          data:result,
+
         });
       }
       else{
