@@ -53,10 +53,6 @@ export  function init(connection) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      businessPicture: {
-        type: DataTypes.TEXT,
-        allowNull: true
-      },
       availabilty: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

@@ -916,10 +916,14 @@ class UserService {
             emailAddress,
             contactPerson,
             locationCoordinate,
+            country,
             tel
           });
   
-        this.sendEmailVerificationCodeBusinessSpot(emailAddress,result.id)
+          this.sendEmailVerificationCodeBusinessSpot(emailAddress,result.id)
+
+          return {id:result.dataValues.id};
+
         }
   
       }else{
@@ -3752,8 +3756,6 @@ class UserService {
                       businessId:element.dataValues.businessId,
                       numberOfBusinessSpot:element.dataValues?.BusinessSpots?.length||0,
                       availabilty:element.dataValues.availabilty,
-                      businessPicture:element.dataValues.businessPicture
-
                     })
         
       }
@@ -3791,6 +3793,7 @@ class UserService {
                       availabilty:element.dataValues.availabilty,
                       address:element.dataValues.address,
                       coordinate:JSON.parse(element.dataValues.locationCoordinate),
+                      businessPicture:element.dataValues.businessPicture
                     })
       }
 
@@ -3931,6 +3934,65 @@ class UserService {
   }
   */
 
+
+  async handCreateBusinessImage(data,files) {
+    let { 
+      createdBy,
+      businessSpotId
+    } = await userUtil.verifyHandCreateBusinessImage.validateAsync(data);
+
+    const businessSpotObj=await this.BusinessSpotsModel.findOne({
+      where:{
+        id:businessSpotId,
+        isDeleted:false
+      }
+    })
+
+
+    if (!businessSpotObj) throw new NotFoundError("Business not found.");
+   
+    
+    let businessPicture= files.map((obj)=>{
+      let accessPath=''
+
+    if(serverConfig.NODE_ENV == "production"){
+      accessPath =
+      serverConfig.DOMAIN +
+      obj.path.replace("/home", "");
+    }
+    else if(serverConfig.NODE_ENV == "development"){
+
+      accessPath = serverConfig.DOMAIN+obj.path.replace("public", "");
+    }
+
+    return  accessPath
+    })
+  
+
+  if(businessSpotObj.businessPicture!=null&&businessSpotObj.businessPicture!=''){
+
+    const parsedArray = JSON.parse(businessSpotObj.dataValues.businessPicture);
+    businessPicture = parsedArray.concat(businessPicture);
+  }
+
+
+  businessPicture=JSON.stringify(businessPicture)
+
+
+    try {
+      await businessSpotObj.update({    
+        businessPicture
+      });
+
+    } catch (error) {
+      throw new ServerError('SystemError',"Failed to update business image" );
+    }
+
+
+  }
+
+
+  /*
   async handCreateBusinessImage(data,files) {
     let { 
       createdBy,
@@ -3948,7 +4010,6 @@ class UserService {
     if (!businessObj) throw new NotFoundError("Business not found.");
    
     
-
     let businessPicture= files.map((obj)=>{
       let accessPath=''
 
@@ -3963,7 +4024,7 @@ class UserService {
     }
 
     return  accessPath
-  })
+    })
   
 
   if(businessObj.businessPicture!=null&&businessObj.businessPicture!=''){
@@ -3988,34 +4049,36 @@ class UserService {
 
   }
 
+  */
+
 
 
   async handleRemoveBusinessImage(data) {
     let { 
       createdBy,
-      businessId,
+      businessSpotId,
       url
     } = await userUtil.verifyHandleRemoveBusinessImage.validateAsync(data);
 
-    const businessObj=await this.BusinessModel.findOne({
+    const businessSpotObj=await this.BusinessSpotsModel.findOne({
       where:{
-        id:businessId,
+        id:businessSpotId,
         isDeleted:false
       }
     })
 
 
-    if (!businessObj) throw new NotFoundError("Business not found.");
+    if (!businessSpotObj) throw new NotFoundError("BusinessSpot not found.");
    
     
-    if(businessObj.businessPicture!=null&&businessObj.businessPicture!=''){
+    if(businessSpotObj.businessPicture!=null&&businessSpotObj.businessPicture!=''){
 
-      let businessPicture = JSON.parse(businessObj.dataValues.businessPicture);
+      let businessPicture = JSON.parse(businessSpotObj.dataValues.businessPicture);
       businessPicture = businessPicture.filter(data => data !== url);
       businessPicture=JSON.stringify(businessPicture)
 
       try {
-        await businessObj.update({    
+        await businessSpotObj.update({    
           businessPicture
         });
   

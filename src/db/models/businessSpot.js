@@ -26,6 +26,10 @@ export function init(connection) {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    businessPicture: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     country: {
       type: DataTypes.STRING,
       allowNull: false,

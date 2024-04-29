@@ -44,7 +44,7 @@ class UserUtil {
 
   verifyHandCreateBusinessImage=Joi.object({
     createdBy: Joi.number().required(),
-    businessId: Joi.number().required(),
+    businessSpotId: Joi.number().required(),
     type: Joi.string().required(),
     image: Joi.object({
       sizes: Joi.array()
@@ -80,7 +80,7 @@ class UserUtil {
 
   verifyHandleRemoveBusinessImage=Joi.object({
     createdBy: Joi.number().integer().required(),
-    businessId: Joi.number().required(),
+    businessSpotId: Joi.number().required(),
     type: Joi.string().required(),
     url: Joi.string().required()
   });
