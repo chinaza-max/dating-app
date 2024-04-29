@@ -103,6 +103,7 @@ class UserUtil {
     availabilty: Joi.boolean().optional(),
     type: Joi.string().required(),
     createdBy: Joi.number().required(),
+    country: Joi.string().required(),
     type2:Joi.string().valid(
       'create',
       'update'

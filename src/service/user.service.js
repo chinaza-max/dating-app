@@ -881,6 +881,7 @@ class UserService {
       availabilty,
       locationCoordinate,
       type2,
+      country,
       tel              
     } = await userUtil.verifyHandleCUBusinessSpot.validateAsync(data);
 
