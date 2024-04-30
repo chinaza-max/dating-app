@@ -1477,16 +1477,8 @@ class UserService {
         where:{city:city, availabilty:true},
         attributes:['id','city','name',
         'address', 'openHours', 'closeHours',
-        'locationCoordinate' 
-      ],
-      include:[
-        {
-          model: this.BusinessModel,
-          attributes:['businessPicture'
-          ],
-          where:{availabilty:true},
-        }
-      ] 
+        'locationCoordinate','businessPicture'
+      ]
       })
 
 
@@ -4068,13 +4060,18 @@ class UserService {
     })
 
 
+
+
+
     if (!businessSpotObj) throw new NotFoundError("BusinessSpot not found.");
    
     
-    if(businessSpotObj.businessPicture!=null&&businessSpotObj.businessPicture!=''){
+    if(businessSpotObj.businessPicture.length>0){
 
       let businessPicture = JSON.parse(businessSpotObj.dataValues.businessPicture);
-      businessPicture = businessPicture.filter(data => data !== url);
+
+     
+      businessPicture = businessPicture.filter(data => !data.includes(url) );
       businessPicture=JSON.stringify(businessPicture)
 
       try {
