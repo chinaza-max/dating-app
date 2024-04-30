@@ -33,8 +33,6 @@ class Server {
         await PushNotificationService.init()
 
        
-
-
         async function checkIfSubscriptionHasExpired(){
           try {
             // Find all subscriptions
@@ -123,8 +121,6 @@ class Server {
           }
         }
        
-        
-
         //'0 0 * * *'
         //'*/10 * * * * *'
   
@@ -133,8 +129,6 @@ class Server {
           checkIfSubscriptionHasExpired();
           checkIfDateAreCompleted();
         });
-
-
 
 
         //To set up a cron job that runs every two weeks at 4 AM
@@ -147,7 +141,12 @@ class Server {
         cron.schedule('0 12 * * *', () => {
           PushNotificationService.sendPushNotificationForMatch()
         });
-        
+
+        //To set up a cron job that runs every two weeks at 3pm
+        cron.schedule('0 15 * * *', () => {
+          PushNotificationService.sendPushNotificationForUpComingDate()
+        });
+
 
     }
      

@@ -78,7 +78,12 @@ export function init(connection) {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue:false
-      }, 
+      },
+      isUpComingNotificationSent: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue:false
+      },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

@@ -2,7 +2,7 @@
 import admin from "firebase-admin";
 import {getMessaging} from "firebase-admin/messaging";
 import serverConfig from "../config/server.js"
-import { UserMatch,User } from "../db/models/index.js";
+import { UserMatch,User,UserDate } from "../db/models/index.js";
 
 
 
@@ -58,18 +58,18 @@ class PushNotificationService {
 
   }
 
-  sendPushNotificationForMatch() {
+  async sendPushNotificationForMatch() {
     
-    const result= UserMatch.findAll({
+    const result=await UserMatch.findAll({
       where:{
         isNotificationsent:false
       }
     })
 
 
-    result.forEach(element => {
+    result.forEach(async element => {
 
-        const result2=User.findOne({
+        const result2=await User.findOne({
           where:{
             isDeleted:false,
             disableAccount:false,
@@ -78,7 +78,7 @@ class PushNotificationService {
           }
         })
 
-        const result3=User.findOne({
+        const result3=await User.findOne({
           where:{
             isDeleted:false,
             disableAccount:false,
@@ -89,13 +89,13 @@ class PushNotificationService {
 
 
         if(result2.dataValues.fcmToken){
-          this.sendPushNotification("Choice mi", 'you have new match',result2.dataValues.fcmToken,"Move to move","https://choicemi.netlify.app/home.html")
+          this.sendPushNotification("Choice mi", 'you have new match',result2.dataValues.fcmToken,"Move to move",`${serverConfig.DOMAIN}/home.html`)
 
         }
         
 
         if(result3.dataValues.fcmToken){
-          this.sendPushNotification("Choice mi", 'you have new match',result2.dataValues.fcmToken,"Move to move","https://choicemi.netlify.app/home.html")
+          this.sendPushNotification("Choice mi", 'you have new match',result2.dataValues.fcmToken,"Move to move",`${serverConfig.DOMAIN}/home.html`)
         }
 
 
@@ -127,6 +127,57 @@ class PushNotificationService {
     });
   
   }
+
+
+  async sendPushNotificationForUpComingDate() {
+    try {
+      const upcomingDates = await UserDate.findAll({
+        where: {
+          fullDate: {
+            [Op.between]: [new Date(), new Date(Date.now() + 24 * 60 * 60 * 1000)] // Find dates within the next 24 hours
+          },
+          isUpComingNotificationSent: false 
+        }
+      });
+  
+      for (const date of upcomingDates) {
+        const user1 = await User.findOne({
+          where: {
+            id: date.userId,
+            isDeleted: false,
+            disableAccount: false,
+            notificationAllowed: true
+          }
+        });
+  
+        const user2 = await User.findOne({
+          where: {
+            id: date.userId2,
+            isDeleted: false,
+            disableAccount: false,
+            notificationAllowed: true
+          }
+        });
+  
+        // Check if notification is allowed for both users and they have an FCM token
+        if (user1.notificationAllowed && user1.fcmToken) {
+          sendPushNotification("Choice mi", 'You have an upcoming date', user1.fcmToken, "Move to move", `${serverConfig.DOMAIN}/date.html`);
+        }
+  
+        if (user2.notificationAllowed && user2.fcmToken) {
+          sendPushNotification("Choice mi", 'You have an upcoming date', user2.fcmToken, "Move to move", `${serverConfig.DOMAIN}/date.html`);
+        }
+  
+        // Update isUpComingNotificationSent to true after sending the notification
+        await UserDate.update({ isUpComingNotificationSent: true }, { where: { id: date.id } });
+      }
+  
+      console.log("Push notifications sent successfully.");
+    } catch (error) {
+      console.error("Error sending push notifications:", error);
+    }
+  }
+  
 
 
   sendPushNotification(title, body,token,action,path) {
