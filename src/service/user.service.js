@@ -2538,7 +2538,7 @@ class UserService {
               userId2: element.dataValues.userId2,
               usersStatus: element.dataValues.usersStatus,
               dateStatus: element.dataValues.dateStatus,
-              personalityQuestionsAnswer:element.dataValues.User.personalityQuestionsAnswer,
+              personalityQuestionsAnswer:element.dataValues?.User.personalityQuestionsAnswer,
               reservationStatus: element.dataValues.reservationStatus,
               whoAcceptedReservationId: element.dataValues.whoAcceptedReservationId,
               fullDate:element.dataValues.fullDate,
@@ -2558,11 +2558,11 @@ class UserService {
                 businessId:element.dataValues.BusinessSpot?.Business?.businessId,
               },
               matchDetails:{
-                id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
-                userId: element.dataValues.Request.dataValues.UserMatch.dataValues.userId,
-                userId2: element.dataValues.Request.dataValues.UserMatch.dataValues.userId2,
-                matchInformation:JSON.parse( element.dataValues.Request.dataValues.UserMatch.dataValues.matchInformation),
-                matchPercentage: element.dataValues.Request.dataValues.UserMatch.dataValues.matchPercentage,
+                id: element.dataValues.Request.dataValues?.UserMatch.dataValues.id,
+                userId: element.dataValues.Request.dataValues?.UserMatch.dataValues.userId,
+                userId2: element.dataValues.Request.dataValues?.UserMatch.dataValues.userId2,
+                matchInformation:JSON.parse( element.dataValues?.Request.dataValues.UserMatch.dataValues.matchInformation),
+                matchPercentage: element.dataValues.Request.dataValues?.UserMatch.dataValues.matchPercentage,
               }
   
           })
