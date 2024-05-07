@@ -2558,10 +2558,10 @@ class UserService {
                 businessId:element.dataValues.BusinessSpot?.Business?.businessId,
               },
               matchDetails:{
-                id: element.dataValues.Request.dataValues?.UserMatch?.dataValues.id,
-                userId: element.dataValues.Request.dataValues?.UserMatch?.dataValues.userId,
-                userId2: element.dataValues.Request.dataValues?.UserMatch?.dataValues.userId2,
-                matchInformation:JSON.parse( element.dataValues?.Request?.dataValues?.UserMatch?.dataValues.matchInformation),
+                id: element.dataValues.Request.dataValues?.UserMatch?.dataValues?.id,
+                userId: element.dataValues.Request.dataValues?.UserMatch?.dataValues?.userId,
+                userId2: element.dataValues.Request.dataValues?.UserMatch?.dataValues?.userId2,
+                matchInformation:JSON.parse( element.dataValues?.Request?.dataValues?.UserMatch?.dataValues?.matchInformation),
                 matchPercentage: element.dataValues.Request.dataValues?.UserMatch?.dataValues?.matchPercentage,
               }
   
