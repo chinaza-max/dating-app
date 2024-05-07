@@ -2363,14 +2363,13 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'country', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
                   include:[
                     {
                       model: this.BusinessModel,
-                      
                     }
                   ]
                 },
@@ -2478,8 +2477,6 @@ class UserService {
        
       }
     
-     
-
       if(type=='completed'){
 
         for (let index = 0; index < details.length; index++) {
