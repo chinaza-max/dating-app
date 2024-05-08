@@ -1525,7 +1525,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: [ 'id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
@@ -1646,7 +1646,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
