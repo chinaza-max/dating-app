@@ -2513,6 +2513,7 @@ class UserService {
                 closeHours:element.dataValues.BusinessSpot.closeHours ,
                 tel: element.dataValues.BusinessSpot.tel ,
                 locationCoordinate: JSON.parse(element.dataValues.BusinessSpot.locationCoordinate),
+                businessPicture:element.dataValues.BusinessSpot?.businessPicture,
 
               },
               matchDetails:{
