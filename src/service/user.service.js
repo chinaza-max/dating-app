@@ -2402,7 +2402,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
@@ -2482,6 +2482,8 @@ class UserService {
         for (let index = 0; index < details.length; index++) {
           const element = details[index];
           let  formattedReviews=[]
+          console.log(element)
+          console.log(element.dataValues.BusinessSpot)
 
        
           if(element.dataValues?.DateReviews){
