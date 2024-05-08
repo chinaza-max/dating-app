@@ -1737,7 +1737,6 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
@@ -1780,7 +1779,6 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
@@ -1825,7 +1823,6 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
@@ -1868,7 +1865,6 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
@@ -1915,7 +1911,6 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
@@ -2363,7 +2358,6 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'country', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
                   where: {
                     isDeleted: false,
                   },
@@ -2513,7 +2507,7 @@ class UserService {
                 closeHours:element.dataValues.BusinessSpot.closeHours ,
                 tel: element.dataValues.BusinessSpot.tel ,
                 locationCoordinate: JSON.parse(element.dataValues.BusinessSpot.locationCoordinate),
-                businessPicture:element.dataValues.BusinessSpot.businessPicture
+                businessPicture:element.dataValues.BusinessSpot?.businessPicture
               },
               matchDetails:{
                 id: element.dataValues.Request.dataValues.UserMatch.dataValues.id,
