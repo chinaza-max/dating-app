@@ -2482,8 +2482,13 @@ class UserService {
         for (let index = 0; index < details.length; index++) {
           const element = details[index];
           let  formattedReviews=[]
-          console.log(element)
+          console.log("ssssssssssssssssssssssssssssssssssss")
+
+          console.log("ssssssssssssssssssssssssssssssssssss")
           console.log(element.dataValues.BusinessSpot)
+          console.log("ssssssssssssssssssssssssssssssssssss")
+          console.log("ssssssssssssssssssssssssssssssssssss")
+          console.log("ssssssssssssssssssssssssssssssssssss")
 
        
           if(element.dataValues?.DateReviews){
