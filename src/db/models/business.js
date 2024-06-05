@@ -56,7 +56,6 @@ export  function init(connection) {
       businessName: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue:"transc"
       },
       availabilty: {
         type: DataTypes.BOOLEAN,

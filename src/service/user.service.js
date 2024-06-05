@@ -3836,9 +3836,15 @@ class UserService {
 
 
     let existingUser = await this.isBusinessExisting(emailAddress,tel);
+    let existingUser2 = await this.BusinessModel.findOne({
+                        where:{
+                          businessId
+                        }
+    });
 
     if (existingUser != null)throw new ConflictError(existingUser);
-  
+    if (existingUser2 != null)throw new ConflictError("Business with this Id already exist");
+
     try {
       const result = await this.BusinessModel.create({
         firstName,
