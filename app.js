@@ -167,8 +167,8 @@ class Server {
             };
         }else{
             corsOptions = {
-                origin: '*',
-            };
+                origin: '*'
+            }
         }
 
         this.app.use(express.urlencoded({ extended: true }));

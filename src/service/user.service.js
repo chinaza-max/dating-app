@@ -329,7 +329,7 @@ class UserService {
 
       return [...activeDatesArray,...activeDatesArray2]
     } catch (error) {
-      console.log(error)
+        console.log(error)
         throw new SystemError(error.name, error.parent)
     }
 
@@ -3818,6 +3818,7 @@ class UserService {
       password,
       businessId,
       createdBy,
+      businessName
     } = await userUtil.verifyHandleCreateBusiness.validateAsync(data);
 
     let hashedPassword;
@@ -3833,32 +3834,30 @@ class UserService {
     }
 
 
-  let existingUser = await this.isBusinessExisting(emailAddress,tel);
+    let existingUser = await this.isBusinessExisting(emailAddress,tel);
 
-  if (existingUser != null)throw new ConflictError(existingUser);
+    if (existingUser != null)throw new ConflictError(existingUser);
   
-  try {
-    const result = await this.BusinessModel.create({
-      firstName,
-      lastName,
-      tel,
-      emailAddress,
-      password:hashedPassword,
-      businessId,
-      createdBy
-    });
+    try {
+      const result = await this.BusinessModel.create({
+        firstName,
+        lastName,
+        tel,
+        emailAddress,
+        password:hashedPassword,
+        businessId,
+        createdBy,
+        businessName
+      });
 
-    await this.sendEmailVerificationCodeBusiness(result.emailAddress,result.id,password)
-  
-    return {id:result.dataValues.id};
-  } catch (error) {
-      console.log(error)  
-      throw new SystemError('SystemError','An error occured while creating business');
-  }
+      await this.sendEmailVerificationCodeBusiness(result.emailAddress,result.id,password)
+    
+      return {id:result.dataValues.id};
+    } catch (error) {
+        console.log(error)  
+        throw new SystemError('SystemError','An error occured while creating business');
+    }
  
-
- 
-
   }
 
   

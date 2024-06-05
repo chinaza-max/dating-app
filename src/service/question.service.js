@@ -42,16 +42,16 @@ class UserService {
 
   const result =await this.PartnerPersonaltyQModel.count();
 
-  if(result.length <= 5){
+ // if(result.length <= 5){
     await this.PartnerPersonaltyQModel.create({
       text,
       PartnerPersonaltyQT,
       createdBy,
       options
     });
-  }else{
+  /*}else{
     throw new BadRequestError('reach limit')
-  }
+  }*/
     
  }
 

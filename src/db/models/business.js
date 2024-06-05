@@ -52,6 +52,10 @@ export  function init(connection) {
       businessId: {
         type: DataTypes.STRING,
         allowNull: false,
+      }, 
+      businessName: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       availabilty: {
         type: DataTypes.BOOLEAN,
