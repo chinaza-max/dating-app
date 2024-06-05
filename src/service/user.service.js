@@ -3746,6 +3746,7 @@ class UserService {
         result1.push({id:element.dataValues.id,
                       lastName:element.dataValues.lastName,
                       firstName:element.dataValues.firstName,
+                      businessName:element.dataValues.businessName,
                       emailAddress:element.dataValues.emailAddress,
                       isEmailValid:element.dataValues.isEmailValid,
                       tel:element.dataValues.tel,
