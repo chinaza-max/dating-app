@@ -3754,6 +3754,7 @@ class UserService {
                       businessId:element.dataValues.businessId,
                       numberOfBusinessSpot:element.dataValues?.BusinessSpots?.length||0,
                       availabilty:element.dataValues.availabilty,
+                      
                     })
         
       }
@@ -3791,7 +3792,9 @@ class UserService {
                       availabilty:element.dataValues.availabilty,
                       address:element.dataValues.address,
                       coordinate:JSON.parse(element.dataValues.locationCoordinate),
-                      businessPicture:element.dataValues.businessPicture
+                      businessPicture:element.dataValues.businessPicture,
+                      country:element.dataValues.country
+
                     })
       }
 
