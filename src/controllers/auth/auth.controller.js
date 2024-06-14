@@ -428,7 +428,6 @@ export default class AuthenticationController {
 
     const user=await authService.handleUploadPicture(my_bj,file);
 
-
       const token = await authService.generateToken(user.dataValues);
 
       const excludedProperties = ['isDeleted', 'password'];

@@ -10,6 +10,17 @@ class QuestionUtil {
   })
 
 
+  verifyHandleGetUserAnsweredQuestion=Joi.object({
+    userId:Joi.number().required()
+  })
+
+
+  verifyHandleGetTag=Joi.object({
+    type: Joi.string().valid('all', 'user').required(),
+    userId:Joi.number().required()
+  })
+
+
   verifyHandleUpdateTag=Joi.object({
     tagId: Joi.number().required(),
     tag: Joi.string().required(),
@@ -41,10 +52,24 @@ class QuestionUtil {
     questionId: Joi.number().required(),
   })
 
-  verifyHandleUpdateAnswer=Joi.object({
+  verifyHandleUpdateQuestionAnswerUser=Joi.object({
+    userId: Joi.number().required(),
+    questionId: Joi.number().required(),
     answer: Joi.string().required(),
-    answerId: Joi.number().required(),
   })
+
+
+  verifyHandleUpdateAnswerUser=Joi.object({
+    details:Joi.array().items(
+        Joi.object({
+          answer: Joi.string().required(),
+          partnerPersonaltyQId: Joi.number().required(),
+        })
+      ),
+      userId: Joi.number().required()
+  })
+
+
 
   verifyHandleCreateAndUpdateTag=Joi.object({
     tags: Joi.array().required(),

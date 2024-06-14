@@ -469,7 +469,7 @@ class UserUtil {
     height: Joi.number().required(),
     weight: Joi.number().required(),
     personalityQuestionsAnswer: Joi.string().allow(null).optional(),
-    tags: Joi.string().allow(null).optional(),
+    tags: Joi.string().optional(),
     haveChildren: Joi.string().required(),
     smoking: Joi.string().required(),
     drinking: Joi.string().required(),

@@ -33,7 +33,6 @@ export function init(connection) {
     country: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue:'Nigeria'
     },
     openHours: {
       type: DataTypes.TIME,

@@ -29,16 +29,16 @@ export default class QuestionController {
     
   }
 
+
+
   async updateQuestion(req, res, next) {
 
     try {
-
       const data = req.body;        
 
       let my_bj = {
         ...data,
       }
-
       await questionService.handleUpdateQuestion(my_bj);
   
       return res.status(200).json({
@@ -49,9 +49,29 @@ export default class QuestionController {
     } catch (error) {
       console.log(error);
       next(error)
-    }
+    }}
+
+    async updateQuestionAnswerUser(req, res, next) {
+
+      try {
+        const data = req.body;        
+  
+        let my_bj = {
+          ...data,
+          userId:req.user.id
+
+        }
+        await questionService.handleUpdateQuestionAnswerUser(my_bj);
     
-  }
+        return res.status(200).json({
+          status: 200,
+          message: "successful.",
+        });
+  
+      } catch (error) {
+        console.log(error);
+        next(error)
+      }}
 
 
   async createQuestion(req, res, next) {
@@ -64,7 +84,6 @@ export default class QuestionController {
         ...data,
         createdBy:req.user.id
       }
-
       await questionService.handleCreateQuestion(my_bj);
   
       return res.status(200).json({
@@ -174,13 +193,42 @@ export default class QuestionController {
     
   }
 
+  
+  async getUserAnsweredQuestion(req, res, next) {
+
+    try {
+
+      const obj={
+        ...req.query,
+        userId:req.user.id
+      }
+
+      let result=await questionService.handleGetUserAnsweredQuestion(obj);
+  
+      return res.status(200).json({
+        status: 200,
+        data: result,
+      });
+
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+    
+  }
 
 
   async getTag(req, res, next) {
 
     try {
 
-      let result=await questionService.handleGetTag();
+
+      const obj={
+        ...req.query,
+        userId:req.user.id
+      }                                
+
+      let result=await questionService.handleGetTag(obj);
   
       return res.status(200).json({
         status: 200,
@@ -219,7 +267,7 @@ export default class QuestionController {
     }
     
   }
-  async updateAnswer(req, res, next) {
+  async updateAnswerUser(req, res, next) {
 
     try {
 
@@ -227,14 +275,15 @@ export default class QuestionController {
 
       let my_bj = {
         ...data,
+        userId:req.user.id
       }
 
-      await questionService.handleUpdateAnswer(my_bj);
+      await questionService.handleUpdateAnswerUser(my_bj);
   
       
       return res.status(200).json({
         status: 200,
-        message: "answer updated successfully.",
+        message: "Answer updated successfully.",
       });
 
     } catch (error) {
@@ -261,7 +310,7 @@ export default class QuestionController {
       
       return res.status(200).json({
         status: 200,
-        message: "answer updated successfully.",
+        message: "Tag successfully updated.",
       });
 
     } catch (error) {
@@ -272,8 +321,6 @@ export default class QuestionController {
   }
 
   
-
-
 
   async deletedAnswer(req, res, next) {
 

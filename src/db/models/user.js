@@ -194,7 +194,7 @@ export function init(connection) {
       profileCompleted: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue:true
+        defaultValue:false
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,

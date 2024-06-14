@@ -6,6 +6,7 @@ import {
   import serverConfig from "../../config/server.js";
 
 
+
   class Admin extends Model {}
 
   export function init(connection) {
@@ -26,7 +27,7 @@ import {
       image: {
         type: DataTypes.STRING,
         allowNull: true,
-        defaultValue:serverConfig.NODE_ENV =="development"? `${serverConfig.DOMAIN}/avatar/download.png`:`${serverConfig.DOMAIN}/images/avatars/download.png`
+        defaultValue:serverConfig.NODE_ENV =="development"? `${serverConfig.DOMAIN}/avatar/download.png`:`${serverConfig.DOMAIN}/avatars/download.png`
       },
       tel: {
         type: DataTypes.STRING,

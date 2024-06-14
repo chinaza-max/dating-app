@@ -4,8 +4,11 @@ import { User,Admin ,
   BusinessSpot,Business,
   EmailandTelValidationBusiness,
   EmailandTelValidationBusinessSpot,
-  UserAnswer,UserMatch,Request,UserDate,SubscriptionPlan
-  ,Subscription,WishList,MarketingData,Review ,Transaction } from "../db/models/index.js";
+  UserAnswer,UserMatch,Request,
+  UserDate,SubscriptionPlan,
+  Subscription,WishList,
+  MarketingData,Review,
+  Transaction } from "../db/models/index.js";
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
@@ -549,12 +552,10 @@ class UserService {
       let result =await this.UserModel.findByPk(userId)
       
 
-
       const adminResult=await this.AdminModel.findByPk(1)
       if(adminResult){
         this.sendPushNotification("Choice mi", "New users sign up",adminResult.dataValues.fcmToken,'no action','') 
       }
-
 
       this.rematchUser()
       return result.dataValues
@@ -562,10 +563,6 @@ class UserService {
       console.log(error)
       throw new SystemError(error.name, error.parent)
     }
-
-   
-    
-
   }
 
   
@@ -2872,8 +2869,12 @@ class UserService {
         },
       });
 
-      const adminCount = await this.UserModel.count({
-        where:{isDeleted:false}
+      const adminCount = await this.AdminModel.count({
+        where:{ 
+            isTelValid: true,
+            isDeleted: false,
+            isEmailValid: true
+          }
       });
       const businessSpotCount = await this.BusinessModel.count();
       const businessCount = await this.BusinessSpotsModel.count();
@@ -4739,7 +4740,6 @@ async formatDateAndTime(fullDate) {
       }
       
       const threshold = 50; 
-
 
       const result = findMatchingUsers(UserInfo, threshold);
   

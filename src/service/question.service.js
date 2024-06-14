@@ -29,6 +29,7 @@ class UserService {
   TagModel=Tag;
   UserAnswerModel=UserAnswer
   UserMatchModel=UserMatch
+
   
  async handleCreateQuestion(data) {
     
@@ -40,18 +41,24 @@ class UserService {
   }=await questionUtil.verifyHandleCreateQuestion.validateAsync(data);
 
 
-  const result =await this.PartnerPersonaltyQModel.count();
+  const result =await this.UserModel.findOne({
+    where:{
+      profileCompleted:true,
+      isDeleted:false
+    }
+  });
 
- // if(result.length <= 5){
+
+  if(!result){
     await this.PartnerPersonaltyQModel.create({
       text,
       PartnerPersonaltyQT,
       createdBy,
       options
     });
-  /*}else{
-    throw new BadRequestError('reach limit')
-  }*/
+  }else{
+    throw new BadRequestError('you cant add more question any more')
+  }
     
  }
 
@@ -67,7 +74,7 @@ class UserService {
         where: {
           tag
         },
-        defaults: {
+        defaults: {      
           tag,
           createdBy
         },
@@ -124,8 +131,6 @@ async handleGetQuestion() {
       attributes:['id','text','PartnerPersonaltyQT','options']
     })
 
-    console.log(result)
-
     result=result.map((data)=>{
       return{id:data.id,text:data.text,PartnerPersonaltyQT:data.PartnerPersonaltyQT,options:JSON.parse(data.options)}
     })
@@ -141,16 +146,33 @@ async handleGetQuestion() {
 
 
 
-async handleGetTag() {
 
-  let result=[]
+async handleGetUserAnsweredQuestion(data) {
+
+  const{  
+    userId,
+   } =await questionUtil.verifyHandleGetUserAnsweredQuestion.validateAsync(data);
+
+  let result=[] 
+
   try {
-    result=await this.TagModel.findAll({
+
+    result=await this.UserAnswerModel.findAll({
       where:{
-        isDeleted:false
+        isDeleted:false,
+        userId
       },
-      attributes:['id','tag']
+      include:[
+        {
+          model: this.PartnerPersonaltyQModel,
+          attributes:['id','text','PartnerPersonaltyQT','options']
+        }
+      ] ,
+      attributes:['id','answer','partnerPersonaltyQId','userId'],
     })
+
+
+    return result
   
   } catch (error) {
       console.log(error)
@@ -158,7 +180,57 @@ async handleGetTag() {
   }
  
 
-  return result||[]
+
+}
+
+async handleGetTag(data) {
+
+  const{  
+    userId,
+    type,
+   } =await questionUtil.verifyHandleGetTag.validateAsync(data);
+
+  let result=[] 
+
+  try {
+
+    if(type=="all"){
+      result=await this.TagModel.findAll({
+        where:{
+          isDeleted:false
+        },
+        attributes:['id','tag']
+      })
+
+      return result||[]
+
+    }
+    else{
+
+      result=await this.UserModel.findOne({
+        where:{
+          id:userId,
+          isDeleted:false
+        },
+        attributes:['tags']
+      })
+
+     /* const tagsArray = JSON.parse(result);
+      for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        
+      }*/
+
+      return result||[]
+    }
+   
+  
+  } catch (error) {
+      console.log(error)
+      throw new SystemError(error.name, error.parent)
+  }
+ 
+
 
 }
 
@@ -315,25 +387,56 @@ async handleCreateAnswer(data) {
 
 
 
-async handleUpdateAnswer(data) {
+async handleUpdateAnswerUser(data) {
 
   const{  
-   answer,
-   answerId
- }=await questionUtil.verifyHandleUpdateAnswer.validateAsync(data);
+    details,
+   userId
+ }=await questionUtil.verifyHandleUpdateAnswerUser.validateAsync(data);
 
- const obj = await this.UserAnswerModel.findByPk(answerId);
- if (!obj) throw new NotFoundError("question not found.");
 
-  try {
-  
-    await obj.update({  
-      answer,
-    });
 
-  } catch (error) {
-    throw new ServerError("Failed to update answer" );
-  }
+    for (let index = 0; index < details.length; index++) {
+      const element = details[index];
+    
+
+      const result = await this.PartnerPersonaltyQModel.findByPk(element.partnerPersonaltyQId);
+
+      if (!result) throw new NotFoundError("Question not found.");
+
+      const result2 = await this.UserAnswerModel.findOne({
+        where:{
+          partnerPersonaltyQId:element.partnerPersonaltyQId,
+          userId
+        }
+      });
+
+
+     
+       try {
+       
+        if(result2){
+          await result2.update({  
+            answer:element.answer,
+          });
+        }else{
+          await this.UserAnswerModel.create({
+              partnerPersonaltyQId:element.partnerPersonaltyQId,
+              userId,
+              answer:element.answer,
+          });
+        }
+
+        this.rematchUser()
+     
+       } catch (error) {
+          throw new ServerError(error.name,error.parent );
+      }
+      
+    }
+
+
+
 }
 
 
@@ -346,14 +449,12 @@ async handleCreateAndUpdateTag(data) {
 
  
  const obj = await this.UserModel.findByPk(userId);
- if (!obj) throw new NotFoundError("question not found.");
+ if (!obj) throw new NotFoundError("User not found.");
 
   try {
     await obj.update({  
       tags:JSON.stringify(tags),
     });
-
- 
   } catch (error) {
     throw new ServerError("Failed to update tag" );
   }

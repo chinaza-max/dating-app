@@ -74,6 +74,7 @@ class UserRoutes extends UserController {
     this.router.get("/getCryptodata", this.getCryptodata);
     this.router.get("/processTransactionAction", this.processTransactionAction);
 
+    
   } 
 
 }
