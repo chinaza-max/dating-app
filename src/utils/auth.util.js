@@ -89,6 +89,7 @@ class AdminUtil {
     verifyHandleUpdateTel= Joi.object({
       userId: Joi.number().required(),
       tel: Joi.number().required(),
+      countryCodeTel:Joi.string().required(),
     });
 
 

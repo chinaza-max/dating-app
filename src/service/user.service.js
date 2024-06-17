@@ -346,6 +346,7 @@ class UserService {
       matchId           
     } = await userUtil.verifyHandleCreateRequest.validateAsync(data);
 
+    /*
     let matchDetail=await this.UserMatchModel.findOne({
       where: {
         [Op.or]: [
@@ -365,6 +366,11 @@ class UserService {
       },
     })
 
+    */
+
+    let matchDetail=await this.UserMatchModel.findByPk(matchId)
+
+    if(!matchDetail) throw new NotFoundError("User match not found.");
 
     let requestDetail=await this.RequestModel.findOne({
 
@@ -390,7 +396,6 @@ class UserService {
 
 
     if(requestDetail) return 
-    if(!matchDetail) throw new NotFoundError("User match not found.");
 
 
   try {
@@ -411,7 +416,7 @@ class UserService {
 
 
     if(result?.dataValues?.fcmToken){
-      this.sendPushNotification('Choice mi', 'You have date request',token,'move to request','https://choicemi.netlify.app/request')
+      this.sendPushNotification('Choice mi', 'You have a date request',result?.dataValues?.fcmToken,'move to request','https://choicemi.netlify.app/request')
     }
     
 
@@ -3237,6 +3242,7 @@ class UserService {
       userId
     } = await userUtil.verifyHandGetAllMatchSingleUserForUser.validateAsync(data);
 
+    
     const {ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor}=query
 
 

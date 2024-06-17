@@ -34,7 +34,6 @@ class UserRoutes extends UserController {
     this.router.get("/getAllMatchSingleUser",  this.getAllMatchSingleUser);
     this.router.post("/reJectMatch",  this.reJectMatch);
 
-
     this.router.post("/createRequest", this.createRequest);
     this.router.get("/getRequest", this.getRequest);
     this.router.post("/requestAction", this.requestAction);

@@ -5,7 +5,9 @@ import { User,MarketingData,  EmailandTelValidationBusiness,  EmailandTelValidat
 import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
 import mailService from "../service/mail.service.js";
-import axios from'axios';
+import twilio from 'twilio';
+//const client = require('twilio')(serverConfig.TWILIO_ACCOUNTSID, serverConfig.TWILIO_AUTHTOKEN);
+
 
 import {
   ConflictError,
@@ -273,7 +275,9 @@ class AuthenticationService {
     if(type==='email'){
       await this.sendEmailVerificationCode(relatedUser.emailAddress,relatedUser.id)
     }else{
-      await this.sendTelVerificationCode(relatedUser.tel,relatedUser.id)
+
+      const contact=relatedUser.countryCodeTel+relatedUser.tel;
+      await this.sendTelVerificationCode(contact,relatedUser.id)
     }
   }
 
@@ -547,14 +551,29 @@ class AuthenticationService {
     let {      
       userId,  
       tel,
+      countryCodeTel
     } = await authUtil.verifyHandleUpdateTel.validateAsync(data);
+
+
+
+    const result =await this.UserModel.findOne({
+      where:{
+        tel,
+        countryCodeTel,
+        isTelValid:true
+      }
+    })
+
+    if (result) throw new ConflictError("Phone number already in use");
+
 
     try {
       
-      let result =await this.UserModel.findByPk(userId)
-      result.update(
+      const result2 =await this.UserModel.findByPk(userId)
+      result2.update(
         {
-          tel:tel
+          tel,
+          countryCodeTel
         }
       );
 
@@ -911,12 +930,13 @@ class AuthenticationService {
 
   }
 
-  async  sendTelVerificationCode(tel, userId) {
-
+  async  sendTelVerificationCode(to, userId) {
+      
+    //to='+2348184724615'
 
     try {
       
-        var keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
+        const keyExpirationMillisecondsFromEpoch = new Date().getTime() + 30 * 60 * 1000;
         const verificationCode = Math.floor(Math.random() * 900000) + 100000;
   
   
@@ -932,30 +952,28 @@ class AuthenticationService {
         });
     
         try {
-              
-          const options = {
-            method: 'GET',
-            url: 'https://phonenumbervalidatefree.p.rapidapi.com/ts_PhoneNumberValidateTest.jsp',
-            params: {
-              number: '+2348184724615',
-            },
-            headers: {
-              'X-RapidAPI-Key': 'b03b577e45mshb62f4d5ecbfae57p108324jsna07cb1377bb8',
-              'X-RapidAPI-Host': 'phonenumbervalidatefree.p.rapidapi.com'
-            }
-          };
+
+          console.log(serverConfig.TWILIO_ACCOUNTSID, serverConfig.TWILIO_AUTHTOKEN)
+          console.log(serverConfig.TWILIO_FROM_NUMBER)
+
+          const client = twilio(serverConfig.TWILIO_ACCOUNTSID, serverConfig.TWILIO_AUTHTOKEN);
+
+          client.messages   
+          .create({
+             body: `Your ChoiceMi verification code is ${verificationCode}`,
+             from: serverConfig.TWILIO_FROM_NUMBER,
+             to    
+           })                      
+          .then(message => console.log(message.sid))
+          .catch(error => {
+            console.error(`Failed to send message: ${error.message}`);
+          });
           
-          try {
-            const response = await axios.request(options);
-            console.log(response.data);
-          } catch (error) {
-            console.error(error);
-          }
-    
+
         } catch (error) {
             console.log(error)
         }
-    
+        
     
     } catch (error) {
       console.log(error);
@@ -1016,3 +1034,4 @@ class AuthenticationService {
 }
 
 export default new AuthenticationService();
+                            

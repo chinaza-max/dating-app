@@ -68,7 +68,7 @@ export function init(connection) {
       isTelValid: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue:true
+        defaultValue:false
       },
       emailAddress: {
         type: DataTypes.STRING,

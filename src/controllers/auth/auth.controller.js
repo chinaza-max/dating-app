@@ -63,7 +63,7 @@ export default class AuthenticationController {
 
       return res.status(200).json({
         status: 200,
-        message: "verification completed",
+        message: "Verification successfull",
         data: { user: modifiedUser, token },
       });
 
@@ -365,7 +365,7 @@ export default class AuthenticationController {
       else{
         return res.status(200).json({
           status: 200,
-          message: "verification code sent you number",
+          message: "verification code sent to your number",
         });
       }
      
