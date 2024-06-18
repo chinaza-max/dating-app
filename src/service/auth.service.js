@@ -6,7 +6,6 @@ import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
 import mailService from "../service/mail.service.js";
 import twilio from 'twilio';
-//const client = require('twilio')(serverConfig.TWILIO_ACCOUNTSID, serverConfig.TWILIO_AUTHTOKEN);
 
 
 import {
@@ -953,9 +952,7 @@ class AuthenticationService {
     
         try {
 
-          console.log(serverConfig.TWILIO_ACCOUNTSID, serverConfig.TWILIO_AUTHTOKEN)
-          console.log(serverConfig.TWILIO_FROM_NUMBER)
-
+        
           const client = twilio(serverConfig.TWILIO_ACCOUNTSID, serverConfig.TWILIO_AUTHTOKEN);
 
           client.messages   
