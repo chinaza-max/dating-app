@@ -5,7 +5,7 @@ import { User,MarketingData,  EmailandTelValidationBusiness,  EmailandTelValidat
 import serverConfig from "../config/server.js";
 import authUtil from "../utils/auth.util.js";
 import mailService from "../service/mail.service.js";
-import twilio from 'twilio';
+import twilio from 'twilio';  
 
 
 import {
