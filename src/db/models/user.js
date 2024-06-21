@@ -1,4 +1,5 @@
 import { Model, DataTypes } from "sequelize";
+import serverConfig from "../../config/server.js";
 
 
 class User extends Model {}
