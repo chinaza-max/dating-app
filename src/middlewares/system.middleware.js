@@ -10,7 +10,7 @@ class SystemMiddlewares {
     next
 ){
     if (error instanceof SystemError) {
-
+ 
       
       switch (error.name) {
         case "NotFoundError":

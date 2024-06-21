@@ -26,6 +26,7 @@ export function init(connection) {
       image: {
         type: DataTypes.STRING,
         allowNull: true,
+        defaultValue:serverConfig.NODE_ENV =="development"? `${serverConfig.DOMAIN}/avatar/download.png`:`${serverConfig.DOMAIN}/avatars/download.png`
       },
       isImageVerified: {
         type: DataTypes.BOOLEAN,
