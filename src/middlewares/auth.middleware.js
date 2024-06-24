@@ -13,6 +13,9 @@ class AuthenticationMiddlewares {
 
 
       const { authorization } = req.headers;
+      console.log(req.path)
+      console.log(req.path)
+      console.log(req.path)
 
 /*
       console.log(req.path=='/')
