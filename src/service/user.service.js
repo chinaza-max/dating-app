@@ -2556,6 +2556,7 @@ class UserService {
                 openHours:element.dataValues.BusinessSpot.openHours ,
                 closeHours:element.dataValues.BusinessSpot.closeHours ,
                 tel: element.dataValues.BusinessSpot.tel ,
+                country:element.dataValues.BusinessSpot.country ,
                 businessPicture:element.dataValues.BusinessSpot?.businessPicture,
                 locationCoordinate: JSON.parse(element.dataValues.BusinessSpot.locationCoordinate),
               },
