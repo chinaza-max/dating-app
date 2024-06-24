@@ -12,7 +12,7 @@ import { User,Admin ,
 import userUtil from "../utils/user.util.js";
 import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
-import {  Op, Sequelize } from "sequelize";
+import {  Op, Sequelize, where } from "sequelize";
 import mailService from "../service/mail.service.js";
 import {getMessaging} from "firebase-admin/messaging";
 import crypto from 'crypto';
@@ -780,7 +780,7 @@ class UserService {
                     as: "RequestDates",
                     required:false
                   }
-                ] ,
+                ],
               attributes:['userId','userId2','status','id','createdAt'],
               order: [['createdAt', 'DESC']]
             })
@@ -854,7 +854,9 @@ class UserService {
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
           personalityQuestionsAnswer:partner.dataValues.personalityQuestionsAnswer,
-          hasDate:element.dataValues.RequestDates == null ? false : true
+          hasDate:element.dataValues.RequestDates == null ? false : true,
+          removeRequest:element.dataValues?.RequestDates?.dateStatus=="completed"
+
         })  
       }
     
@@ -1349,12 +1351,12 @@ class UserService {
 
 
         if(result1?.dataValues?.fcmToken){
-          this.sendPushNotification("Choice mi", 'Your reservation have been approve',result1.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
+          this.sendPushNotification("Choice mi", 'Your reservation have been approve',result1.dataValues?.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
         }
         
 
         if(result2?.dataValues?.fcmToken){
-          this.sendPushNotification("Choice mi", 'Your reservation have been approve',result2.dataValues.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
+          this.sendPushNotification("Choice mi", 'Your reservation have been approve',result2.dataValues?.fcmToken,"Move to date","https://choicemi.netlify.app/date.html")
         }
 
       }
@@ -2484,14 +2486,6 @@ class UserService {
         for (let index = 0; index < details.length; index++) {
           const element = details[index];
           let  formattedReviews=[]
-          console.log("ssssssssssssssssssssssssssssssssssss")
-
-          console.log("ssssssssssssssssssssssssssssssssssss")
-          console.log(element.dataValues.BusinessSpot)
-          console.log("ssssssssssssssssssssssssssssssssssss")
-          console.log("ssssssssssssssssssssssssssssssssssss")
-          console.log("ssssssssssssssssssssssssssssssssssss")
-
        
           if(element.dataValues?.DateReviews){
             formattedReviews= element.dataValues.DateReviews.map((review) => ({
@@ -2934,7 +2928,7 @@ class UserService {
         },
       });
 
-      const requestAcceptedCount = await this.RequestModel.count({
+      let requestAcceptedCount = await this.RequestModel.findAll({
         where: {
           [Op.and]: [
             {
@@ -2946,7 +2940,29 @@ class UserService {
             { status: 'accepted' },
           ],
         },
+        include:[
+          {
+            model: this.DateModel,
+            as: "RequestDates",
+            required:false,
+            where:{
+              dateStatus:'completed'
+            }
+          },
+        ]
       });
+
+      
+      let requestAcceptedCounter=0
+      for (let index = 0; index < requestAcceptedCount.length; index++) {
+        const element = requestAcceptedCount[index];
+
+          if(element.dataValues?.RequestDates)continue
+          else{
+              requestAcceptedCounter++
+          }
+      }
+      requestAcceptedCount=requestAcceptedCounter
 
       const myResult = await this.RequestModel.findOne({
         where: {
