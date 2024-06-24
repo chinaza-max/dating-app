@@ -845,6 +845,9 @@ class UserService {
           },
         })
         
+
+        if((type=="accepted")&&(element.dataValues?.RequestDates?.dateStatus=="completed")) {continue}
+
         result.push({
           userId: element.dataValues.userId,
           userId2:element.dataValues.userId2,
@@ -854,9 +857,7 @@ class UserService {
           matchId:matchDetail.dataValues.id,
           createdAt:element.dataValues.createdAt,
           personalityQuestionsAnswer:partner.dataValues.personalityQuestionsAnswer,
-          hasDate:element.dataValues.RequestDates == null ? false : true,
-          removeRequest:element.dataValues?.RequestDates?.dateStatus=="completed"
-
+          hasDate:element.dataValues.RequestDates == null ? false : true
         })  
       }
     
