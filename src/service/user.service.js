@@ -1530,7 +1530,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: [ 'id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: [ 'id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1570,7 +1570,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1611,7 +1611,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1651,7 +1651,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1699,7 +1699,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1742,7 +1742,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1785,7 +1785,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1830,7 +1830,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1873,7 +1873,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1920,7 +1920,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['businessPicture','id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -1966,7 +1966,7 @@ class UserService {
                 include: [
                   {
                     model: this.BusinessSpotsModel,
-                    attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                    attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                     where: {
                       isDeleted: false,
                     },
@@ -1999,7 +1999,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -2032,7 +2032,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -2064,7 +2064,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -2138,7 +2138,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -2447,7 +2447,7 @@ class UserService {
               include: [
                 {
                   model: this.BusinessSpotsModel,
-                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate'],
+                  attributes: ['id', 'name', 'address', 'city', 'openHours', 'closeHours', 'tel', 'locationCoordinate', 'country'],
                   where: {
                     isDeleted: false,
                   },
@@ -2515,6 +2515,7 @@ class UserService {
                 city:element.dataValues.BusinessSpot.city ,
                 openHours:element.dataValues.BusinessSpot.openHours ,
                 closeHours:element.dataValues.BusinessSpot.closeHours ,
+                country:element.dataValues.BusinessSpot.country ,
                 tel: element.dataValues.BusinessSpot.tel ,
                 locationCoordinate: JSON.parse(element.dataValues.BusinessSpot.locationCoordinate),
                 businessPicture:element.dataValues.BusinessSpot?.businessPicture
