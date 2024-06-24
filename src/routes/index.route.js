@@ -31,7 +31,7 @@ class Routes {
     this.router.use(`${rootAPI}/auth`, authRoute)
 
     this.router.use(authMiddleware.validateUserToken);
-
+ 
     this.router.use(`${rootAPI}/user`, userRoute)
     this.router.use(`${rootAPI}/question`, questionRoute)
     
