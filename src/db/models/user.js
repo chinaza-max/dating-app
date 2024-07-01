@@ -32,6 +32,16 @@ export function init(connection) {
       isImageVerified: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue:true
+      }, 
+      IDImage: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue:''
+      },
+      isIDImageVerified: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
         defaultValue:false
       }, 
       gender: {

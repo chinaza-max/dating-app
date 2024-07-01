@@ -70,6 +70,23 @@ class UserService {
 
   
 
+  async handleVerifyOrUnverify(data) {
+    
+    const{ userId, type}=await userUtil.verifyHandleVerifyOrUnverify.validateAsync(data);
+ 
+    const response = await this.UserModel.findByPk(userId);
+    if (!response) throw new NotFoundError("User not found.");
+     
+          try {
+
+            await response.update({ isIDImageVerified:type});
+
+          } catch (error) {
+            new ServerError(error.name,error.parent );
+          }
+   }
+  
+
   async handleRequestAction(data) {
     
     const{ requestId,userId,type}=await userUtil.verifyHandleRequestAction.validateAsync(data);
@@ -99,7 +116,7 @@ class UserService {
         }
  
      
-   }
+  }
 
    
    async handleReJectMatch(data) {
@@ -3262,7 +3279,7 @@ class UserService {
     } = await userUtil.verifyHandGetAllMatchSingleUserForUser.validateAsync(data);
 
     
-    const {ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor}=query
+    const {ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance=144,maritalStatus,haveChildren,lookingFor}=query
 
 
     //console.log(ageRangeMin,ageRangeMax,height,ethnicity,bodyType,smoking,drinking,distance,maritalStatus,haveChildren,lookingFor)
@@ -3370,7 +3387,6 @@ class UserService {
 
            if(myMatchUser.dataValues?.UserDates?.DateReviews){
 
-            console.log(myMatchUser.dataValues.UserDates.DateReviews)
             ratingAverage=await this.calculateAverage(myMatchUser.dataValues.UserDates.DateReviews)
            }else if(myMatchUser.dataValues?.User2Dates){
 
@@ -3390,7 +3406,6 @@ class UserService {
               
             if(me.dataValues.preferedGender!==myMatchUser.dataValues.gender) continue
              
-
             let havePendingRequest=await this.RequestModel.findOne({
               where: {
                 [Op.or]: [
@@ -3509,12 +3524,10 @@ class UserService {
 
             if(distance){
               
-
               let lat1=JSON.parse( me.dataValues.locationCoordinate).latitude
               let lon1= JSON.parse(me.dataValues.locationCoordinate).longitude
               let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
               let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
-
 
               const result=await this.getDistanceBetween(lat1, lon1 ,lat2 ,lon2 ,distance)
 

@@ -1326,6 +1326,34 @@ export default class UserController {
       next(error);
     }
   }
+
+
+  
+  async verifyOrUnverify(
+    req,
+    res,
+    next
+  ){
+    try {
+      
+      const data=req.body
+
+      const my_bj = {
+        ...data,
+        adminId:req.user.id,
+      }
+      
+      await userService.handleVerifyOrUnverify(my_bj);
+
+      return res.status(200).json({
+        status: 200,
+        message: 'sucess',
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async requestAction(
     req,
     res,

@@ -445,15 +445,6 @@ class AuthenticationService {
       );
 
 
-      console.log("''''===============''''")
-
-      console.log(type)
-      console.log(userId)
-      console.log(resetPasswordKey)
-      console.log(relatedUser)
-      console.log(hashedPassword)
-      console.log("''''===============''''")
-
       relatedUser.update({
         password: hashedPassword,
       });
@@ -489,8 +480,8 @@ class AuthenticationService {
 
           accessPath = serverConfig.DOMAIN+file.path.replace("public", "");
         }
-        await user.update({ image: accessPath ,
-                        isImageVerified:true});
+        await user.update({ IDImage: accessPath 
+                       });
 
         return user
       } catch (error) {

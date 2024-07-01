@@ -26,7 +26,7 @@ import MarketingData, { init as initMarketingData} from "./marketingData.js";
 
 
 
-function associate() {
+function associate() { 
 
   User.hasMany(UserAnswer, {
     foreignKey: 'userId',

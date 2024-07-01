@@ -295,6 +295,12 @@ class UserUtil {
     ).required()
   });
 
+  verifyHandleVerifyOrUnverify= Joi.object({
+    userId: Joi.number().required(),
+    adminId: Joi.number().required(),
+    type: Joi.boolean().required()
+  });  
+
 
   verifyHandleRequestAction= Joi.object({
     userId: Joi.number().required(),
