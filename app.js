@@ -153,11 +153,7 @@ class Server {
     initializeMiddlewaresAndRoutes(){
         let corsOptions
         if(this.mode=='production'){
-          corsOptions = {
-            origin: ['https://choicemi.netlify.app'],
-            methods: ['GET', 'POST', 'PUT', 'DELETE'],
-            allowedHeaders: ['Content-Type', 'Authorization']
-          };
+            const allowedOrigins = ['http://example.com']; // Add your allowed origin(s) here
 
             corsOptions = {
               origin: function (origin, callback) {
@@ -170,29 +166,18 @@ class Server {
               },
             };
         }else{
-
-
-          corsOptions = {
-            origin: ['https://choicemi.netlify.app'],
-            methods: ['GET', 'POST', 'PUT', 'DELETE'],
-            allowedHeaders: ['Content-Type', 'Authorization']
-          };
-           /* corsOptions = {
+            corsOptions = {
                 origin: '*'
-            }*/
+            }
         }
 
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
         this.app.use(express.static(path.join(__dirname, 'public')));
         this.app.use(cors(corsOptions));
-        this.app.use((req, res, next) => {
-          res.header('Access-Control-Allow-Origin', '*');
-          next();
-        });
         this.app.use(routes); 
         this.app.use(systemMiddleware.errorHandler);
-  
+
     }
   
     start() {
