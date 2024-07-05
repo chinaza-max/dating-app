@@ -73,7 +73,7 @@ class AdminUtil {
     verifyHandleUploadPicture= Joi.object({
       userId: Joi.number().required(),
       image: Joi.object({
-        size: Joi.number().max(1048576).required(), // Maximum size allowed is 1MB (1048576 bytes)
+        size: Joi.number().max(5048576).required(), // Maximum size allowed is 1MB (1048576 bytes)
       }).required(),
     });
 
