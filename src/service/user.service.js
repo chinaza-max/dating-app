@@ -1450,9 +1450,8 @@ class UserService {
         where: { id: userId}, 
         attributes: { exclude: ['password', 'createdAt'] },
       })
+      if(!result) throw new NotFoundError("No user with this id")
       return result.dataValues
-
-
   }
 
   async handleGetMatchDetails(data) {

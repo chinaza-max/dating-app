@@ -174,7 +174,9 @@ class Server {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
         this.app.use(express.static(path.join(__dirname, 'public')));
-        this.app.use(cors(corsOptions));
+        this.app.use(cors({
+          origin: '*'
+      }  ));
         this.app.use(routes); 
         this.app.use(systemMiddleware.errorHandler);
 
