@@ -154,6 +154,10 @@ class Server {
         let corsOptions
         if(this.mode=='production'){
 
+          console.log("production mode is on ")
+          console.log("production mode is on ")
+          console.log("production mode is on ")
+          console.log("production mode is on ")
 
             const allowedOrigins = ['https://choicemi.netlify.app']; // Add your allowed origin(s) here
 
