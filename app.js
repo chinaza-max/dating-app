@@ -186,6 +186,10 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.static(path.join(__dirname, 'public')));
         this.app.use(cors(corsOptions));
+        this.app.use((req, res, next) => {
+          res.header('Access-Control-Allow-Origin', '*');
+          next();
+        });
         this.app.use(routes); 
         this.app.use(systemMiddleware.errorHandler);
 
