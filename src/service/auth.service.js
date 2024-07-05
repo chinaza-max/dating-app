@@ -605,17 +605,6 @@ class AuthenticationService {
     });   
 
 
-    console.log("sssssssssss")
-    console.log("sssssssssss")
-    console.log("sssssssssss")
-
-
-    console.log(user)
-
-    console.log("sssssssssss")
-    console.log("sssssssssss")
-    console.log("sssssssssss")
-
 
     if (!user) throw new NotFoundError("User not found.");
 
