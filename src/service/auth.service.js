@@ -375,7 +375,7 @@ class AuthenticationService {
       subject: "Reset Password",
       templateName: "reset_password",
       variables: {
-        resetLink:serverConfig.NODE_ENV==='development'?`http://localhost/COMPANYS_PROJECT/ResetPassword/sendPasswordLink.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/Passwor?${params.toString()}`
+        resetLink:serverConfig.NODE_ENV==='development'?`${serverConfig.CLIENT_DOMAIN}/resetPasswordLink.html?${params.toString()}`: `${serverConfig.DOMAIN}/adminpanel/Passwor?${params.toString()}`
       },
     });
 

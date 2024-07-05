@@ -6,6 +6,7 @@ class ServerConfig {
    NODE_ENV = process.env.NODE_ENV;
    PORT = process.env.PORT;
    DOMAIN = process.env.DOMAIN;
+   CLIENT_DOMAIN = process.env.CLIENT_DOMAIN;
    TRUSTLY_ACCESS_KEY = process.env.TRUSTLY_ACCESS_KEY;
 
 
