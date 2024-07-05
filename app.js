@@ -153,13 +153,11 @@ class Server {
     initializeMiddlewaresAndRoutes(){
         let corsOptions
         if(this.mode=='production'){
-
-          console.log("production mode is on ")
-          console.log("production mode is on ")
-          console.log("production mode is on ")
-          console.log("production mode is on ")
-
-            const allowedOrigins = ['https://choicemi.netlify.app']; // Add your allowed origin(s) here
+          corsOptions = {
+            origin: ['https://choicemi.netlify.app'],
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'Authorization']
+          };
 
             corsOptions = {
               origin: function (origin, callback) {
@@ -174,19 +172,20 @@ class Server {
         }else{
 
 
-          console.log("allow all origin allow all origin  ")
-          console.log("allow all origin allow all origin  ")
-          const allowedOrigins = ['https://choicemi.netlify.app', 'http://127.0.0.1:5502']; 
-            corsOptions = {
-                origin: allowedOrigins,
-                methods: ['GET', 'POST'],
-            }
+          corsOptions = {
+            origin: ['https://choicemi.netlify.app'],
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'Authorization']
+          };
+           /* corsOptions = {
+                origin: '*'
+            }*/
         }
 
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(express.json());
         this.app.use(express.static(path.join(__dirname, 'public')));
-        this.app.use(cors({credentials: true, origin: true}));
+        this.app.use(cors(corsOptions));
         this.app.use(routes); 
         this.app.use(systemMiddleware.errorHandler);
 
