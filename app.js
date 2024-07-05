@@ -153,7 +153,9 @@ class Server {
     initializeMiddlewaresAndRoutes(){
         let corsOptions
         if(this.mode=='production'){
-            const allowedOrigins = ['http://example.com']; // Add your allowed origin(s) here
+
+
+            const allowedOrigins = ['https://choicemi.netlify.app']; // Add your allowed origin(s) here
 
             corsOptions = {
               origin: function (origin, callback) {
