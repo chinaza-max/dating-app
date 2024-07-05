@@ -176,7 +176,7 @@ class Server {
 
           console.log("allow all origin allow all origin  ")
           console.log("allow all origin allow all origin  ")
-          const allowedOrigins = ['https://choicemi.netlify.app']; 
+          const allowedOrigins = ['https://choicemi.netlify.app', 'http://127.0.0.1:5502']; 
             corsOptions = {
                 origin: allowedOrigins,
                 methods: ['GET', 'POST'],
