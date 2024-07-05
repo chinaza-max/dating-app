@@ -168,6 +168,10 @@ class Server {
               },
             };
         }else{
+
+
+          console.log("allow all origin allow all origin  ")
+          console.log("allow all origin allow all origin  ")
             corsOptions = {
                 origin: '*'
             }
