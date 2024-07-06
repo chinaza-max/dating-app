@@ -237,8 +237,8 @@ export default class AuthenticationController {
       }
       
 
-
-      const token = await authService.generateToken(user.dataValues);
+      const JWT_USER_PAYLOAD={id:user.dataValues.id,firstName:user.dataValues.firstName,lastName:user.dataValues.lastName }
+      const token = await authService.generateToken(JWT_USER_PAYLOAD);
 
       const excludedProperties = ['isDeleted', 'password'];
 
