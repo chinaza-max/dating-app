@@ -4679,7 +4679,6 @@ async formatDateAndTime(fullDate) {
  
   async rematchUser(){
   
-
     try {
       const usersWithProfiles =await  this.UserModel.findAll({
         attributes: ['id', 'tags'],
@@ -4692,7 +4691,8 @@ async formatDateAndTime(fullDate) {
           },
         }],
         where: {
-          isTelValid:true,
+         /* isTelValid:true,*/
+          profileCompleted:true,
           isEmailValid:true,
           isDeleted:false
         },
@@ -4703,7 +4703,7 @@ async formatDateAndTime(fullDate) {
         const userArray = usersWithProfiles[index];
 
         console.log(JSON.parse(userArray.dataValues.tags))
-        
+
         const tags=JSON.parse(userArray.dataValues.tags)
         
          
