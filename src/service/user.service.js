@@ -4702,6 +4702,17 @@ async formatDateAndTime(fullDate) {
       for (let index = 0; index < usersWithProfiles.length; index++) {
         const userArray = usersWithProfiles[index];
 
+        console.log(userArray.dataValues.tags)
+        if(!userArray.dataValues.tags){
+          console.log("works")
+          console.log("works")
+          console.log("works")
+        }
+        console.log(JSON.parse(userArray.dataValues.tags))
+
+        if(!JSON.parse(userArray.dataValues.tags)){
+            continue
+        }
         console.log(JSON.parse(userArray.dataValues.tags))
 
         const tags=JSON.parse(userArray.dataValues.tags)
