@@ -49,8 +49,6 @@ class UserService {
 
   
 
-  
-
 
  async updateUserPersonalityQuestion(data) {
     
@@ -4703,6 +4701,9 @@ async formatDateAndTime(fullDate) {
       let UserInfo=[]
       for (let index = 0; index < usersWithProfiles.length; index++) {
         const userArray = usersWithProfiles[index];
+
+        console.log(JSON.parse(userArray.dataValues.tags))
+        
         const tags=JSON.parse(userArray.dataValues.tags)
         
          

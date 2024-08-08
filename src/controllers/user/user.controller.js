@@ -306,7 +306,6 @@ export default class UserController {
                           
         const result=await userService.handleUpdateProfile2(my_bj);
 
-
         const excludedProperties = ['isDeleted', 'password'];
 
         const modifiedUser = Object.keys(result)
