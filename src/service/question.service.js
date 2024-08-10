@@ -472,7 +472,10 @@ async rematchUser(){
     const myUserService=userService
     await myUserService.rematchUser()
    } catch (error) {
+      console.log('chinaza')
       console.log(error)
+      console.log("chinaza")
+
    }
   /*
   try {
