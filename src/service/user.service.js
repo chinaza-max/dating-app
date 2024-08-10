@@ -1444,12 +1444,22 @@ class UserService {
     const {userId}=await userUtil.verifyHandleGetProfileDetail.validateAsync(data);
 
 
+    try {
+      
       const result =await this.UserModel.findOne({
         where: { id: userId}, 
         attributes: { exclude: ['password', 'createdAt'] },
       })
       if(!result) throw new NotFoundError("No user with this id")
       return result.dataValues
+
+    } catch (error) {
+
+      throw new SystemError(error.name,  error.parent)
+    }
+
+
+     
   }
 
   async handleGetMatchDetails(data) {
@@ -4702,18 +4712,11 @@ async formatDateAndTime(fullDate) {
       for (let index = 0; index < usersWithProfiles.length; index++) {
         const userArray = usersWithProfiles[index];
 
-        console.log(userArray.dataValues.tags)
-        if(!userArray.dataValues.tags){
-          console.log("works")
-          console.log("works")
-          console.log("works")
-        }
-        console.log(JSON.parse(userArray.dataValues.tags))
+       
 
         if(!JSON.parse(userArray.dataValues.tags)){
             continue
         }
-        console.log(JSON.parse(userArray.dataValues.tags))
 
         const tags=JSON.parse(userArray.dataValues.tags)
         
