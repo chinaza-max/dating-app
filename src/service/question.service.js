@@ -471,10 +471,10 @@ async rematchUser(){
    try {
     const myUserService=userService
     await myUserService.rematchUser()
-   } catch (error) {
+   } catch (error) { 
       console.log('chinaza')
       console.log(error)
-      console.log("chinaza")
+      throw new SystemError(error.name,error.parent)
 
    }
   /*
