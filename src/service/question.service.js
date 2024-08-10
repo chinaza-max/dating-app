@@ -10,6 +10,7 @@ import bcrypt from'bcrypt';
 import serverConfig from "../config/server.js";
 import { Op } from "sequelize";
 import mailService from "./mail.service.js";
+import userService from "./user.service.js";
 
 
 import {
@@ -466,6 +467,9 @@ async handleCreateAndUpdateTag(data) {
 
 async rematchUser(){
   
+  const myUserService=userService
+  await myUserService.rematchUser()
+  /*
   try {
     const usersWithProfiles =await  this.UserModel.findAll({
       attributes: ['id', 'tags'],
@@ -625,7 +629,7 @@ async rematchUser(){
   } catch (error) {
     console.log(error)
     throw new SystemError(error.name,error.parent)
-  }
+  }*/
   
 }
 
