@@ -135,6 +135,7 @@ async handleGetQuestion() {
     result=result.map((data)=>{
       return{id:data.id,text:data.text,PartnerPersonaltyQT:data.PartnerPersonaltyQT,options:JSON.parse(data.options)}
     })
+    
   } catch (error) {
       console.log(error)
       throw new SystemError(error.name, error.parent)
