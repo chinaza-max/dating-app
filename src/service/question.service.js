@@ -412,9 +412,6 @@ async handleUpdateAnswerUser(data) {
           userId
         }
       });
-
-
-     
        try {
        
         if(result2){
@@ -432,6 +429,7 @@ async handleUpdateAnswerUser(data) {
         this.rematchUser()
      
        } catch (error) {
+          console.log(error)
           throw new ServerError(error.name,error.parent );
       }
       
@@ -457,12 +455,14 @@ async handleCreateAndUpdateTag(data) {
     await obj.update({  
       tags:JSON.stringify(tags),
     });
+
+    this.rematchUser()
+
   } catch (error) {
     throw new ServerError("Failed to update tag" );
   }
 
 
-   this.rematchUser()
 }
 
 
