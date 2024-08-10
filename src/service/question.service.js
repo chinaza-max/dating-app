@@ -135,7 +135,7 @@ async handleGetQuestion() {
     result=result.map((data)=>{
       return{id:data.id,text:data.text,PartnerPersonaltyQT:data.PartnerPersonaltyQT,options:JSON.parse(data.options)}
     })
-    
+
   } catch (error) {
       console.log(error)
       throw new SystemError(error.name, error.parent)
@@ -468,8 +468,12 @@ async handleCreateAndUpdateTag(data) {
 
 async rematchUser(){
   
-  const myUserService=userService
-  await myUserService.rematchUser()
+   try {
+    const myUserService=userService
+    await myUserService.rematchUser()
+   } catch (error) {
+      console.log(error)
+   }
   /*
   try {
     const usersWithProfiles =await  this.UserModel.findAll({
