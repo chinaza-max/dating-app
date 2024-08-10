@@ -475,8 +475,7 @@ async rematchUser(){
     const myUserService=userService
     await myUserService.rematchUser()
    } catch (error) { 
-      console.log('chinaza')
-      console.log(error)
+      
       throw new SystemError(error.name,error.parent)
 
    }

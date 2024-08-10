@@ -2889,7 +2889,7 @@ class UserService {
 
       const userCount = await this.UserModel.count({
         where: {
-          isTelValid: true,
+         /* isTelValid: true,*/
           isDeleted: false,
           isEmailValid: true
         },
@@ -2897,7 +2897,7 @@ class UserService {
 
       const adminCount = await this.AdminModel.count({
         where:{ 
-            isTelValid: true,
+           /* isTelValid: true,*/
             isDeleted: false,
             isEmailValid: true
           }
@@ -4221,8 +4221,9 @@ async  isBusinessExisting(emailAddress, tel) {
     }
     return null
   } catch (error) {
-    console.log('error')
-    console.log(error)
+   
+    throw new SystemError(error.name,error.parent)
+
   }
 
 }
