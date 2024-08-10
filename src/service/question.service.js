@@ -395,7 +395,7 @@ async handleUpdateAnswerUser(data) {
 
   const{  
     details,
-   userId
+    userId
  }=await questionUtil.verifyHandleUpdateAnswerUser.validateAsync(data);
 
     for (let index = 0; index < details.length; index++) {
@@ -426,7 +426,6 @@ async handleUpdateAnswerUser(data) {
           });
         }
 
-        await this.rematchUser()
      
        } catch (error) {
           console.log(error)
@@ -435,7 +434,11 @@ async handleUpdateAnswerUser(data) {
       
     }
 
-
+    try {
+      await this.rematchUser()
+    } catch (error) {
+      throw new ServerError(error.name,error.parent );
+    }
 
 }
 
