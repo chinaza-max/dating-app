@@ -351,7 +351,9 @@ async handleCreateAnswer(data) {
 
 
  
- this.rematchUser()
+ //this.rematchUser()
+
+
 /*
  
   details.map(async (data) => {
@@ -396,11 +398,8 @@ async handleUpdateAnswerUser(data) {
    userId
  }=await questionUtil.verifyHandleUpdateAnswerUser.validateAsync(data);
 
-
-
     for (let index = 0; index < details.length; index++) {
       const element = details[index];
-    
 
       const result = await this.PartnerPersonaltyQModel.findByPk(element.partnerPersonaltyQId);
 
@@ -418,7 +417,8 @@ async handleUpdateAnswerUser(data) {
           await result2.update({  
             answer:element.answer,
           });
-        }else{
+        }
+        else{
           await this.UserAnswerModel.create({
               partnerPersonaltyQId:element.partnerPersonaltyQId,
               userId,
@@ -426,7 +426,7 @@ async handleUpdateAnswerUser(data) {
           });
         }
 
-        this.rematchUser()
+        await this.rematchUser()
      
        } catch (error) {
           console.log(error)
