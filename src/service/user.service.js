@@ -3531,10 +3531,24 @@ class UserService {
 
             if(distance){
               
+
+            
               let lat1=JSON.parse( me.dataValues.locationCoordinate).latitude
               let lon1= JSON.parse(me.dataValues.locationCoordinate).longitude
+
               let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
               let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
+              if (
+                !lat1 || isNaN(lat1) || !lon1 || isNaN(lon1) ||
+                !lat2 || isNaN(lat2) || !lon2 || isNaN(lon2)
+              ) {
+                console.log("Invalid coordinates detected, skipping distance calculation.");
+                console.log("Invalid coordinates detected, skipping distance calculation.");
+                console.log("Invalid coordinates detected, skipping distance calculation.");
+                console.log("Invalid coordinates detected, skipping distance calculation.");
+
+                continue;
+              }
 
               const result=await this.getDistanceBetween(lat1, lon1 ,lat2 ,lon2 ,distance)
 
