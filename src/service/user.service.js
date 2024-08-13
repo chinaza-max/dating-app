@@ -3531,13 +3531,19 @@ class UserService {
 
             if(distance){
               
-
+              const mainLocation1 = me.dataValues.locationCoordinate;
+              const mainLocation2 = myMatchUser.dataValues.locationCoordinate;
             
-              let lat1=JSON.parse( me.dataValues.locationCoordinate).latitude
-              let lon1= JSON.parse(me.dataValues.locationCoordinate).longitude
+              if (!mainLocation1 || !mainLocation2) {
+                continue;
+              }
 
-              let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate).latitude
-              let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate).longitude
+              let lat1=JSON.parse( me.dataValues.locationCoordinate)?.latitude
+              let lon1= JSON.parse(me.dataValues.locationCoordinate)?.longitude
+
+              let lat2=JSON.parse( myMatchUser.dataValues.locationCoordinate)?.latitude
+              let lon2=JSON.parse( myMatchUser.dataValues.locationCoordinate)?.longitude
+
               if (
                 !lat1 || isNaN(lat1) || !lon1 || isNaN(lon1) ||
                 !lat2 || isNaN(lat2) || !lon2 || isNaN(lon2)
