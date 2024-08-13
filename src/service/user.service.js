@@ -1547,8 +1547,8 @@ class UserService {
                   }
                 ],
                 usersStatus:'accepted',
-                dateStatus:{[Sequelize.Op.not]: 'completed',
-              },
+               /* dateStatus:{[Sequelize.Op.not]: 'completed',
+              },*/
                 isDeleted:false
               },
               include: [
@@ -1751,8 +1751,6 @@ class UserService {
         else{
           if(type=='accepted'){
 
-
-
             details=await this.DateModel.findAll({
               where: {
                 [Op.or]: [
@@ -1797,23 +1795,6 @@ class UserService {
               order: [['createdAt', 'DESC']]
             })
 
-
-            console.log("accepted2") 
-            console.log("accepted2") 
-            console.log("accepted2") 
-            console.log("accepted2") 
-            console.log("accepted2") 
-            
-            console.log(userId) 
-            console.log(userId) 
-            console.log(userId) 
-
-            console.log(details) 
-  
-            console.log("accepted2") 
-            console.log("accepted2") 
-            console.log("accepted2") 
-            console.log("accepted2") 
           }
           else if(type=='decline'){
            
@@ -2580,22 +2561,11 @@ class UserService {
         for (let index = 0; index < details.length; index++) {
           const element = details[index];
 
-         if(type=='accepted')  {
-          console.log("accepted") 
-          console.log("accepted") 
-          console.log("accepted") 
-          console.log("accepted") 
-          console.log("accepted") 
-
-          console.log(element) 
-
-          console.log("accepted") 
-          console.log("accepted") 
-          console.log("accepted") 
-          console.log("accepted") 
-
-
-
+       
+         if(type=='accepted'&&type2=='user'){
+          if(element.dataValues.dateStatus=='completed'){
+            continue
+          }
          }
 
           result.push({
@@ -3109,17 +3079,22 @@ class UserService {
         },
       });
 
-      const dateAcceptCount = await this.DateModel.count({
+      const dateAcceptResult = await this.DateModel.findAll({
         where: {
           [Op.or]:[
             {userId2: userId},
             {userId: userId},
           ],
-          usersStatus:'accepted',
-          dateStatus:{[Sequelize.Op.not]: 'completed',
-        }
-
+          usersStatus:'accepted'
         },
+      });
+
+      let dateAcceptCount = 0;
+
+      dateAcceptResult.forEach((date) => {
+        if (date.dateStatus !== 'completed') {
+          remainingCount++;
+        }
       });
 
       
