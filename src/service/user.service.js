@@ -1750,6 +1750,9 @@ class UserService {
         }
         else{
           if(type=='accepted'){
+
+
+
             details=await this.DateModel.findAll({
               where: {
                 [Op.or]: [
@@ -1793,6 +1796,24 @@ class UserService {
               ],
               order: [['createdAt', 'DESC']]
             })
+
+
+            console.log("accepted2") 
+            console.log("accepted2") 
+            console.log("accepted2") 
+            console.log("accepted2") 
+            console.log("accepted2") 
+            
+            console.log(userId) 
+            console.log(userId) 
+            console.log(userId) 
+
+            console.log(details) 
+  
+            console.log("accepted2") 
+            console.log("accepted2") 
+            console.log("accepted2") 
+            console.log("accepted2") 
           }
           else if(type=='decline'){
            
@@ -2559,7 +2580,23 @@ class UserService {
         for (let index = 0; index < details.length; index++) {
           const element = details[index];
 
-         console.log(element)   
+         if(type=='accepted')  {
+          console.log("accepted") 
+          console.log("accepted") 
+          console.log("accepted") 
+          console.log("accepted") 
+          console.log("accepted") 
+
+          console.log(element) 
+
+          console.log("accepted") 
+          console.log("accepted") 
+          console.log("accepted") 
+          console.log("accepted") 
+
+
+
+         }
 
           result.push({
               DateId:element.dataValues.id,
