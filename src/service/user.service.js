@@ -1340,6 +1340,16 @@ class UserService {
       }  
     }
     else if(type=='acceptReservationStatus'){
+
+
+      console.log("userId")
+      console.log(userId)
+      console.log(userId)
+      console.log(userId)
+      console.log(userId)
+      console.log(userId)
+      console.log("userId")
+
       if (dateDetails){
         dateDetails.update({
           reservationStatus:'accepted',
