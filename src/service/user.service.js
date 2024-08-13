@@ -1352,7 +1352,7 @@ class UserService {
             isDeleted:false,
             disableAccount:false,
             notificationAllowed:true,
-            id:userId
+            id:dateDetails.dataValues.userId
           }
         })
 
@@ -1361,7 +1361,7 @@ class UserService {
             isDeleted:false,
             disableAccount:false,
             notificationAllowed:true,
-            id:userId2
+            id:dateDetails.dataValues.userId2
           }
         })
 
@@ -1377,7 +1377,6 @@ class UserService {
 
       }
     }
-
 
     if(type=='acceptReservationStatus'){
       if(dateDetails){
