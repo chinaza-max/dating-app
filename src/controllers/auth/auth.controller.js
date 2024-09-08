@@ -411,6 +411,24 @@ export default class AuthenticationController {
   }
 */
   
+async pingme(
+  req,
+  res,
+  next
+) {
+  try {
+
+    return res.status(200).json({
+      status: 200,
+      message: "successufully ping",
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+
   async uploadPicture(req, res, next) {
 
     try {
